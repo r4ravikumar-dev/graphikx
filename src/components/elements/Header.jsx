@@ -129,7 +129,7 @@ const Header = () => {
         } transition-transform duration-300 ease-in-out`}
       >
         <div className="flex items-center justify-between p-4 font-ubuntu ">
-            <span className="text-lg font-bold">Menu</span>
+            <span className="text-lg font-bold text-lightBlue">Menu</span>
           <div className="mt-[-60px]">
             <button
               onClick={toggleSidebar}
