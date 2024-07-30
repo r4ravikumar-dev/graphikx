@@ -153,8 +153,8 @@ const Header = () => {
               onClick={toggleSidebar}
               className={({ isActive }) =>
                 `block py-2 pr-4 pl-3 duration-200 ${
-                  isActive ? "text-navy font-bold" : "text-white"
-                }  hover:bg-gray-50 lg:hover:bg-transparent hover:text-navy lg:p-0`
+                  isActive ? "text-lightBlue font-bold" : "text-white"
+                }  hover:bg-gray-50 lg:hover:bg-transparent hover:text-lightBlue lg:p-0`
               }
             >
               Home
@@ -166,8 +166,8 @@ const Header = () => {
               onClick={toggleSidebar}
               className={({ isActive }) =>
                 `block py-2 pr-4 pl-3 duration-200 ${
-                  isActive ? "text-navy font-bold" : "text-white"
-                }  hover:bg-gray-50 lg:hover:bg-transparent  hover:text-navy lg:p-0`
+                  isActive ? "text-lightBlue font-bold" : "text-white"
+                }  hover:bg-gray-50 lg:hover:bg-transparent  hover:text-lightBlue lg:p-0`
               }
             >
               Projects
@@ -179,8 +179,8 @@ const Header = () => {
               onClick={toggleSidebar}
               className={({ isActive }) =>
                 `block py-2 pr-4 pl-3 duration-200 ${
-                  isActive ? "text-navy font-bold" : "text-white"
-                }  hover:bg-gray-50 lg:hover:bg-transparent hover:text-navy lg:p-0`
+                  isActive ? "text-lightBlue font-bold" : "text-white"
+                }  hover:bg-gray-50 lg:hover:bg-transparent hover:text-lightBlue lg:p-0`
               }
             >
               About Us
@@ -192,8 +192,8 @@ const Header = () => {
               onClick={toggleSidebar}
               className={({ isActive }) =>
                 `block py-2 pr-4 pl-3 duration-200 ${
-                  isActive ? "text-navy font-bold" : "text-white"
-                }  hover:bg-gray-50 lg:hover:bg-transparent hover:text-navy lg:p-0`
+                  isActive ? "text-lightBlue font-bold" : "text-white"
+                }  hover:bg-gray-50 lg:hover:bg-transparent hover:text-lightBlue lg:p-0`
               }
             >
               Blogs
