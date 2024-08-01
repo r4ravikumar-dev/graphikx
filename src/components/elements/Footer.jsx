@@ -14,7 +14,7 @@ import {
 function Footer() {
   return (
     <>
-      <div className="bg-navy">
+      <div className="bg-gradient-to-r from-[#2454FF] to-[#0070FF]">
         <div className="flex flex-wrap mx-2 sm:mx-auto max-w-screen-xl pt-[40px] sm:pt-[80px] pb-[40px] ">
           <div className="flex flex-wrap justify-start">
             <a href="/">
@@ -26,37 +26,37 @@ function Footer() {
               For more updates be socially connected with us on
             </h1>
             <div className="flex flex-wrap justify-center mt-2 mb-4">
-              <div className="text-white hover:text-navy text-[12px] sm:text-[20px] ml-2 rounded-[24px]  p-2  hover:bg-white/40 ">
+              <div className="text-white hover:text-darkBlue text-[16px] sm:text-[24px] ml-2 rounded-[28px]  p-2  hover:bg-white/80 ">
                 <a href="https://www.instagram.com/_graphikx">
                   <FaInstagram />
                 </a>
               </div>
-              <div className="text-white hover:text-navy text-[12px] sm:text-[20px] ml-2 rounded-[24px]  p-2  hover:bg-white/40 ">
+              <div className="text-white hover:text-darkBlue text-[16px] sm:text-[24px] ml-2 rounded-[28px]  p-2  hover:bg-white/80 ">
                 <a href="https://www.instagram.com/_graphikx">
                   <FaLinkedin />
                 </a>
               </div>
-              <div className="text-white hover:text-navy text-[12px] sm:text-[20px] ml-2 rounded-[24px]  p-2  hover:bg-white/40 ">
+              <div className="text-white hover:text-darkBlue text-[16px] sm:text-[24px] ml-2 rounded-[28px]  p-2  hover:bg-white/80 ">
                 <a href="https://www.instagram.com/_graphikx">
                   <FaGithub />
                 </a>
               </div>
-              <div className="text-white hover:text-navy text-[12px] sm:text-[20px] ml-2 rounded-[24px]  p-2  hover:bg-white/40">
+              <div className="text-white hover:text-darkBlue text-[16px] sm:text-[24px] ml-2 rounded-[28px]  p-2  hover:bg-white/80">
                 <a href="https://www.instagram.com/_graphikx">
                   <FaFigma />
                 </a>
               </div>
-              <div className="text-white hover:text-navy text-[12px] sm:text-[20px] ml-2 rounded-[40px]  p-2 hover:bg-white/40 ">
+              <div className="text-white hover:text-darkBlue text-[16px] sm:text-[24px] ml-2 rounded-[28px]  p-2 hover:bg-white/80 ">
                 <a href="https://www.instagram.com/_graphikx">
                   <FaBehance />
                 </a>
               </div>
-              <div className="text-white hover:text-navy text-[12px] sm:text-[20px] ml-2 rounded-[40px]  p-2 hover:bg-white/40">
+              <div className="text-white hover:text-darkBlue text-[16px] sm:text-[24px] ml-2 rounded-[28px]  p-2 hover:bg-white/80">
                 <a href="https://www.instagram.com/_graphikx">
                   <FaDribbble />
                 </a>
               </div>
-              <div className="text-white hover:text-navy text-[12px] sm:text-[20px] ml-2 rounded-[24px]  p-2  hover:bg-white/40 ">
+              <div className="text-white hover:text-darkBlue text-[16px] sm:text-[24px] ml-2 rounded-[28px]  p-2  hover:bg-white/80 ">
                 <a href="https://www.instagram.com/_graphikx">
                   <FaChrome />
                 </a>

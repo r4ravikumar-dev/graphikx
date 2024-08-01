@@ -1,7 +1,7 @@
 // Header.js
 import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-import logo from "../../assets/image.png"; // Replace with your logo path
+import logo from "../../assets/logoDesign2.svg"; // Replace with your logo path
 
 const Header = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -12,12 +12,12 @@ const Header = () => {
 
   return (
     <header className="shadow sticky z-50 top-0">
-      <nav className="bg-gray-dark/60 backdrop-blur-[8px] border-gray-200 px-4 lg:px-6 py-[16px]">
+      <nav className="bg-lightBlue/25 backdrop-blur-[8px] border-gray-200 px-4 lg:px-6 py-[16px]">
         <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
           <Link to="/" className="flex items-center">
             <img
               src={logo}
-              className="mr-3 h-[16px] sm:h-[20px] md:h-[24px]"
+              className="mr-3 h-[16px] sm:h-[20px] md:h-[40px]"
               alt="Logo"
             />
           </Link>
@@ -53,13 +53,13 @@ const Header = () => {
           <div className="hidden sm:flex items-center lg:order-2">
             <Link
               to="https://graphikx.framer.ai/"
-              className="text-white bg-slateblue/10 hover:bg-navy/20 focus:ring-2 focus:ring-navy/40 rounded-lg text-[16px] leading-[135%] font-bold px-4 lg:px-5 py-2 lg:py-2.5 mr-[24px] focus:outline-none"
+              className="text-white bg-darkBlue/10 hover:bg-darkBlue/60 focus:ring-2 focus:ring-darkBlue/40 rounded-lg text-[16px] leading-[135%] font-bold px-4 lg:px-5 py-2 lg:py-2.5 mr-[24px] focus:outline-none"
             >
               Portfolio
             </Link>
             <Link
               to="/contact-us"
-              className="text-white bg-navy hover:bg-navy/90 focus:ring-2 focus:ring-navy/40 rounded-lg text-[16px] leading-[135%] font-bold px-4 lg:px-5 py-2 lg:py-2.5 focus:outline-none"
+              className="text-white bg-darkBlue hover:bg-darkBlue/90 focus:ring-2 focus:ring-darkBlue/40 rounded-lg text-[16px] leading-[135%] font-bold px-4 lg:px-5 py-2 lg:py-2.5 focus:outline-none"
             >
               Let's Connect
             </Link>
@@ -74,8 +74,8 @@ const Header = () => {
                   to="/"
                   className={({ isActive }) =>
                     `block py-2 pr-4 pl-3 duration-200 ${
-                      isActive ? "text-navy font-bold" : "text-white"
-                    } border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 hover:text-navy lg:p-0`
+                      isActive ? "text-darkBlue font-bold" : "text-white"
+                    } border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 hover:text-darkBlue lg:p-0`
                   }
                 >
                   Home
@@ -86,8 +86,8 @@ const Header = () => {
                   to="projects"
                   className={({ isActive }) =>
                     `block py-2 pr-4 pl-3 duration-200 ${
-                      isActive ? "text-navy font-bold" : "text-white"
-                    } border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 hover:text-navy lg:p-0`
+                      isActive ? "text-darkBlue font-bold" : "text-white"
+                    } border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 hover:text-darkBlue lg:p-0`
                   }
                 >
                   Projects
@@ -98,8 +98,8 @@ const Header = () => {
                   to="about-us"
                   className={({ isActive }) =>
                     `block py-2 pr-4 pl-3 duration-200 ${
-                      isActive ? "text-navy font-bold" : "text-white"
-                    } border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 hover:text-navy lg:p-0`
+                      isActive ? "text-darkBlue font-bold" : "text-white"
+                    } border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 hover:text-darkBlue lg:p-0`
                   }
                 >
                   About Us
@@ -110,8 +110,8 @@ const Header = () => {
                   to="blogs"
                   className={({ isActive }) =>
                     `block py-2 pr-4 pl-3 duration-200 ${
-                      isActive ? "text-navy font-bold" : "text-white"
-                    } border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 hover:text-navy lg:p-0`
+                      isActive ? "text-darkBlue font-bold" : "text-white"
+                    } border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 hover:text-darkBlue lg:p-0`
                   }
                 >
                   Blogs
@@ -128,7 +128,7 @@ const Header = () => {
           isSidebarOpen ? "translate-x-full" : "-translate-x-0"
         } transition-transform duration-300 ease-in-out`}
       >
-        <div className="flex items-center justify-between p-4 font-ubuntu ">
+        <div className="flex items-center justify-between p-4 font-poppins ">
             <span className="text-lg font-bold text-lightBlue">Menu</span>
           <div className="mt-[-60px]">
             <button
@@ -146,54 +146,54 @@ const Header = () => {
             </button>
           </div>
         </div>
-        <ul className="mt-4 font-ubuntu text-[16px] font-medium">
-          <li className="py-2 px-4 ">
+        <ul className="mt-4">
+          <li className="py-2 px-4  text-xl">
             <NavLink
               to="/"
               onClick={toggleSidebar}
               className={({ isActive }) =>
-                `block py-2 pr-4 pl-3 duration-200 ${
+                `block py-2 pr-4 pl-3 duration-200  ${
                   isActive ? "text-lightBlue font-bold" : "text-white"
-                }  hover:bg-gray-50 lg:hover:bg-transparent hover:text-lightBlue lg:p-0`
+                } hover:bg-gray-50 lg:hover:bg-transparent hover:text-lightBlue lg:p-0`
               }
             >
               Home
             </NavLink>
           </li>
-          <li className="py-2 px-4">
+          <li className="py-2 px-4 text-xl">
             <NavLink
               to="projects"
               onClick={toggleSidebar}
               className={({ isActive }) =>
-                `block py-2 pr-4 pl-3 duration-200 ${
+                `block py-2 pr-4 pl-3 duration-200  ${
                   isActive ? "text-lightBlue font-bold" : "text-white"
-                }  hover:bg-gray-50 lg:hover:bg-transparent  hover:text-lightBlue lg:p-0`
+                } hover:bg-gray-50 lg:hover:bg-transparent  hover:text-lightBlue lg:p-0`
               }
             >
               Projects
             </NavLink>
           </li>
-          <li className="py-2 px-4">
+          <li className="py-2 px-4 text-xl">
             <NavLink
               to="about-us"
               onClick={toggleSidebar}
               className={({ isActive }) =>
-                `block py-2 pr-4 pl-3 duration-200 ${
+                `block py-2 pr-4 pl-3 duration-200  ${
                   isActive ? "text-lightBlue font-bold" : "text-white"
-                }  hover:bg-gray-50 lg:hover:bg-transparent hover:text-lightBlue lg:p-0`
+                } hover:bg-gray-50 lg:hover:bg-transparent hover:text-lightBlue lg:p-0`
               }
             >
               About Us
             </NavLink>
           </li>
-          <li className="py-2 px-4">
+          <li className="py-2 px-4 text-xl">
             <NavLink
               to="blogs"
               onClick={toggleSidebar}
               className={({ isActive }) =>
-                `block py-2 pr-4 pl-3 duration-200 ${
+                `block py-2 pr-4 pl-3 duration-200  ${
                   isActive ? "text-lightBlue font-bold" : "text-white"
-                }  hover:bg-gray-50 lg:hover:bg-transparent hover:text-lightBlue lg:p-0`
+                } hover:bg-gray-50 lg:hover:bg-transparent hover:text-lightBlue lg:p-0`
               }
             >
               Blogs
