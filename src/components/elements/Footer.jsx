@@ -22,41 +22,41 @@ function Footer() {
             </a>
           </div>
           <div className="w-full flex flex-wrap justify-center flex-col mt-10">
-            <h1 className="flex flex-wrap  justify-center text-center underline font-ubuntu font-medium text-[12px] sm:text-[16px] leading-[135%] text-white">
+            <h1 className="flex flex-wrap  justify-center text-center underline font-poppins font-medium text-[12px] sm:text-[16px] leading-[135%] text-white">
               For more updates be socially connected with us on
             </h1>
             <div className="flex flex-wrap justify-center mt-2 mb-4">
-              <div className="text-white hover:text-darkBlue text-[16px] sm:text-[24px] ml-2 rounded-[28px]  p-2  hover:bg-white/80 ">
+              <div className="text-white hover:text-darkBlue text-[20px] sm:text-[24px] ml-2 rounded-[28px]  p-2  hover:bg-white/80 ">
                 <a href="https://www.instagram.com/_graphikx">
                   <FaInstagram />
                 </a>
               </div>
-              <div className="text-white hover:text-darkBlue text-[16px] sm:text-[24px] ml-2 rounded-[28px]  p-2  hover:bg-white/80 ">
+              <div className="text-white hover:text-darkBlue text-[20px] sm:text-[24px] ml-2 rounded-[28px]  p-2  hover:bg-white/80 ">
                 <a href="https://www.instagram.com/_graphikx">
                   <FaLinkedin />
                 </a>
               </div>
-              <div className="text-white hover:text-darkBlue text-[16px] sm:text-[24px] ml-2 rounded-[28px]  p-2  hover:bg-white/80 ">
+              <div className="text-white hover:text-darkBlue text-[20px] sm:text-[24px] ml-2 rounded-[28px]  p-2  hover:bg-white/80 ">
                 <a href="https://www.instagram.com/_graphikx">
                   <FaGithub />
                 </a>
               </div>
-              <div className="text-white hover:text-darkBlue text-[16px] sm:text-[24px] ml-2 rounded-[28px]  p-2  hover:bg-white/80">
+              <div className="text-white hover:text-darkBlue text-[20px] sm:text-[24px] ml-2 rounded-[28px]  p-2  hover:bg-white/80">
                 <a href="https://www.instagram.com/_graphikx">
                   <FaFigma />
                 </a>
               </div>
-              <div className="text-white hover:text-darkBlue text-[16px] sm:text-[24px] ml-2 rounded-[28px]  p-2 hover:bg-white/80 ">
+              <div className="text-white hover:text-darkBlue text-[20px] sm:text-[24px] ml-2 rounded-[28px]  p-2 hover:bg-white/80 ">
                 <a href="https://www.instagram.com/_graphikx">
                   <FaBehance />
                 </a>
               </div>
-              <div className="text-white hover:text-darkBlue text-[16px] sm:text-[24px] ml-2 rounded-[28px]  p-2 hover:bg-white/80">
+              <div className="text-white hover:text-darkBlue text-[20px] sm:text-[24px] ml-2 rounded-[28px]  p-2 hover:bg-white/80">
                 <a href="https://www.instagram.com/_graphikx">
                   <FaDribbble />
                 </a>
               </div>
-              <div className="text-white hover:text-darkBlue text-[16px] sm:text-[24px] ml-2 rounded-[28px]  p-2  hover:bg-white/80 ">
+              <div className="text-white hover:text-darkBlue text-[20px] sm:text-[24px] ml-2 rounded-[28px]  p-2  hover:bg-white/80 ">
                 <a href="https://www.instagram.com/_graphikx">
                   <FaChrome />
                 </a>
@@ -64,7 +64,7 @@ function Footer() {
             </div>
           </div>
           <div className="flex flex-wrap justify-center item-center text-center mx-auto mt-4">
-            <p className="text-[12px] sm:text-[14px] text-white/60">
+            <p className=" font-poppins text-[12px] sm:text-[14px] text-white/60">
               © {new Date().getFullYear()} <a href="/">Graphikx India.</a>{" "}
               <span>
                 All rights reserved. | Privacy Policy | Terms of Services

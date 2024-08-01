@@ -53,13 +53,13 @@ const Header = () => {
           <div className="hidden sm:flex items-center lg:order-2">
             <Link
               to="https://graphikx.framer.ai/"
-              className="text-white bg-darkBlue/10 hover:bg-darkBlue/60 focus:ring-2 focus:ring-darkBlue/40 rounded-lg text-[16px] leading-[135%] font-bold px-4 lg:px-5 py-2 lg:py-2.5 mr-[24px] focus:outline-none"
+              className="text-white bg-darkBlue/10 hover:bg-darkBlue/60 focus:ring-2 focus:ring-darkBlue/40 rounded-lg text-[16px] font-poppins leading-[135%] font-bold px-4 lg:px-5 py-2 lg:py-2.5 mr-[24px] focus:outline-none"
             >
               Portfolio
             </Link>
             <Link
               to="/contact-us"
-              className="text-white bg-darkBlue hover:bg-darkBlue/90 focus:ring-2 focus:ring-darkBlue/40 rounded-lg text-[16px] leading-[135%] font-bold px-4 lg:px-5 py-2 lg:py-2.5 focus:outline-none"
+              className="text-white bg-darkBlue hover:bg-darkBlue/90 focus:ring-2 focus:ring-darkBlue/40 rounded-lg text-[16px] font-poppins leading-[135%] font-bold px-4 lg:px-5 py-2 lg:py-2.5 focus:outline-none"
             >
               Let's Connect
             </Link>
@@ -68,7 +68,7 @@ const Header = () => {
             className="hidden justify-between items-center w-full lg:flex lg:w-auto lg:order-1"
             id="mobile-menu-2"
           >
-            <ul className="flex flex-col mt-4 font-bold text-[16px] leading-[135%] lg:flex-row lg:space-x-8 lg:mt-0">
+            <ul className="flex flex-col mt-4 font-bold text-[16px] font-poppins leading-[135%] lg:flex-row lg:space-x-8 lg:mt-0">
               <li>
                 <NavLink
                   to="/"
@@ -146,54 +146,54 @@ const Header = () => {
             </button>
           </div>
         </div>
-        <ul className="mt-4">
-          <li className="py-2 px-4  text-xl">
+        <ul className="mt-4 font-poppins text-[16px] font-medium">
+          <li className="py-2 px-4 ">
             <NavLink
               to="/"
               onClick={toggleSidebar}
               className={({ isActive }) =>
-                `block py-2 pr-4 pl-3 duration-200  ${
+                `block py-2 pr-4 pl-3 duration-200 ${
                   isActive ? "text-lightBlue font-bold" : "text-white"
-                } hover:bg-gray-50 lg:hover:bg-transparent hover:text-lightBlue lg:p-0`
+                }  hover:bg-gray-50 lg:hover:bg-transparent hover:text-lightBlue lg:p-0`
               }
             >
               Home
             </NavLink>
           </li>
-          <li className="py-2 px-4 text-xl">
+          <li className="py-2 px-4">
             <NavLink
               to="projects"
               onClick={toggleSidebar}
               className={({ isActive }) =>
-                `block py-2 pr-4 pl-3 duration-200  ${
+                `block py-2 pr-4 pl-3 duration-200 ${
                   isActive ? "text-lightBlue font-bold" : "text-white"
-                } hover:bg-gray-50 lg:hover:bg-transparent  hover:text-lightBlue lg:p-0`
+                }  hover:bg-gray-50 lg:hover:bg-transparent  hover:text-lightBlue lg:p-0`
               }
             >
               Projects
             </NavLink>
           </li>
-          <li className="py-2 px-4 text-xl">
+          <li className="py-2 px-4">
             <NavLink
               to="about-us"
               onClick={toggleSidebar}
               className={({ isActive }) =>
-                `block py-2 pr-4 pl-3 duration-200  ${
+                `block py-2 pr-4 pl-3 duration-200 ${
                   isActive ? "text-lightBlue font-bold" : "text-white"
-                } hover:bg-gray-50 lg:hover:bg-transparent hover:text-lightBlue lg:p-0`
+                }  hover:bg-gray-50 lg:hover:bg-transparent hover:text-lightBlue lg:p-0`
               }
             >
               About Us
             </NavLink>
           </li>
-          <li className="py-2 px-4 text-xl">
+          <li className="py-2 px-4">
             <NavLink
               to="blogs"
               onClick={toggleSidebar}
               className={({ isActive }) =>
-                `block py-2 pr-4 pl-3 duration-200  ${
+                `block py-2 pr-4 pl-3 duration-200 ${
                   isActive ? "text-lightBlue font-bold" : "text-white"
-                } hover:bg-gray-50 lg:hover:bg-transparent hover:text-lightBlue lg:p-0`
+                }  hover:bg-gray-50 lg:hover:bg-transparent hover:text-lightBlue lg:p-0`
               }
             >
               Blogs
