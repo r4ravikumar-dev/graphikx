@@ -15,10 +15,10 @@ function ContentAwaited() {
           />
         </div>
         <div className="font-poppins flex flex-wrap flex-col item-center justify-center text-center mt-12">
-          <div className="text-[28px] font-semibold text-darkBlue flex flex-wrap justify-center ">
+          <div className="text-[28px] sm:text-[36px]  font-semibold text-darkBlue flex flex-wrap justify-center ">
             Content Awaited
           </div>
-          <div className=" mb-12 mt-2 text-[18px] text-lightBlue flex flex-wrap justify-center ">
+          <div className=" mb-12 mt-2 text-[14px] sm:text-[18px] text-lightBlue flex flex-wrap justify-center ">
             Please be patient something great is bring cooking and stay tuned
             for more updates...
           </div>
