@@ -17,7 +17,7 @@ function Home() {
             <h2 className="mt-8 font-poppins font-semibold text-[20px] sm:text-[28px] underline">
               Crafting Intuitive, Engaging & User-Cantered Experiences
             </h2>
-            <p className="mt-4 font-poppins font-light text-[16px] sm:text-[18px]">
+            <p className="mt-4 font-poppins font-light text-[14px] sm:text-[18px]">
               At Graphikx, we believe that great design starts with
               understanding the user. This space will soon showcase our journey,
               our skills, our dedication and our latest works in crafting
