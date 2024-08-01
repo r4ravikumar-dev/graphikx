@@ -4,7 +4,7 @@ import reload from "../../assets/contentAwaited.svg";
 function ContentAwaited() {
   return (
     <>
-      <div className="w-full h-[90vh] flex flex-wrap flex-col justify-center px-[12px]">
+      <div className="w-full h-[60vh] flex flex-wrap flex-col justify-center px-[12px]">
         <div className="flex justify-center">
           <img
             src={reload}
