@@ -40,16 +40,54 @@ The website is structured around a storytelling-led experience rather than a tra
 
 ### Core areas
 
-| Area                | Description                                                         |
-| ------------------- | ------------------------------------------------------------------- |
-| **Home**            | The Graphikx story, point of view, practice, and brand experience   |
-| **Practice**        | Product, UX, UI, interaction, flow, no-code, and SaaS design        |
-| **Graphyene**       | Graphikx's evolving design-system exploration                       |
-| **Thinking**        | Articles, observations, and ideas around digital product design     |
-| **Studio**          | The people, principles, and thinking behind Graphikx                |
-| **Start a Project** | Project enquiries and conversations                                 |
+| Area                | Visitor question          | Description                                                       |
+| ------------------- | ------------------------- | ----------------------------------------------------------------- |
+| **Home**            | "Who are they?"           | The Graphikx story, point of view, practice, and brand experience |
+| **Practice**        | "What do they do?"        | Product, UX, UI, interaction, flow, no-code, and SaaS design      |
+| **Thinking**        | "How do they think?"      | Articles, observations, and ideas around digital product design   |
+| **Graphyene**       | "What are they building?" | Graphikx's evolving design-system exploration                     |
+| **Studio**          | "Who are they?"           | The people, principles, and thinking behind Graphikx              |
+| **Start a Project** | "Let's talk."             | Project enquiries and conversations                               |
 
 A future **Work** section can be added as Graphikx begins to publish real client projects.
+
+### Site journey
+
+The site is built as a journey. Each page answers one question and ends by pointing to the next stop.
+
+```
+                DISCOVER
+                   ↓
+                 HOME
+             "Who are they?"
+                   ↓
+          ┌────────┴────────┐
+          ↓                 ↓
+       PRACTICE          THINKING
+    "What do they      "How do they
+        do?"              think?"
+          │                 │
+          └────────┬────────┘
+                   ↓
+               GRAPHYENE
+          "What are they
+            building?"
+                   ↓
+                STUDIO
+           "Who are they?"
+                   ↓
+            START A PROJECT
+             "Let's talk."
+```
+
+- Home gives a first impression of who Graphikx is. Studio gives the full answer once the visitor has seen the work and the thinking.
+- Home forks into Practice and Thinking. Both lead on to Graphyene.
+- The journey is defined in `frontend/src/content/journey.ts`, and the main navigation order is generated from it.
+- Each page moves visitors on through its own calls to action. The homepage previews of Practice, Graphyene and Thinking link onward, and each inner page closes with an invitation to start a project.
+- Every page shares one footer. Its copy lives in `frontend/src/content/footer.ts`.
+- The Privacy and Terms pages (`/privacy`, `/terms`) are plain-language drafts in `frontend/src/content/legal.ts`. Review them before launch, and update them whenever the site starts collecting anything new.
+- The "Start a project" button stays in the top navigation on every page, so a visitor never has to finish the journey to get in touch.
+
 
 ---
 
@@ -58,29 +96,30 @@ A future **Work** section can be added as Graphikx begins to publish real client
 ```
 graphikx/
 │
-├── frontend/
+├── frontend/                 # Next.js website
 │   ├── public/
-│   ├── src/
-│   ├── components/
-│   ├── pages/              # or app/ depending on framework
-│   ├── styles/
-│   └── ...
+│   └── src/
+│       ├── app/              # Routes, layout, metadata, sitemap, robots
+│       ├── components/       # Grouped by purpose (see Component Architecture)
+│       ├── content/          # Site copy: practice, principles, Graphyene, articles
+│       ├── lib/              # API client
+│       └── motion/           # M3 Expressive spring tokens
 │
-├── backend/
+├── backend/                  # Express API
 │   ├── src/
-│   ├── routes/
-│   ├── controllers/
-│   ├── services/
-│   ├── models/
-│   ├── middleware/
-│   └── ...
+│   │   ├── config/           # Environment parsing
+│   │   ├── routes/
+│   │   ├── controllers/
+│   │   ├── services/
+│   │   ├── models/           # Zod schemas and types
+│   │   ├── middleware/
+│   │   └── data/
+│   └── tests/
 │
 ├── README.md
-├── .gitignore
-└── ...
+└── .gitignore
 ```
 
-> The exact folder structure may vary depending on the framework and project setup.
 
 ---
 
@@ -107,16 +146,23 @@ The frontend is responsible for the Graphikx website experience, responsive layo
 
 ### Frontend stack
 
-_Update this section with the technologies used in the project._
+```
+Framework:   Next.js 16 (App Router) + React 19
+Language:    TypeScript
+Components:  Astryx (@astryxdesign/core) — https://astryx.atmeta.com/components
+Theme:       Astryx Stone (@astryxdesign/theme-stone), extended in src/theme
+Typography:  Graphikx Responsive Typography Scale v1 (src/theme/typeScale.ts)
+Templates:   Astryx templates (shell-top-nav, centered-hero, contact-form)
+Styling:     Astryx components + design tokens (no Tailwind)
+Animation:   Framer Motion with Material Design 3 Expressive springs
+Icons:       Lucide
+Forms:       Astryx form components with custom validation
+CMS:         None yet — content lives in src/content
+```
 
-```
-Framework:  [Next.js / React / Other]
-Language:   [TypeScript / JavaScript]
-Styling:    [Tailwind CSS / CSS Modules / Other]
-Animation:  [Framer Motion / GSAP / Other]
-Forms:      [Library]
-CMS:        [CMS / Custom]
-```
+Pages are built from Astryx templates. Run `npx astryx build "<page idea>"` in `frontend/` to find the closest template, and `npx astryx component <Name>` for component props.
+
+Motion uses the Material Design 3 Expressive spring tokens in `frontend/src/motion/springs.ts`. Spatial springs (movement) overshoot slightly and settle. Effects springs (opacity, colour) never bounce. Reduced-motion preferences are respected everywhere.
 
 ---
 
@@ -138,15 +184,16 @@ The backend handles the server-side functionality required by the Graphikx websi
 
 ### Backend stack
 
-_Update this section with the technologies used._
-
 ```
-Runtime:         [Node.js / Other]
-Framework:       [Express / NestJS / Other]
-Language:        [TypeScript / JavaScript]
-Database:        [PostgreSQL / MongoDB / Other]
-Authentication:  [If applicable]
-Email:           [Resend / SendGrid / SMTP / Other]
+Runtime:         Node.js 22+
+Framework:       Express 5
+Language:        TypeScript
+Validation:      Zod
+Security:        Helmet, CORS, rate limiting on enquiries
+Database:        None yet (DATABASE_URL reserved)
+Authentication:  Not applicable
+Email:           SMTP via Nodemailer (logs to console when EMAIL_HOST is unset)
+Testing:         Vitest + Supertest
 ```
 
 ---
@@ -177,6 +224,8 @@ git clone https://github.com/r4ravikumar-dev/graphikx.git
 cd graphikx
 ```
 
+The frontend and backend each have their own `package.json`. Run each one in its own terminal.
+
 ### Frontend setup
 
 Move into the frontend directory:
@@ -200,8 +249,8 @@ cp .env.example .env.local
 Add the required values to `.env.local`. Example:
 
 ```env
-NEXT_PUBLIC_API_URL=
-NEXT_PUBLIC_SITE_URL=
+NEXT_PUBLIC_API_URL=http://localhost:4000
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
 NEXT_PUBLIC_ANALYTICS_ID=
 ```
 
@@ -236,13 +285,18 @@ cp .env.example .env
 Add the required environment variables. Example:
 
 ```env
-PORT=5000
+PORT=4000
+CORS_ORIGIN=http://localhost:3000
 DATABASE_URL=
-CORS_ORIGIN=
 EMAIL_HOST=
+EMAIL_PORT=587
 EMAIL_USER=
 EMAIL_PASSWORD=
+EMAIL_FROM=
+ENQUIRY_NOTIFY_TO=
 ```
+
+Leave `EMAIL_HOST` empty during development. Enquiries are then printed to the console instead of being emailed.
 
 Start the backend:
 
@@ -250,7 +304,9 @@ Start the backend:
 npm run dev
 ```
 
-The API should now be available at [http://localhost:5000](http://localhost:5000).
+The API should now be available at [http://localhost:4000](http://localhost:4000).
+
+> Port 5000 is avoided because macOS uses it for AirPlay Receiver.
 
 ---
 
@@ -265,14 +321,18 @@ Keep sensitive values inside local `.env` files or your deployment provider's en
 ```env
 NEXT_PUBLIC_API_URL=
 NEXT_PUBLIC_SITE_URL=
+NEXT_PUBLIC_CONTACT_EMAIL=
+NEXT_PUBLIC_LINKEDIN_URL=
 ```
 
 ### Backend
 
 ```env
 PORT=
-DATABASE_URL=
 CORS_ORIGIN=
+DATABASE_URL=
+EMAIL_HOST=
+ENQUIRY_NOTIFY_TO=
 ```
 
 Add service-specific variables as required.
@@ -327,11 +387,22 @@ Example request:
   "email": "jane@example.com",
   "company": "Example",
   "projectType": "Product Design",
+  "stage": "Already have a product",
+  "timeline": "In the next few weeks",
   "message": "We are redesigning an existing product."
 }
 ```
 
-> The actual request body should match the implementation in the backend.
+Only `name`, `email` and `message` are required. `company`, `projectType` (what they'd like help with), `stage` (where they are right now), `timeline`, `difficulty` (what feels difficult) and `notes` are optional. A successful request returns `201 {"status": "received"}`. A request that fails validation returns `422` with a message for each field:
+
+```json
+{
+  "error": "Please check the highlighted fields",
+  "fields": {"email": "Enter a valid email address"}
+}
+```
+
+Enquiries are limited to 5 per IP every 15 minutes.
 
 ---
 
@@ -428,35 +499,55 @@ components/
 │
 ├── storytelling/
 │   ├── Hero
+│   ├── Eyebrow
+│   ├── Microcopy
 │   ├── NarrativeBlock
 │   ├── Statement
-│   └── SectionIntro
+│   ├── SectionIntro
+│   ├── Highlight
+│   ├── LayeredLines
+│   ├── TopicGrid
+│   ├── ProcessSteps
+│   ├── SituationList
+│   ├── KeyStatement
+│   └── ProjectInvitation
 │
 ├── practice/
+│   ├── PracticeGroup
 │   ├── PracticeSection
 │   ├── Capability
+│   ├── DisciplineFlow
 │   └── PracticePreview
 │
 ├── graphyene/
 │   ├── Principle
 │   ├── Architecture
-│   └── Exploration
+│   ├── Exploration
+│   ├── StatusBadge
+│   └── GraphyenePreview
 │
 ├── thinking/
 │   ├── ArticleCard
 │   ├── ArticleList
 │   ├── CategoryFilter
+│   ├── FeaturedArticle
+│   ├── FlowComparison
 │   └── ArticleContent
 │
 ├── forms/
 │   ├── Input
 │   ├── Textarea
 │   ├── Select
-│   └── ProjectForm
+│   ├── ProjectForm
+│   └── ProjectEnquiry
+│
+├── studio/
+│   ├── FounderProfile
+│   └── FocusArea
 │
 └── mascot/
-    ├── Mascot
-    └── MascotScene
+    ├── Mascot           # Used only inside MascotDialogue
+    └── MascotDialogue   # The looping mascot moment; the only element on the site that loops
 ```
 
 ### Naming
@@ -552,8 +643,6 @@ SEO copy should remain natural and useful rather than repeating keywords unneces
 
 ## Development Scripts
 
-_Update these commands to match the actual project configuration._
-
 ### Frontend
 
 | Command         | Description                   |
@@ -571,6 +660,8 @@ _Update these commands to match the actual project configuration._
 | `npm run build` | Create a production build     |
 | `npm run start` | Run the production build      |
 | `npm run test`  | Run the test suite            |
+| `npm run lint`  | Lint the codebase             |
+| `npm run typecheck` | Type-check without building |
 
 ---
 
@@ -669,6 +760,20 @@ Work
 
 The Work section will be introduced when Graphikx has real projects to showcase.
 
+When it arrives, add it to the navigation without replacing another section. It sits between what Graphikx can do and what Graphikx has done:
+
+```
+Practice · Work · Thinking · Graphyene · Studio · Start a project ↗
+```
+
+- Hover hint: **What we've made**, with "Projects · Stories · Outcomes"
+- Landing headline: **Things we've made with other people.**
+- Supporting line: A collection of products, experiences, and design problems we've had the chance to work through.
+
+### Navigation voice
+
+Navigation labels stay clear, quiet, human and confident. Use Practice, Thinking, Graphyene, Studio and Start a project. Avoid generic labels such as Services, Solutions, Insights, Resources, About Us, Get in Touch or Book a Call. All navigation copy lives in `frontend/src/content/navigation.ts`.
+
 ---
 
 ## Contribution
@@ -701,6 +806,6 @@ For private or commercial repositories, do not add an open-source license unless
 
 A design studio exploring better ways to make digital products clearer, more useful, and more human.
 
-[Website URL] · [LinkedIn URL] · [Contact Email]
+[Website URL] · [LinkedIn](https://www.linkedin.com/company/graphikxstudio/) · [design@graphikx.in](mailto:design@graphikx.in)
 
 </div>

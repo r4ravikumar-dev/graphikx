@@ -1,0 +1,55 @@
+@import "@astryxdesign/core/reset.css";
+@import "@astryxdesign/core/astryx.css";
+/* Graphikx theme: Astryx Stone (src/theme). */
+@import "../theme/graphikx.css";
+
+html {
+  scroll-behavior: smooth;
+  /* Match the page surface so overscroll and safe areas follow light/dark mode too. */
+  background-color: var(--color-background-surface);
+  color: var(--color-text-primary);
+}
+
+/* Header vertical padding: 16px on mobile, 20px on tablet, 24px on desktop. */
+:root {
+  --nav-padding-block: 16px;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --nav-padding-block: 20px;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --nav-padding-block: 24px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/*
+ * Footer columns, following the Astryx layout thresholds:
+ * 1 column below 768px, 2 from 768px, 4 above 1024px (the brand column is a little wider).
+ * Overrides the Grid's own column template, which lives in a lower-priority CSS layer.
+ */
+.footer-columns {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+@media (min-width: 768px) {
+  .footer-columns {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1025px) {
+  .footer-columns {
+    grid-template-columns: minmax(0, 1.4fr) repeat(3, minmax(0, 1fr));
+  }
+}
