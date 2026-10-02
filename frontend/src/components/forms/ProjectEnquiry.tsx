@@ -22,10 +22,7 @@ type ProjectEnquiryProps = {
 /** An inline "start a conversation" section: invitation on one side, the form on the other. */
 export function ProjectEnquiry({id, eyebrow, title, prompts, closing}: ProjectEnquiryProps) {
   return (
-    <Container
-      paddingBlock={10}
-      id={id}
-      style={id ? {scrollMarginTop: 'var(--spacing-10)'} : undefined}>
+    <Container paddingBlock={10} id={id}>
       <Grid columns={{minWidth: 320, max: 2}} gap={10}>
         <VStack gap={5}>
           <Reveal gap={3}>

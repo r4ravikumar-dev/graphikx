@@ -26,8 +26,7 @@ export function PracticeSection({capability}: {capability: Capability}) {
         gap={3}
         id={capability.slug}
         as="section"
-        aria-labelledby={titleId}
-        style={{scrollMarginTop: 'var(--spacing-10)'}}>
+        aria-labelledby={titleId}>
         <HStack gap={2} vAlign="center">
           {icon && <Icon icon={icon} size="md" color="accent" />}
           <Text type="label" color="accent" id={titleId}>

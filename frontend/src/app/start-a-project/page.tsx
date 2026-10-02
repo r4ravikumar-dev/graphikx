@@ -54,8 +54,7 @@ export default function StartAProjectPage() {
           size="narrow"
           paddingBlock={10}
           gap={6}
-          id={enquiry.id}
-          style={{scrollMarginTop: 'var(--spacing-10)'}}>
+          id={enquiry.id}>
           <SectionIntro
             eyebrow={enquiry.eyebrow}
             title={enquiry.title}

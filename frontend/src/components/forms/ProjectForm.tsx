@@ -187,7 +187,7 @@ export function ProjectForm({variant = 'short'}: ProjectFormProps) {
   );
 
   return (
-    <VStack ref={ref} style={{scrollMarginTop: 'var(--spacing-10)'}}>
+    <VStack ref={ref}>
       <AnimatePresence mode="wait" initial={false}>
         {isSent ? (
           <MotionVStack

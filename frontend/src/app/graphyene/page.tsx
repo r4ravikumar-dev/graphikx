@@ -173,7 +173,7 @@ export default function GraphyenePage() {
       </Section>
 
       {/* 07: What's changing */}
-      <VStack gap={0} id={stillBecoming.id} style={{scrollMarginTop: 'var(--spacing-10)'}}>
+      <VStack gap={0} id={stillBecoming.id}>
         <NarrativeBlock
           eyebrow={stillBecoming.eyebrow}
           title={stillBecoming.title}

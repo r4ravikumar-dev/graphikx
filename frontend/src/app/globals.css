@@ -5,6 +5,11 @@
 
 html {
   scroll-behavior: smooth;
+  /*
+   * Jumps to #sections stop below the sticky header (its padding on both sides
+   * plus its 32px content row) with a little breathing room.
+   */
+  scroll-padding-top: calc(var(--nav-padding-block) * 2 + 32px + var(--spacing-4));
   /* Match the page surface so overscroll and safe areas follow light/dark mode too. */
   background-color: var(--color-background-surface);
   color: var(--color-text-primary);

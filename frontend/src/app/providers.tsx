@@ -6,6 +6,7 @@ import {Theme} from '@astryxdesign/core/theme';
 import {LinkProvider} from '@astryxdesign/core/Link';
 import {graphikxTheme} from '@/theme/graphikx';
 import {springs} from '@/motion/springs';
+import {ScrollManager} from '@/components/navigation/ScrollManager';
 
 export function Providers({children}: {children: React.ReactNode}) {
   return (
@@ -13,6 +14,7 @@ export function Providers({children}: {children: React.ReactNode}) {
     <Theme theme={graphikxTheme} mode="system">
       <LinkProvider component={Link}>
         <MotionConfig reducedMotion="user" transition={springs.spatial.default}>
+          <ScrollManager />
           {children}
         </MotionConfig>
       </LinkProvider>

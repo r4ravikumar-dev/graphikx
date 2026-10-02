@@ -52,7 +52,9 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
     // The theme attribute is rendered on the server so theme colours apply from
     // the first paint, before JavaScript runs (no flash of the wrong scheme).
-    <html lang="en" data-astryx-theme="graphikx">
+    // data-scroll-behavior: keep smooth scrolling for in-page links, but let
+    // Next.js jump instantly between pages (see ScrollManager).
+    <html lang="en" data-astryx-theme="graphikx" data-scroll-behavior="smooth">
       <head>
         {/* Typefaces used by the Astryx Stone theme. The root layout covers every page. */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />

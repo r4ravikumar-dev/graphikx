@@ -38,8 +38,6 @@ import {
 } from '@/content/home';
 import {typeRole} from '@/theme/typeScale';
 
-const sectionAnchor = {scrollMarginTop: 'var(--spacing-10)'};
-
 export default function HomePage() {
   const previewArticles = thinkingPreview.articleSlugs
     .map(slug => articles.find(article => article.slug === slug))
@@ -86,7 +84,7 @@ export default function HomePage() {
       </Container>
 
       {/* 05: How we think */}
-      <VStack gap={0} id={howWeThink.id} style={sectionAnchor}>
+      <VStack gap={0} id={howWeThink.id}>
         <NarrativeBlock
           eyebrow={howWeThink.eyebrow}
           title={howWeThink.title}

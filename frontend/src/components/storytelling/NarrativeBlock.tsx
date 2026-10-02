@@ -39,7 +39,7 @@ export function NarrativeBlock({
   children,
 }: NarrativeBlockProps) {
   return (
-    <Container paddingBlock={10} id={id} style={id ? {scrollMarginTop: 'var(--spacing-10)'} : undefined}>
+    <Container paddingBlock={10} id={id}>
       <Grid columns={{minWidth: 320, max: 2}} gap={8}>
         <Reveal gap={2}>
           <Eyebrow>{eyebrow}</Eyebrow>
