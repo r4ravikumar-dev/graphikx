@@ -1,4 +1,10 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:4000';
+/**
+ * The API is served from the same origin under /api: on Vercel a top-level
+ * rewrite routes /api/* to the backend service, and in local development
+ * next.config.ts proxies /api/* to BACKEND_URL. So the browser never needs to
+ * know the backend's address.
+ */
+const ENQUIRY_ENDPOINT = '/api/projects/enquiry';
 
 export type ProjectEnquiry = {
   name: string;
@@ -32,7 +38,7 @@ export class EnquiryError extends Error {
 export async function submitProjectEnquiry(enquiry: ProjectEnquiry): Promise<void> {
   let response: Response;
   try {
-    response = await fetch(`${API_URL}/api/projects/enquiry`, {
+    response = await fetch(ENQUIRY_ENDPOINT, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(enquiry),
