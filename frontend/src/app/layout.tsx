@@ -3,6 +3,7 @@ import './globals.css';
 import {Providers} from './providers';
 import {SiteShell} from '@/components/layout/SiteShell';
 import {site} from '@/content/site';
+import { Analytics } from "@vercel/analytics/next";
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -69,6 +70,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
         <Providers>
           <SiteShell>{children}</SiteShell>
         </Providers>
+        <Analytics />
       </body>
     </html>
   );
