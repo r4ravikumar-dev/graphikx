@@ -114,7 +114,7 @@ export const graphikxTheme = {
     "--color-on-light": "light-dark(#25252a, #28282a)",
     "--color-on-accent": "light-dark(#ffffff, #25252a)",
     "--color-on-success": "light-dark(#374c36, #d0e9ce)",
-    "--color-on-error": "light-dark(#58413e, #f9dcd7)",
+    "--color-on-error": "light-dark(hsl(0 70% 32%), hsl(0 90% 88%))",
     "--color-on-warning": "light-dark(#524622, #f4e1b7)",
     "--color-icon-accent": "light-dark(#25252a, #f3f3f5)",
     "--color-icon-primary": "light-dark(#25252a, #f3f3f5)",
@@ -125,8 +125,8 @@ export const graphikxTheme = {
     "--color-background-inverted": "light-dark(#25252a, #f3f3f5)",
     "--color-success": "light-dark(#374c36, #b4cdb2)",
     "--color-success-muted": "light-dark(#d0e9ce, #b4cdb2)",
-    "--color-error": "light-dark(#58413e, #dcc0bc)",
-    "--color-error-muted": "light-dark(#f9dcd7, #dcc0bc)",
+    "--color-error": "light-dark(hsl(0 72% 44%), hsl(0 85% 72%))",
+    "--color-error-muted": "light-dark(hsl(0 86% 96%), hsl(0 42% 18%))",
     "--color-warning": "light-dark(#524622, #d7c59c)",
     "--color-warning-muted": "light-dark(#f4e1b7, #d7c59c)",
     "--color-border": "light-dark(#e2e2e8, #f3f3f51a)",
@@ -162,10 +162,10 @@ export const graphikxTheme = {
     "--color-border-purple": "light-dark(#d9d1e5, #3f3949)",
     "--color-icon-purple": "light-dark(#4b4454, #e8dff3)",
     "--color-text-purple": "light-dark(#4b4454, #e8dff3)",
-    "--color-background-red": "light-dark(#f9dcd7, #644d49)",
-    "--color-border-red": "light-dark(#ebcec9, #4c3633)",
-    "--color-icon-red": "light-dark(#58413e, #f9dcd7)",
-    "--color-text-red": "light-dark(#58413e, #f9dcd7)",
+    "--color-background-red": "light-dark(hsl(0 86% 96%), hsl(0 42% 18%))",
+    "--color-border-red": "light-dark(hsl(0 70% 85%), hsl(0 45% 32%))",
+    "--color-icon-red": "light-dark(hsl(0 72% 44%), hsl(0 85% 72%))",
+    "--color-text-red": "light-dark(hsl(0 72% 44%), hsl(0 85% 72%))",
     "--color-background-teal": "light-dark(#d4e7dc, #46564d)",
     "--color-border-teal": "light-dark(#c6d9ce, #303f36)",
     "--color-icon-teal": "light-dark(#3b4a41, #d4e7dc)",
@@ -187,56 +187,64 @@ export const graphikxTheme = {
     "--shadow-inset-selected": "inset 0px 0px 0px 2px #28282A50",
     "--shadow-inset-success": "inset 0px 0px 0px 2px #83838a30",
     "--shadow-inset-warning": "inset 0px 0px 0px 2px #83838a30",
-    "--shadow-inset-error": "inset 0px 0px 0px 2px #83838a30"
+    "--shadow-inset-error": "inset 0px 0px 0px 2px #83838a30",
+    "--size-element-md": "36px",
+    "--size-element-lg": "36px"
   },
   localTokens: {
-    "--type-display-xxl-size": "clamp(9rem, 3.8571rem + 5.7143vw, 13rem)",
+    "--type-display-xxl-size": "clamp(9rem, 3.9375rem + 5.625vw, 9.5625rem)",
     "--type-display-xxl-leading": "0.95",
-    "--type-display-xl-size": "clamp(6rem, 2.7857rem + 3.5714vw, 8.5rem)",
+    "--type-display-xl-size": "clamp(6rem, 2.625rem + 3.75vw, 6.375rem)",
     "--type-display-xl-leading": "1",
-    "--type-display-l-size": "clamp(3.5rem, 1.8929rem + 1.7857vw, 4.75rem)",
+    "--type-display-l-size": "clamp(3.5rem, 1.8125rem + 1.875vw, 3.6875rem)",
     "--type-display-l-leading": "1.1",
-    "--type-display-m-size": "clamp(3rem, 1.7143rem + 1.4286vw, 4rem)",
+    "--type-display-m-size": "clamp(3rem, 1.875rem + 1.25vw, 3.125rem)",
     "--type-display-m-leading": "1.1",
-    "--type-display-s-size": "clamp(2.5rem, 1.5357rem + 1.0714vw, 3.25rem)",
+    "--type-display-s-size": "clamp(2.5rem, 1.375rem + 1.25vw, 2.625rem)",
     "--type-display-s-leading": "1.1",
-    "--type-headline-xl-size": "clamp(2.25rem, 1.6071rem + 0.7143vw, 2.75rem)",
+    "--type-headline-xl-size": "clamp(2.25rem, 1.6875rem + 0.625vw, 2.3125rem)",
     "--type-headline-xl-leading": "1.25",
-    "--type-headline-l-size": "clamp(2rem, 1.5179rem + 0.5357vw, 2.375rem)",
+    "--type-headline-l-size": "clamp(2rem, 1.4375rem + 0.625vw, 2.0625rem)",
     "--type-headline-l-leading": "1.25",
-    "--type-headline-m-size": "clamp(1.75rem, 1.4286rem + 0.3571vw, 2rem)",
+    "--type-headline-m-size": "clamp(1.75rem, 1.1875rem + 0.625vw, 1.8125rem)",
     "--type-headline-m-leading": "1.25",
-    "--type-headline-s-size": "clamp(1.5rem, 1.1786rem + 0.3571vw, 1.75rem)",
+    "--type-headline-s-size": "clamp(1.5rem, 0.9375rem + 0.625vw, 1.5625rem)",
     "--type-headline-s-leading": "1.25",
-    "--type-label-l-size": "clamp(1.125rem, 0.9643rem + 0.1786vw, 1.25rem)",
+    "--type-label-l-size": "1.125rem",
     "--type-label-l-leading": "1.25",
-    "--type-label-m-size": "clamp(1rem, 0.9196rem + 0.0893vw, 1.0625rem)",
+    "--type-label-m-size": "1rem",
     "--type-label-m-leading": "1.25",
-    "--type-label-s-size": "clamp(0.875rem, 0.7946rem + 0.0893vw, 0.9375rem)",
+    "--type-label-s-size": "0.875rem",
     "--type-label-s-leading": "1.25",
-    "--type-body-l-size": "clamp(1.25rem, 1.0089rem + 0.2679vw, 1.4375rem)",
+    "--type-body-l-size": "1.25rem",
     "--type-body-l-leading": "1.35",
-    "--type-body-m-size": "clamp(1rem, 0.8393rem + 0.1786vw, 1.125rem)",
+    "--type-body-m-size": "1rem",
     "--type-body-m-leading": "1.35",
-    "--type-body-s-size": "clamp(0.875rem, 0.7946rem + 0.0893vw, 0.9375rem)",
+    "--type-body-s-size": "0.875rem",
     "--type-body-s-leading": "1.4",
-    "--type-caption-l-size": "clamp(0.875rem, 0.7946rem + 0.0893vw, 0.9375rem)",
+    "--type-caption-l-size": "0.875rem",
     "--type-caption-l-leading": "1.5",
-    "--type-caption-m-size": "clamp(0.8125rem, 0.7321rem + 0.0893vw, 0.875rem)",
+    "--type-caption-m-size": "0.8125rem",
     "--type-caption-m-leading": "1.5",
-    "--type-caption-s-size": "clamp(0.75rem, 0.6696rem + 0.0893vw, 0.8125rem)",
+    "--type-caption-s-size": "0.75rem",
     "--type-caption-s-leading": "1.5",
-    "--space-section": "clamp(10rem, 4.8571rem + 5.7143vw, 14rem)",
-    "--space-chapter-gap": "clamp(6rem, 3.4286rem + 2.8571vw, 8rem)",
-    "--space-block": "clamp(3rem, 1.7143rem + 1.4286vw, 4rem)",
-    "--space-gutter": "clamp(4rem, 0.1429rem + 4.2857vw, 7rem)",
-    "--content-max": "2080px",
-    "--illustration-scale": "1.45",
+    "--space-section": "clamp(10rem, 4.9375rem + 5.625vw, 10.5625rem)",
+    "--space-chapter-gap": "clamp(6rem, 3.1875rem + 3.125vw, 6.3125rem)",
+    "--space-block": "clamp(3rem, 1.875rem + 1.25vw, 3.125rem)",
+    "--space-gutter": "clamp(4rem, 0.0625rem + 4.375vw, 4.4375rem)",
+    "--content-max": "calc(1600px - 2 * var(--space-gutter))",
+    "--illustration-scale": "1.2",
     "--color-brand": "#2059DF",
     "--color-on-brand": "#FFFFFF",
     "--color-brand-text": "light-dark(#2059DF, #8EAEFF)",
     "--font-family-accent": "\"Instrument Serif\", Georgia, \"Times New Roman\", serif",
-    "--font-family-eyebrow": "\"IBM Plex Mono\", \"SF Mono\", Menlo, Consolas, monospace"
+    "--font-family-eyebrow": "\"IBM Plex Mono\", \"SF Mono\", Menlo, Consolas, monospace",
+    "--color-logo-primary": "light-dark(#2059DF, var(--color-text-primary))",
+    "--color-logo-secondary": "light-dark(#0D39A0, var(--color-text-secondary))",
+    "--glass-highlight": "light-dark(rgb(255 255 255 / 0.9), rgb(255 255 255 / 0.14))",
+    "--glass-edge": "light-dark(rgb(0 0 0 / 0.08), rgb(255 255 255 / 0.07))",
+    "--glass-sheen": "light-dark(rgb(255 255 255 / 0.55), rgb(255 255 255 / 0.06))",
+    "--glass-shadow": "light-dark(rgb(15 15 30 / 0.12), rgb(0 0 0 / 0.45))"
   },
   __localTokenOwners: {
     "--type-display-xxl-size": "graphikx",
@@ -285,7 +293,13 @@ export const graphikxTheme = {
     "--color-on-brand": "graphikx",
     "--color-brand-text": "graphikx",
     "--font-family-accent": "graphikx",
-    "--font-family-eyebrow": "graphikx"
+    "--font-family-eyebrow": "graphikx",
+    "--color-logo-primary": "graphikx",
+    "--color-logo-secondary": "graphikx",
+    "--glass-highlight": "graphikx",
+    "--glass-edge": "graphikx",
+    "--glass-sheen": "graphikx",
+    "--glass-shadow": "graphikx"
   },
   __localTokenLineage: ["graphikx"],
   components: {
@@ -401,6 +415,14 @@ export const graphikxTheme = {
         "backgroundColor": "var(--color-background-red)",
         "color": "var(--color-text-red)"
       },
+      "size:sm": {
+        "height": "var(--size-element-lg)",
+        "minHeight": "var(--size-element-lg)"
+      },
+      "size:md": {
+        "height": "var(--size-element-lg)",
+        "minHeight": "var(--size-element-lg)"
+      },
       "variant:primary": {
         "backgroundColor": "var(--color-brand)",
         "color": "var(--color-on-brand)"
@@ -497,7 +519,7 @@ export const graphikxTheme = {
         "--color-warning": "light-dark(#9f8f68, #bbaa81)"
       },
       "status:error": {
-        "--color-error": "light-dark(#a58b86, #c0a5a1)"
+        "--color-error": "var(--color-text-red)"
       }
     },
     "text-area": {
@@ -508,7 +530,7 @@ export const graphikxTheme = {
         "--color-warning": "light-dark(#9f8f68, #bbaa81)"
       },
       "status:error": {
-        "--color-error": "light-dark(#a58b86, #c0a5a1)"
+        "--color-error": "var(--color-text-red)"
       }
     },
     "number-input": {
@@ -519,7 +541,7 @@ export const graphikxTheme = {
         "--color-warning": "light-dark(#9f8f68, #bbaa81)"
       },
       "status:error": {
-        "--color-error": "light-dark(#a58b86, #c0a5a1)"
+        "--color-error": "var(--color-text-red)"
       }
     },
     "date-input": {
@@ -530,7 +552,7 @@ export const graphikxTheme = {
         "--color-warning": "light-dark(#9f8f68, #bbaa81)"
       },
       "status:error": {
-        "--color-error": "light-dark(#a58b86, #c0a5a1)"
+        "--color-error": "var(--color-text-red)"
       }
     },
     "time-input": {
@@ -541,7 +563,7 @@ export const graphikxTheme = {
         "--color-warning": "light-dark(#9f8f68, #bbaa81)"
       },
       "status:error": {
-        "--color-error": "light-dark(#a58b86, #c0a5a1)"
+        "--color-error": "var(--color-text-red)"
       }
     },
     "selector": {
@@ -552,7 +574,7 @@ export const graphikxTheme = {
         "--color-warning": "light-dark(#9f8f68, #bbaa81)"
       },
       "status:error": {
-        "--color-error": "light-dark(#a58b86, #c0a5a1)"
+        "--color-error": "var(--color-text-red)"
       }
     },
     "multi-selector": {
@@ -563,7 +585,7 @@ export const graphikxTheme = {
         "--color-warning": "light-dark(#9f8f68, #bbaa81)"
       },
       "status:error": {
-        "--color-error": "light-dark(#a58b86, #c0a5a1)"
+        "--color-error": "var(--color-text-red)"
       }
     },
     "typeahead": {
@@ -574,7 +596,7 @@ export const graphikxTheme = {
         "--color-warning": "light-dark(#9f8f68, #bbaa81)"
       },
       "status:error": {
-        "--color-error": "light-dark(#a58b86, #c0a5a1)"
+        "--color-error": "var(--color-text-red)"
       }
     },
     "tokenizer": {
@@ -585,7 +607,7 @@ export const graphikxTheme = {
         "--color-warning": "light-dark(#9f8f68, #bbaa81)"
       },
       "status:error": {
-        "--color-error": "light-dark(#a58b86, #c0a5a1)"
+        "--color-error": "var(--color-text-red)"
       }
     },
     "card": {
@@ -621,21 +643,9 @@ export const graphikxTheme = {
       "md": 768,
       "lg": 1024,
       "xl": 1440,
-      "2xl": 1920
+      "2xl": 1600
     },
     "rules": [
-      {
-        "when": {
-          "width": {
-            "below": "2xl"
-          }
-        },
-        "value": {
-          "localTokens": {
-            "--illustration-scale": "1.2"
-          }
-        }
-      },
       {
         "when": {
           "width": {
@@ -687,6 +697,10 @@ export const graphikxTheme = {
             "--type-caption-l-size": "0.8125rem",
             "--type-caption-m-size": "0.75rem",
             "--type-caption-s-size": "0.75rem"
+          },
+          "tokens": {
+            "--size-element-md": "44px",
+            "--size-element-lg": "48px"
           }
         }
       },

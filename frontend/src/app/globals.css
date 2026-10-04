@@ -9,10 +9,51 @@ html {
    * Jumps to #sections stop below the sticky header (its padding on both sides
    * plus its 32px content row) with a little breathing room.
    */
-  scroll-padding-top: calc(var(--nav-padding-block) * 2 + 32px + var(--spacing-4));
+  scroll-padding-top: calc(var(--nav-padding-block) * 2 + var(--size-element-lg) + var(--spacing-4));
   /* Match the page surface so overscroll and safe areas follow light/dark mode too. */
   background-color: var(--color-background-surface);
   color: var(--color-text-primary);
+}
+
+/*
+ * Liquid glass header. The bar stays 80% opaque in the theme's surface
+ * colour; what scrolls beneath shows through blurred and colour-boosted,
+ * with a bright specular top edge, a soft lower glint and a faint sheen so
+ * it reads as a glass slab. Falls back to solid where blur is unsupported or
+ * the visitor prefers reduced transparency.
+ */
+.astryx-app-shell-header.astryx-app-shell-header {
+  z-index: 50;
+  background-color: var(--color-background-surface);
+  box-shadow:
+    inset 0 1px 0 0 var(--glass-highlight),
+    inset 0 -1px 0 0 var(--glass-edge),
+    0 12px 32px -24px var(--glass-shadow);
+}
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .astryx-app-shell-header.astryx-app-shell-header {
+    background-color: color-mix(in srgb, var(--color-background-surface) 80%, transparent);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    backdrop-filter: blur(24px) saturate(180%);
+  }
+  .astryx-app-shell-header.astryx-app-shell-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background: linear-gradient(to bottom, var(--glass-sheen) 0%, transparent 65%);
+  }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .astryx-app-shell-header.astryx-app-shell-header {
+    background-color: var(--color-background-surface);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+  .astryx-app-shell-header.astryx-app-shell-header::before {
+    display: none;
+  }
 }
 
 /* Header vertical padding: 16px on mobile, 20px on tablet, 24px on desktop. */
@@ -54,7 +95,7 @@ html {
   }
   .sticky-split-aside {
     position: sticky;
-    top: calc(var(--nav-padding-block) * 2 + 32px + var(--spacing-8));
+    top: calc(var(--nav-padding-block) * 2 + var(--size-element-lg) + var(--spacing-8));
   }
 }
 
@@ -170,10 +211,26 @@ html {
   .question-rail-item:nth-child(n + 3) {
     border-block-start: 1px solid var(--color-border);
   }
+  /* Outer columns sit flush with the content edge; padding only between. */
+  .question-rail-item:nth-child(odd) {
+    padding-inline-start: 0;
+  }
+  .question-rail-item:nth-child(even) {
+    padding-inline-end: 0;
+  }
 }
 @media (min-width: 1024px) {
   .question-rail {
     grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .question-rail-item.question-rail-item {
+    padding-inline: var(--spacing-6);
+  }
+  .question-rail-item.question-rail-item:nth-child(4n + 1) {
+    padding-inline-start: 0;
+  }
+  .question-rail-item.question-rail-item:nth-child(4n) {
+    padding-inline-end: 0;
   }
   .question-rail-item:nth-child(n + 3) {
     border-block-start: 0;
@@ -279,53 +336,123 @@ html {
   }
 }
 
-/* LineDiagram: horizontal chain from tablet up, vertical on phones. */
-.line-diagram {
-  flex-wrap: nowrap;
+/* SequenceRail: hairline columns like the question rail. Stacked on phones,
+   three columns on tablets and small laptops, one row from 1280px. */
+.sequence-rail {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-block: 1px solid var(--color-border);
 }
-.line-diagram-link {
+.sequence-rail-step {
+  padding-block: var(--spacing-8);
+}
+.sequence-rail-step + .sequence-rail-step {
+  border-block-start: 1px solid var(--color-border);
+}
+.sequence-rail-progress {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline: 0;
+  z-index: 1;
   display: block;
-  flex: 1 1 var(--spacing-8);
-  min-inline-size: var(--spacing-4);
-  block-size: 1px;
-  background-color: var(--color-text-primary);
+  block-size: 2px;
+  margin-block-start: -0.5px;
+  background-color: var(--color-brand-text);
   transform-origin: left center;
 }
-.line-diagram-node {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-1);
-  padding: var(--spacing-4) var(--spacing-5);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-container-md, 12px);
-  white-space: nowrap;
-}
-@media (min-width: 768px) and (max-width: 1023px) {
-  .line-diagram-node {
-    padding: var(--spacing-3) var(--spacing-3);
+@media (min-width: 768px) {
+  .sequence-rail {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .sequence-rail-step {
+    padding: var(--spacing-8) var(--spacing-6);
+  }
+  .sequence-rail-step + .sequence-rail-step {
+    border-block-start: 0;
+  }
+  .sequence-rail-step:not(:nth-child(3n + 1)) {
+    border-inline-start: 1px solid var(--color-border);
+  }
+  .sequence-rail-step:nth-child(n + 4) {
+    border-block-start: 1px solid var(--color-border);
+  }
+  /* Outer columns sit flush with the content edge; padding only between. */
+  .sequence-rail-step:nth-child(3n + 1) {
+    padding-inline-start: 0;
+  }
+  .sequence-rail-step:nth-child(3n) {
+    padding-inline-end: 0;
   }
 }
-@media (max-width: 767px) {
-  .line-diagram {
-    flex-direction: column;
-    align-items: flex-start;
+@media (min-width: 1280px) {
+  .sequence-rail {
+    grid-template-columns: repeat(var(--steps), minmax(0, 1fr));
   }
-  .line-diagram-link {
-    flex: 0 0 auto;
-    inline-size: 1px;
-    min-inline-size: 0;
-    block-size: var(--spacing-8);
-    margin-inline-start: var(--spacing-6);
-    transform-origin: center top;
+  .sequence-rail-step:nth-child(n + 4) {
+    border-block-start: 0;
+  }
+  .sequence-rail-step + .sequence-rail-step {
+    border-inline-start: 1px solid var(--color-border);
+  }
+  .sequence-rail-step.sequence-rail-step {
+    padding-inline: var(--spacing-6);
+  }
+  .sequence-rail-step.sequence-rail-step:first-child {
+    padding-inline-start: 0;
+  }
+  .sequence-rail-step.sequence-rail-step:last-child {
+    padding-inline-end: 0;
   }
 }
 
-/* EditorialHero meta row: spread on wide screens, left-aligned when it wraps. */
-@media (max-width: 767px) {
-  .hero-meta.hero-meta {
-    justify-content: flex-start;
-    column-gap: var(--spacing-5);
-    row-gap: var(--spacing-2);
+/* Form fields: the "∙ Required" marker in brand blue ("∙ Optional" stays
+   secondary). Astryx renders both in the same span, so required fields are
+   picked out by their required input. */
+.astryx-field:has(:is(input, textarea, select)[required], [aria-required="true"]) > * > .astryx-field-label > span,
+.astryx-field:has(:is(input, textarea, select)[required], [aria-required="true"]) .astryx-field-label > span {
+  color: var(--color-brand-text);
+}
+
+/* BigStatement: email and action on the left, the illustration on the
+   right edge from 1024px; stacked (illustration last) below that. */
+/* Start a project: illustration first on phones and tablets; on desktop the
+   label and title span the width with the email left and the art right. */
+.big-statement-grid {
+  grid-template-areas: 'art' 'label' 'title' 'text';
+}
+.big-statement-label { grid-area: label; }
+.big-statement-title { grid-area: title; }
+.big-statement-text { grid-area: text; }
+.big-statement-art {
+  grid-area: art;
+  align-items: flex-start;
+}
+@media (min-width: 1024px) {
+  .big-statement-grid {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    grid-template-areas: 'label label' 'title title' 'text art';
+    align-items: end;
+  }
+  .big-statement-art {
+    align-items: flex-end;
+  }
+}
+
+/* Maybe this sounds familiar: one column on phones, two from 768px, each
+   situation under a hairline. */
+.familiar-grid {
+  column-gap: var(--space-chapter-gap);
+}
+.familiar-item {
+  border-block-start: 1px solid var(--color-border);
+  padding-block: var(--spacing-8) var(--spacing-10);
+}
+@media (min-width: 768px) {
+  .familiar-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -627,16 +754,72 @@ html.has-custom-cursor :is(input:not([type="checkbox"]):not([type="radio"]):not(
   block-size: 20px;
   margin: -10px 0 0 -10px;
   pointer-events: none;
-  /* White in "difference" mode inverts whatever is underneath: light on dark,
-     dark on light, and the colours of buttons and images. */
-  mix-blend-mode: difference;
 }
-.cursor-squircle svg {
+.cursor-lens {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+}
+.cursor-lens svg {
   display: block;
   inline-size: 100%;
   block-size: 100%;
   overflow: visible;
 }
-.cursor-squircle path {
+.cursor-lens path {
   fill: white;
+}
+
+/* Liquid glass lens: the backdrop filter inverts what is beneath (as the
+   blend did) and adds the header's glass: a touch of blur, a colour boost,
+   a bright specular rim, a darker lower edge and a sheen. */
+@supports ((backdrop-filter: invert(1)) or (-webkit-backdrop-filter: invert(1))) {
+  .cursor-lens {
+    border-radius: 38%;
+    -webkit-backdrop-filter: invert(1) saturate(1.6) blur(0.6px);
+    backdrop-filter: invert(1) saturate(1.6) blur(0.6px);
+    background: linear-gradient(160deg, var(--glass-sheen) 0%, transparent 60%);
+    box-shadow:
+      inset 0 1px 0.5px var(--glass-highlight),
+      inset 0 -1px 1px rgb(0 0 0 / 0.25),
+      0 2px 8px -3px var(--glass-shadow);
+  }
+  .cursor-lens svg {
+    display: none;
+  }
+  /* Over a control the glass clears: it still inverts, but without blur or
+     colour boost, so the label stays sharp. */
+  .cursor-lens.is-interactive {
+    -webkit-backdrop-filter: invert(1);
+    backdrop-filter: invert(1);
+  }
+}
+
+/* The control under the lens magnifies 1.1×, with a soft spring. Uses the
+   individual scale property so components' own transforms are untouched;
+   the hover colour transitions the controls already have are kept too. */
+html.has-custom-cursor :is(a, button, [role='button'], [role='tab'], summary, label, select) {
+  transition:
+    scale 280ms cubic-bezier(0.2, 0, 0, 1.4),
+    background-color 200ms ease,
+    color 200ms ease,
+    border-color 200ms ease,
+    box-shadow 200ms ease,
+    opacity 200ms ease,
+    text-decoration-color 200ms ease;
+}
+[data-cursor-magnify] {
+  scale: 1.1;
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-cursor-magnify] {
+    scale: none;
+  }
+}
+/* Without backdrop filters: the original inverting squircle. White in
+   "difference" mode inverts whatever is underneath. */
+@supports not ((backdrop-filter: invert(1)) or (-webkit-backdrop-filter: invert(1))) {
+  .cursor-squircle {
+    mix-blend-mode: difference;
+  }
 }

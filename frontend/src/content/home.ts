@@ -1,3 +1,6 @@
+import type {GlyphName} from '@/components/illustrations/glyphs';
+import {graphyeneLayers} from './graphyene';
+
 /**
  * Homepage copy, in page order. About 450 words in total: each chapter says
  * one thing. "\n" breaks a line; "*word*" sets the italic serif accent (titles)
@@ -54,8 +57,9 @@ export const graphyene = {
   index: 4,
   label: "An idea we're building",
   title: 'Graphyene',
-  description: 'A design system that brings clarity to growing products, and still leaves room for ideas.',
-  layers: ['Foundation', 'Tokens', 'Components', 'Patterns', 'Experiences'],
+  description:
+    'A design system that brings clarity to growing products, and still leaves room for ideas.',
+  layers: graphyeneLayers,
   principles: [
     'Consistency without sameness',
     'Structure without rigidity',
@@ -81,11 +85,11 @@ export const familiar = {
   index: 6,
   label: 'Maybe this sounds familiar',
   situations: [
-    "Maybe the idea is strong, but the experience hasn't caught up.",
-    'Maybe simple things take people longer than they should.',
-    "Maybe the product grew and the interface didn't.",
-    "Maybe you're starting with nothing but an idea.",
-  ],
+    {text: "Maybe the idea is strong, but the experience hasn't caught up.", glyph: 'experiences'},
+    {text: 'Maybe simple things take people longer than they should.', glyph: 'ux'},
+    {text: "Maybe the product grew and the interface didn't.", glyph: 'evolve'},
+    {text: "Maybe you're starting with nothing but an idea.", glyph: 'product'},
+  ] satisfies {text: string; glyph: GlyphName}[],
   closing: "You don't need the *perfect* brief.",
 };
 

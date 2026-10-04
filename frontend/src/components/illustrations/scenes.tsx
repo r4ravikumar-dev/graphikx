@@ -1,5 +1,7 @@
 'use client';
 
+import {useId} from 'react';
+import {motion} from 'framer-motion';
 import {ACCENT, Dot, Illustration, MUTED, Pulse, Stroke, Surface, Travel} from './Illustration';
 
 type SceneProps = {label?: string; maxWidth?: number};
@@ -17,7 +19,12 @@ export function TangleToLine({label, maxWidth = 560}: SceneProps) {
     <Illustration viewBox="0 0 480 220" label={label} maxWidth={maxWidth}>
       <Stroke order={0} d={TANGLE} />
       <Stroke order={6} d="M260 130 L 440 130" />
-      <Stroke order={8} weight="fine" stroke={MUTED} d="M300 116 L 300 144 M 360 116 L 360 144 M 420 116 L 420 144" />
+      <Stroke
+        order={8}
+        weight="fine"
+        stroke={MUTED}
+        d="M300 116 L 300 144 M 360 116 L 360 144 M 420 116 L 420 144"
+      />
       <Travel d={`${TANGLE} L 452 130`} duration={9} />
       <Pulse cx={452} cy={130} r={8} />
       <Pulse cx={452} cy={130} r={8} delay={1.5} />
@@ -46,7 +53,10 @@ export function StackedLayers({label, maxWidth = 420}: SceneProps) {
           <g key={layer.dy} transform={`translate(0 ${layer.dy}) rotate(${layer.rotate} 200 100)`}>
             <g
               className={`ill-loop ${isTop ? 'ill-tilt' : 'ill-float'}`}
-              style={{animationDelay: `${-index * 1.6}s`, ['--float' as string]: `${4 + index * 3}px`}}>
+              style={{
+                animationDelay: `${-index * 1.6}s`,
+                ['--float' as string]: `${4 + index * 3}px`,
+              }}>
               <Surface order={index * 2} d={plane} />
               <Stroke
                 order={index * 2}
@@ -77,11 +87,19 @@ export function SystemBlocks({label, maxWidth = 440}: SceneProps) {
   const y = (row: number) => 60 + row * 90;
   // Snake order: left to right, then right to left, then left to right.
   const order = [
-    [0, 0], [0, 1], [0, 2],
-    [1, 2], [1, 1], [1, 0],
-    [2, 0], [2, 1], [2, 2],
+    [0, 0],
+    [0, 1],
+    [0, 2],
+    [1, 2],
+    [1, 1],
+    [1, 0],
+    [2, 0],
+    [2, 1],
+    [2, 2],
   ] as const;
-  const snake = order.map(([row, col], index) => `${index === 0 ? 'M' : 'L'}${x(col)} ${y(row)}`).join(' ');
+  const snake = order
+    .map(([row, col], index) => `${index === 0 ? 'M' : 'L'}${x(col)} ${y(row)}`)
+    .join(' ');
   const shapePath = (row: number, col: number) => {
     const cx = x(col);
     const cy = y(row);
@@ -94,7 +112,12 @@ export function SystemBlocks({label, maxWidth = 440}: SceneProps) {
   const stepSeconds = 1.2;
   return (
     <Illustration viewBox="0 0 400 300" label={label} maxWidth={maxWidth}>
-      <Stroke order={0} weight="fine" stroke={MUTED} d="M80 60 H 320 M 80 150 H 320 M 80 240 H 320 M 80 60 V 240 M 200 60 V 240 M 320 60 V 240" />
+      <Stroke
+        order={0}
+        weight="fine"
+        stroke={MUTED}
+        d="M80 60 H 320 M 80 150 H 320 M 80 240 H 320 M 80 60 V 240 M 200 60 V 240 M 320 60 V 240"
+      />
       <Travel d={snake} duration={steps * stepSeconds} />
       {order.map(([row, col], index) => (
         <g key={`${row}-${col}`}>
@@ -143,7 +166,13 @@ export function ThinkingLens({label, maxWidth = 420}: SceneProps) {
             </clipPath>
           </defs>
           {lines.map((line, index) => (
-            <Stroke key={line.y} order={index} weight="fine" stroke={MUTED} d={`M60 ${line.y} h${line.w}`} />
+            <Stroke
+              key={line.y}
+              order={index}
+              weight="fine"
+              stroke={MUTED}
+              d={`M60 ${line.y} h${line.w}`}
+            />
           ))}
           {/* The same lines in blue, visible only through the glass. */}
           <path
@@ -170,7 +199,8 @@ export function ThinkingLens({label, maxWidth = 420}: SceneProps) {
  * blue pulse running along the trail.
  */
 export function PaperPlane({label, maxWidth = 420}: SceneProps) {
-  const trail = 'M20 236 C 90 236, 120 180, 96 150 C 72 120, 30 150, 60 176 C 100 210, 190 150, 250 96';
+  const trail =
+    'M20 236 C 90 236, 120 180, 96 150 C 72 120, 30 150, 60 176 C 100 210, 190 150, 250 96';
   return (
     <Illustration viewBox="0 0 400 260" label={label} maxWidth={maxWidth}>
       <Stroke order={0} weight="fine" stroke={MUTED} strokeDasharray="4 10" d={trail} />
@@ -298,8 +328,10 @@ export function OriginRings({label, maxWidth = 420}: SceneProps) {
  * Graphikx is typing back. In the loop the bubbles drift and the dots type.
  */
 export function Conversation({label, maxWidth = 460}: SceneProps) {
-  const left = 'M40 40 h170 a16 16 0 0 1 16 16 v62 a16 16 0 0 1 -16 16 h-130 l-26 22 v-22 h-14 a16 16 0 0 1 -16 -16 v-62 a16 16 0 0 1 16 -16 Z';
-  const right = 'M200 150 h164 a16 16 0 0 1 16 16 v50 a16 16 0 0 1 -16 16 h-14 v22 l-26 -22 h-124 a16 16 0 0 1 -16 -16 v-50 a16 16 0 0 1 16 -16 Z';
+  const left =
+    'M40 40 h170 a16 16 0 0 1 16 16 v62 a16 16 0 0 1 -16 16 h-130 l-26 22 v-22 h-14 a16 16 0 0 1 -16 -16 v-62 a16 16 0 0 1 16 -16 Z';
+  const right =
+    'M200 150 h164 a16 16 0 0 1 16 16 v50 a16 16 0 0 1 -16 16 h-14 v22 l-26 -22 h-124 a16 16 0 0 1 -16 -16 v-50 a16 16 0 0 1 16 -16 Z';
   return (
     <Illustration viewBox="0 0 420 270" label={label} maxWidth={maxWidth}>
       <g className="ill-loop ill-float" style={{['--float' as string]: '5px'}}>
@@ -307,7 +339,9 @@ export function Conversation({label, maxWidth = 460}: SceneProps) {
         <Stroke order={0} d={left} />
         <Stroke order={2} weight="fine" stroke={MUTED} d="M48 68 h140 M48 88 h110 M48 108 h126" />
       </g>
-      <g className="ill-loop ill-float" style={{animationDelay: '-4s', ['--float' as string]: '5px'}}>
+      <g
+        className="ill-loop ill-float"
+        style={{animationDelay: '-4s', ['--float' as string]: '5px'}}>
         <Surface order={3} d={right} />
         <Stroke order={3} stroke={ACCENT} d={right} />
         {[0, 1, 2].map(dot => (
@@ -322,6 +356,102 @@ export function Conversation({label, maxWidth = 460}: SceneProps) {
           />
         ))}
       </g>
+    </Illustration>
+  );
+}
+
+/**
+ * Start a project: a first conversation. You on the left say hello, a dotted
+ * line reaches across to Graphikx on the right, and a reply is on its way.
+ * In the loop a message travels the line, the reply types and the hello
+ * floats.
+ */
+export function FirstConversation({label, maxWidth = 420}: SceneProps) {
+  const avatar = (cx: number, cy: number) =>
+    `M${cx - 28} ${cy} a28 28 0 1 0 56 0 a28 28 0 1 0 -56 0`;
+  const head = (cx: number, cy: number) => `M${cx - 8} ${cy - 7} a8 8 0 1 0 16 0 a8 8 0 1 0 -16 0`;
+  const shoulders = (cx: number, cy: number) => `M${cx - 14} ${cy + 18} a14 12 0 0 1 28 0`;
+  const line = 'M108 190 C 180 190, 220 80, 292 80';
+  const hello =
+    'M46 70 h108 a14 14 0 0 1 14 14 v32 a14 14 0 0 1 -14 14 h-62 l-16 16 v-16 h-30 a14 14 0 0 1 -14 -14 v-32 a14 14 0 0 1 14 -14 Z';
+  const reply =
+    'M254 140 h52 l16 -16 v16 h34 a14 14 0 0 1 14 14 v24 a14 14 0 0 1 -14 14 h-102 a14 14 0 0 1 -14 -14 v-24 a14 14 0 0 1 14 -14 Z';
+  return (
+    <Illustration viewBox="0 0 400 240" label={label} maxWidth={maxWidth}>
+      {/* You */}
+      <Surface order={0} d={avatar(80, 190)} />
+      <Stroke order={0} d={avatar(80, 190)} />
+      <Stroke order={0} d={head(80, 190)} />
+      <Stroke order={0} d={shoulders(80, 190)} />
+      {/* The hello */}
+      <g className="ill-loop ill-float" style={{['--float' as string]: '4px'}}>
+        <Surface order={1} d={hello} />
+        <Stroke order={1} d={hello} />
+        <Stroke order={2} weight="fine" stroke={MUTED} d="M50 92 h84 M50 108 h56" />
+      </g>
+      {/* The line reaching across, a message travelling it */}
+      <Stroke order={2} weight="fine" stroke={MUTED} strokeDasharray="2 6" d={line} />
+      <Travel d={line} duration={6} shape="dot" thickness={7} />
+      {/* Graphikx */}
+      <Pulse cx={320} cy={80} r={28} delay={1} />
+      <Surface order={3} d={avatar(320, 80)} />
+      <Stroke order={3} stroke={ACCENT} d={avatar(320, 80)} />
+      <Stroke order={3} stroke={ACCENT} d={head(320, 80)} />
+      <Stroke order={3} stroke={ACCENT} d={shoulders(320, 80)} />
+      {/* The reply, typing */}
+      <g
+        className="ill-loop ill-float"
+        style={{animationDelay: '-3s', ['--float' as string]: '4px'}}>
+        <Surface order={4} d={reply} />
+        <Stroke order={4} stroke={ACCENT} d={reply} />
+        {[0, 1, 2].map(dot => (
+          <circle
+            key={dot}
+            className="ill-loop ill-typing"
+            cx={280 + dot * 25}
+            cy={166}
+            r={5}
+            fill={ACCENT}
+            style={{animationDelay: `${dot * 0.3}s`}}
+          />
+        ))}
+      </g>
+    </Illustration>
+  );
+}
+
+/**
+ * The founder: Ravi's photo, cut out and mapped through the brand blues
+ * (public/founder-duotone.webp), on the dot grid in front of a fine blue
+ * ring. The photo fades out at the bottom; in the loop a comet circles the
+ * ring.
+ */
+export function FounderPortrait({label, maxWidth = 360}: SceneProps) {
+  const fadeId = useId();
+  const ring = 'M35 140 a115 115 0 1 0 230 0 a115 115 0 1 0 -230 0';
+  return (
+    <Illustration viewBox="0 0 300 321" label={label} maxWidth={maxWidth}>
+      <defs>
+        <linearGradient id={`${fadeId}-g`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0.78" stopColor="white" />
+          <stop offset="1" stopColor="black" />
+        </linearGradient>
+        <mask id={fadeId}>
+          <rect width="300" height="321" fill={`url(#${fadeId}-g)`} />
+        </mask>
+      </defs>
+      <Stroke order={0} weight="fine" stroke={ACCENT} d={ring} />
+      <Travel d={ring} duration={20} thickness={2.5} />
+      <motion.image
+        href="/founder-duotone.webp"
+        width={300}
+        height={321}
+        mask={`url(#${fadeId})`}
+        variants={{
+          off: {opacity: 0},
+          on: {opacity: 1, transition: {duration: 1.2, delay: 0.2}},
+        }}
+      />
     </Illustration>
   );
 }

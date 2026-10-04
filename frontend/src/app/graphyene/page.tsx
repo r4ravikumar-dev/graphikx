@@ -11,7 +11,7 @@ import {ChapterHeader} from '@/components/editorial/ChapterHeader';
 import {EditorialHero} from '@/components/editorial/EditorialHero';
 import {IndexLabel} from '@/components/editorial/IndexLabel';
 import {IndexList} from '@/components/editorial/IndexList';
-import {LineDiagram} from '@/components/editorial/LineDiagram';
+import {SequenceRail} from '@/components/editorial/SequenceRail';
 import {Manifesto} from '@/components/editorial/Manifesto';
 import {QuestionRail} from '@/components/editorial/QuestionRail';
 import {StepTimeline} from '@/components/editorial/StepTimeline';
@@ -99,10 +99,7 @@ export default function GraphyenePage() {
             </Reveal>
           </HStack>
         </VStack>
-        <LineDiagram
-          nodes={architecture.layers}
-          label={`The Graphyene layers: ${architecture.layers.join(', then ')}.`}
-        />
+        <SequenceRail steps={architecture.layers} label="The Graphyene layers, in order" />
       </Chapter>
 
       {/* 06: Explorations. */}

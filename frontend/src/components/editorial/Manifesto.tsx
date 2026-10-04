@@ -15,8 +15,8 @@ type ManifestoProps = {
 type Token = {word: string; isKeyword: boolean; position: number} | {lineBreak: true};
 
 /** Splits text into words (with their position among all words) and line breaks. */
-/** Keywords: the italic serif accent used across the site, in brand blue once lit. */
-const keywordStyle = {...accentStyle, color: 'var(--color-brand-text)'} as const;
+/** Keywords: the italic serif accent used across the site (brand blue). */
+const keywordStyle = accentStyle;
 
 function tokenize(text: string): Token[] {
   let position = 0;

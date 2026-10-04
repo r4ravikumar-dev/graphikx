@@ -1,11 +1,14 @@
 'use client';
 
+import {useEffect, useRef} from 'react';
 import {VStack, HStack} from '@astryxdesign/core/Layout';
 import {Heading} from '@astryxdesign/core/Heading';
 import {Text} from '@astryxdesign/core/Text';
 import {Button} from '@astryxdesign/core/Button';
-import {CtaButton} from '@/components/navigation/CtaButton';
+import {Icon} from '@astryxdesign/core/Icon';
+import {RotateCcw} from 'lucide-react';
 import {IndexLabel} from '@/components/editorial/IndexLabel';
+import {PaperPlane} from '@/components/illustrations/scenes';
 import {confirmation} from '@/content/enquiry';
 import {typeRole} from '@/theme/typeScale';
 
@@ -13,13 +16,29 @@ type EnquiryConfirmationProps = {
   onSendAnother: () => void;
 };
 
-/** Shown after an enquiry is sent: a human thank-you and where to go next. */
+/**
+ * Shown after an enquiry is sent: the paper plane on its way, a human
+ * thank-you, and one action, which opens a fresh form. Focus moves to the
+ * heading so screen-reader and keyboard users land on the confirmation.
+ */
 export function EnquiryConfirmation({onSendAnother}: EnquiryConfirmationProps) {
+  const headingRef = useRef<HTMLHeadingElement>(null);
+
+  useEffect(() => {
+    headingRef.current?.focus({preventScroll: true});
+  }, []);
+
   return (
-    <VStack gap={6} hAlign="center" paddingBlock={8} role="status">
+    <VStack gap={8} hAlign="center" paddingBlock={6} role="status">
+      <PaperPlane maxWidth={260} />
       <VStack gap={3} hAlign="center">
         <IndexLabel>{confirmation.eyebrow}</IndexLabel>
-        <Heading level={2} style={typeRole('headline-xl')} justify="center">
+        <Heading
+          ref={headingRef}
+          tabIndex={-1}
+          level={2}
+          justify="center"
+          style={{...typeRole('headline-xl'), outline: 'none'}}>
           {confirmation.title}
         </Heading>
         {confirmation.paragraphs.map(paragraph => (
@@ -28,11 +47,15 @@ export function EnquiryConfirmation({onSendAnother}: EnquiryConfirmationProps) {
           </Text>
         ))}
       </VStack>
-      <HStack gap={3} wrap="wrap" justify="center">
-        <CtaButton {...confirmation.action} />
-        <CtaButton {...confirmation.secondaryAction} variant="ghost" />
+      <HStack justify="center">
+        <Button
+          label={confirmation.sendAnother}
+          variant="primary"
+          size="lg"
+          onClick={onSendAnother}
+          icon={<Icon icon={RotateCcw} size="sm" color="inherit" />}
+        />
       </HStack>
-      <Button label="Send another enquiry" variant="ghost" size="sm" onClick={onSendAnother} />
     </VStack>
   );
 }
