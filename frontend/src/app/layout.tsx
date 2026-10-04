@@ -3,7 +3,7 @@ import './globals.css';
 import {Providers} from './providers';
 import {SiteShell} from '@/components/layout/SiteShell';
 import {site} from '@/content/site';
-import { Analytics } from "@vercel/analytics/next";
+import {Analytics} from '@vercel/analytics/next';
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
