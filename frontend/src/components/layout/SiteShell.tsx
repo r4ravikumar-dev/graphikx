@@ -4,6 +4,8 @@ import {AppShell} from '@astryxdesign/core/AppShell';
 import {VStack} from '@astryxdesign/core/Layout';
 import {MainNav} from '@/components/navigation/MainNav';
 import {MobileMenu} from '@/components/navigation/MobileMenu';
+import {PageTransition} from '@/components/navigation/PageTransition';
+import {CustomCursor} from '@/components/navigation/CustomCursor';
 import {Footer} from './Footer';
 
 /**
@@ -13,15 +15,19 @@ import {Footer} from './Footer';
  */
 export function SiteShell({children}: {children: React.ReactNode}) {
   return (
-    <AppShell
-      variant="surface"
-      height="auto"
-      topNav={<MainNav />}
-      mobileNav={{hasToggle: false, content: <MobileMenu />}}>
-      <VStack gap={0}>
-        {children}
-        <Footer />
-      </VStack>
-    </AppShell>
+    <>
+      <AppShell
+        variant="surface"
+        height="auto"
+        topNav={<MainNav />}
+        mobileNav={{hasToggle: false, content: <MobileMenu />}}>
+        <VStack gap={0}>
+          {children}
+          <Footer />
+        </VStack>
+      </AppShell>
+      <PageTransition />
+      <CustomCursor />
+    </>
   );
 }

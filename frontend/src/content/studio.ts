@@ -114,11 +114,6 @@ export const currentlyExploring = {
   ],
 };
 
-export const mascotMoment = {
-  label: "One thing we've learned",
-  frames: ['Do we have the answer?', 'Not yet.', "Good. Let's keep looking."],
-};
-
 export const closing = {
   title: "We're still figuring things *out.*",
   note: "And that's exactly how we like it.",

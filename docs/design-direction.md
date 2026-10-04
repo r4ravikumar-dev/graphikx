@@ -105,7 +105,7 @@ Each line below is roughly one screen.
 6. **Graphyene (on the muted surface).** A Display XL "Graphyene", one line and an animated `LineDiagram` (Foundation → Tokens → Components → Patterns → Experiences). The principles run in a marquee.
 7. **Thinking.** Three articles as editorial rows (category · title · read time), not cards.
 8. **Maybe this sounds familiar.** One large "Maybe…" line at a time, then "You don't need the perfect brief."
-9. **Mascot moment (full viewport).** The looping dialogue on its own.
+9. ~~Mascot moment~~ (removed: the mascot is no longer part of the site).
 10. **Closing (`BigStatement`).** "Bring us something worth figuring out.", the email as a giant link and "Start a project ↗". The inline homepage form moves to the Start a Project page.
 
 **Footer:** the `GiantWordmark` plus the current four columns, with more space.
@@ -147,7 +147,7 @@ Each line below is roughly one screen.
 4. How we work as a `StepTimeline`.
 5. People: a large founder portrait (needs a photo), name and quote. The team line as a `BigStatement`-style moment.
 6. Currently exploring: a horizontal rail.
-7. Mascot moment.
+7. ~~Mascot moment~~ (removed).
 8. `BigStatement`.
 
 ### Start a Project
@@ -163,7 +163,7 @@ Each line below is roughly one screen.
 - **One showpiece per page.** A manifesto, a sticky sequence or a diagram, not all three on every page.
 - **Hover is quiet:** a hairline underline, an arrow nudge and a one-line hint. No scaling cards.
 - **Sticky sequences use spatial springs.** Word highlights are linked to scroll position, not timers.
-- **Illustrations loop slowly.** Minimal 2D line art on a faint dot grid, with soft tinted surfaces and one brand-blue moving accent. Lines draw in once, then each scene runs a slow 7–12s loop (a pulse travelling a path, layers drifting, a lens scanning). Loops run only on screen and pause on hover. The mascot dialogue is the only other looping element.
+- **Illustrations loop slowly.** Minimal 2D line art on a faint dot grid, with soft tinted surfaces and one brand-blue moving accent. Lines draw in once, then each scene runs a slow 7–12s loop (a pulse travelling a path, layers drifting, a lens scanning). Loops run only on screen and pause on hover. The page-change loader is the only other looping motion.
 - **Respect reduced motion.** Sticky sections become plain stacked sections, manifestos render fully lit, and illustrations show their finished still.
 - **Navigation:** keep the current header. Consider a floating pill dock that appears after the hero, like Creativeans, as an optional enhancement.
 
@@ -171,7 +171,7 @@ Each line below is roughly one screen.
 
 - **Work carousels and project rails** (Visuvate, Studio RS, Creativeans) need real case studies. Plan the Work section for when they exist, as the navigation spec already says.
 - **Pricing tables, press logos, client counts and testimonials** need real proof. Don't add placeholders, because invented numbers undermine the mature tone.
-- **3D and WebGL scenes** look impressive but cost performance and maintenance. Graphikx's line diagrams and the mascot give character more cheaply.
+- **3D and WebGL scenes** look impressive but cost performance and maintenance. Graphikx's line diagrams and illustrations give character more cheaply.
 
 ## 8. Suggested build order
 
@@ -236,7 +236,7 @@ Display/headline roles, gutters and section spacing are fluid (`clamp()`) betwee
 
 **Graphyene:** hero (status meta) → 01 the problem (build-up) → 02 the idea (manifesto) → 03 "A system should…" (rows) → 04 principles (muted, step timeline) → 05 architecture (line diagram) → 06 explorations (question rail) → 07 still becoming (rows) → close.
 
-**Studio:** hero → manifesto → 01 why we started (questions build-up) → 02 beliefs (expandable rows) → 03 how we work (muted, step timeline) → 04 the founder (quote, bio) → 05 currently exploring (question rail) → mascot moment → close.
+**Studio:** hero → manifesto → 01 why we started (questions build-up) → 02 beliefs (expandable rows) → 03 how we work (muted, step timeline) → 04 the founder (quote, bio) → 05 currently exploring (question rail) → close.
 
 **Thinking:** hero → manifesto (the overlooked details) → 01 featured article → 02 all thinking (filter and rows) → close. **Article:** reading-column header (back link, category, Display L title, intro, mono meta) → body → keep thinking (rows) → close.
 

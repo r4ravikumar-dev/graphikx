@@ -119,13 +119,21 @@ function useHash() {
   return useSyncExternalStore(subscribeToHash, () => window.location.hash, () => '');
 }
 
-function ExpandableRow({item, index, config}: {item: IndexItem; index: number; config: RowConfig}) {
-  const hash = useHash();
-  // null until the visitor toggles the row; until then the URL hash decides.
-  const [toggled, setToggled] = useState<boolean | null>(null);
+function ExpandableRow({
+  item,
+  index,
+  config,
+  isOpen,
+  onToggle,
+}: {
+  item: IndexItem;
+  index: number;
+  config: RowConfig;
+  isOpen: boolean;
+  onToggle: () => void;
+}) {
   const [isHovered, setIsHovered] = useState(false);
   const panelId = useId();
-  const isOpen = toggled ?? (item.id !== undefined && hash === `#${item.id}`);
 
   return (
     <VStack gap={0} id={item.id} style={rowStyle}>
@@ -134,7 +142,7 @@ function ExpandableRow({item, index, config}: {item: IndexItem; index: number; c
         className="index-row"
         aria-expanded={isOpen}
         aria-controls={panelId}
-        onClick={() => setToggled(!isOpen)}
+        onClick={onToggle}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}>
         <RowContent item={item} index={index} config={config} isOpen={isOpen} isHovered={isHovered} kind="expand" />
@@ -188,9 +196,17 @@ function StaticRow({item, index, config}: {item: IndexItem; index: number; confi
 /**
  * Large-type rows separated by hairlines, the editorial alternative to a grid
  * of cards. Rows link somewhere, expand to show more, or simply state a point.
+ * Expandable rows work as an accordion: opening one closes the others.
  */
 export function IndexList({items, isNumbered = true, level = 3, size = 'large'}: IndexListProps) {
   const config = {isNumbered, level, size};
+  const hash = useHash();
+  // undefined until the visitor opens or closes a row; until then the URL
+  // hash decides (so /practice#ux-design arrives with that row open).
+  const [openKey, setOpenKey] = useState<string | null | undefined>(undefined);
+  const keyOf = (item: IndexItem) => item.id ?? item.title;
+  const hashKey = items.find(item => item.id !== undefined && hash === `#${item.id}`)?.id ?? null;
+  const currentKey = openKey === undefined ? hashKey : openKey;
   return (
     <VStack gap={0} role="list" style={{borderBlockEnd: '1px solid var(--color-border)'}}>
       {items.map((item, index) => (
@@ -198,7 +214,13 @@ export function IndexList({items, isNumbered = true, level = 3, size = 'large'}:
           {item.href ? (
             <LinkRow item={item} index={index} config={config} />
           ) : item.detail ? (
-            <ExpandableRow item={item} index={index} config={config} />
+            <ExpandableRow
+              item={item}
+              index={index}
+              config={config}
+              isOpen={currentKey === keyOf(item)}
+              onToggle={() => setOpenKey(currentKey === keyOf(item) ? null : keyOf(item))}
+            />
           ) : (
             <StaticRow item={item} index={index} config={config} />
           )}

@@ -522,67 +522,52 @@ Frontend components should be reusable and grouped by purpose.
 ```
 components/
 │
+├── editorial/              # The shared page vocabulary
+│   ├── EditorialHero       # Page hero: label, title with one accent word, fact row, illustration
+│   ├── Chapter             # A numbered section; tone "default" or "muted", always theme-following
+│   ├── ChapterHeader       # Index label, large title, optional intro
+│   ├── IndexLabel          # "01 ── LABEL" in the mono eyebrow voice
+│   ├── StickySplit         # Pinned title on the left, story on the right (from 1024px)
+│   ├── Manifesto           # Words light up as you scroll
+│   ├── IndexList           # Hairline rows that link, expand (one open at a time) or state
+│   ├── FaqList             # Questions as expandable rows
+│   ├── BuildUp             # Lines stacking like layers, then one answer
+│   ├── StepTimeline        # Numbered steps with outlined numerals
+│   ├── LineDiagram         # Nodes joined by hairlines that draw in once
+│   ├── Marquee             # Phrases that slide with the scroll
+│   ├── QuestionRail        # Open questions side by side
+│   ├── ArticleRows         # Articles as editorial rows
+│   └── BigStatement        # The closing statement and email on every page
+│
+├── illustrations/
+│   ├── Illustration        # Frame: dot grid, draw-in, slow loops that pause off screen
+│   └── scenes              # TangleToLine, StackedLayers, SystemBlocks, ThinkingLens,
+│                           # QuestionPath, JourneyScreens, OriginRings, Conversation, PaperPlane
+│
 ├── layout/
-│   ├── Header
-│   ├── Footer
-│   └── Container
+│   ├── Container           # Content column with fluid gutters
+│   ├── Footer              # Contact bar, columns and the full-width wordmark
+│   └── SiteShell           # AppShell, navigation, page transition and cursor
 │
 ├── navigation/
-│   ├── MainNav
-│   ├── MobileNav
-│   └── SectionNav
-│
-├── storytelling/
-│   ├── Hero
-│   ├── Eyebrow
-│   ├── Microcopy
-│   ├── NarrativeBlock
-│   ├── Statement
-│   ├── SectionIntro
-│   ├── Highlight
-│   ├── LayeredLines
-│   ├── TopicGrid
-│   ├── ProcessSteps
-│   ├── SituationList
-│   ├── KeyStatement
-│   └── ProjectInvitation
-│
-├── practice/
-│   ├── PracticeGroup
-│   ├── PracticeSection
-│   ├── Capability
-│   ├── DisciplineFlow
-│   └── PracticePreview
-│
-├── graphyene/
-│   ├── Principle
-│   ├── Architecture
-│   ├── Exploration
-│   ├── StatusBadge
-│   └── GraphyenePreview
-│
-├── thinking/
-│   ├── ArticleCard
-│   ├── ArticleList
-│   ├── CategoryFilter
-│   ├── FeaturedArticle
-│   ├── FlowComparison
-│   └── ArticleContent
+│   ├── MainNav             # Header navigation
+│   ├── MobileMenu          # Mobile drawer
+│   ├── PageTransition      # 1.4s orbit loader between pages
+│   ├── CustomCursor        # Inverting squircle cursor (mouse and trackpad only)
+│   ├── ScrollManager       # Top of page on new pages, restored on Back, #section links
+│   ├── Logo / Wordmark     # Theme-following logo and the home link
+│   └── CtaButton, HoverHint, isActivePath
 │
 ├── forms/
-│   ├── Input
-│   ├── Textarea
-│   ├── Select
-│   ├── ProjectForm
-│   └── ProjectEnquiry
+│   ├── ProjectForm         # The three-step Start a Project form
+│   ├── ChoiceChips         # Single-choice chips
+│   └── EnquiryConfirmation
 │
-├── studio/
-│   ├── FounderProfile
-│   └── FocusArea
-│
-└── mascot/
-    ├── Mascot           # Used only inside MascotDialogue
-    └── MascotDialogue   # The looping mascot moment; the only element on the site that loops
+├── practice/CapabilityDetail
+├── studio/FounderNote
+├── thinking/               # ArticleContent, ArticleList, CategoryFilter, FeaturedArticle, FlowComparison
+├── storytelling/           # Lines (inline accent markup), LegalContent
+└── motion/                 # Motion primitives and Reveal
 ```
 
 ### Naming

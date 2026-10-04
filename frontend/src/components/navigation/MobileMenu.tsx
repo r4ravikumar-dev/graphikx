@@ -37,7 +37,7 @@ export function MobileMenu() {
   }
 
   return (
-    <MobileNav header={<Wordmark height={22} />} width={480}>
+    <MobileNav header={<Wordmark />} width={480}>
       <VStack
         gap={0}
         justify="between"

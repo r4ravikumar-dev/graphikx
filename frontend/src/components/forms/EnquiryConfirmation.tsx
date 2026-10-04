@@ -4,7 +4,6 @@ import {VStack, HStack} from '@astryxdesign/core/Layout';
 import {Heading} from '@astryxdesign/core/Heading';
 import {Text} from '@astryxdesign/core/Text';
 import {Button} from '@astryxdesign/core/Button';
-import {MascotDialogue} from '@/components/mascot/MascotDialogue';
 import {CtaButton} from '@/components/navigation/CtaButton';
 import {IndexLabel} from '@/components/editorial/IndexLabel';
 import {confirmation} from '@/content/enquiry';
@@ -14,7 +13,7 @@ type EnquiryConfirmationProps = {
   onSendAnother: () => void;
 };
 
-/** Shown after an enquiry is sent: a human thank-you, the mascot reading it, and where to go next. */
+/** Shown after an enquiry is sent: a human thank-you and where to go next. */
 export function EnquiryConfirmation({onSendAnother}: EnquiryConfirmationProps) {
   return (
     <VStack gap={6} hAlign="center" paddingBlock={8} role="status">
@@ -29,7 +28,6 @@ export function EnquiryConfirmation({onSendAnother}: EnquiryConfirmationProps) {
           </Text>
         ))}
       </VStack>
-      <MascotDialogue frames={[confirmation.mascotLine]} look={{x: 0.3, y: 0.9}} />
       <HStack gap={3} wrap="wrap" justify="center">
         <CtaButton {...confirmation.action} />
         <CtaButton {...confirmation.secondaryAction} variant="ghost" />
