@@ -1,4 +1,6 @@
 import {VStack, HStack} from '@astryxdesign/core/Layout';
+import {PageFaq} from '@/components/editorial/PageFaq';
+import {homeFaq} from '@/content/faqs';
 import {Grid} from '@astryxdesign/core/Grid';
 import {Heading} from '@astryxdesign/core/Heading';
 import {Text} from '@astryxdesign/core/Text';
@@ -54,10 +56,10 @@ export default function HomePage() {
 
       {/* Manifesto: words light up as you scroll. */}
       <Chapter label={manifesto.label}>
-        <Reveal>
+        <Reveal hAlign="center">
           <IndexLabel>{manifesto.label}</IndexLabel>
         </Reveal>
-        <Manifesto text={manifesto.text} />
+        <Manifesto text={manifesto.text} isCentered />
       </Chapter>
 
       {/* 01 The problem: title pinned while the layers stack up. */}
@@ -171,9 +173,12 @@ export default function HomePage() {
 
       {/* 06 Maybe this sounds familiar: four situations, each with its glyph. */}
       <Chapter tone="muted" label={familiar.label}>
-        <Reveal>
-          <IndexLabel index={familiar.index}>{familiar.label}</IndexLabel>
-        </Reveal>
+        <ChapterHeader
+          index={familiar.index}
+          label={familiar.label}
+          title={familiar.title}
+          size="display-l"
+        />
         <Grid columns={1} gap={0} className="familiar-grid" role="list">
           {familiar.situations.map((situation, index) => (
             <Reveal
@@ -207,6 +212,9 @@ export default function HomePage() {
           </Heading>
         </Reveal>
       </Chapter>
+
+      {/* 07 Before you go: questions people actually have. */}
+      <PageFaq group={homeFaq} index={7} />
 
       {/* Closing: statement and email, no form. */}
       <BigStatement {...closing} />

@@ -1,5 +1,8 @@
 import type {Metadata} from 'next';
+import {PageFaq} from '@/components/editorial/PageFaq';
+import {termsFaq} from '@/content/faqs';
 import {LegalContent} from '@/components/storytelling/LegalContent';
+import {TermsDocument} from '@/components/illustrations/scenes';
 import {terms} from '@/content/legal';
 
 export const metadata: Metadata = {
@@ -9,5 +12,10 @@ export const metadata: Metadata = {
 };
 
 export default function TermsPage() {
-  return <LegalContent page={terms} />;
+  return (
+    <>
+      <LegalContent page={terms} illustration={<TermsDocument />} />
+      <PageFaq group={termsFaq} tone="muted" />
+    </>
+  );
 }

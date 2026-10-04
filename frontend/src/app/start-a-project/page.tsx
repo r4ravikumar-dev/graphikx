@@ -1,4 +1,6 @@
 import type {Metadata} from 'next';
+import {PageFaq} from '@/components/editorial/PageFaq';
+import {startProjectFaq} from '@/content/faqs';
 import {VStack} from '@astryxdesign/core/Layout';
 import {Text} from '@astryxdesign/core/Text';
 import {Link} from '@astryxdesign/core/Link';
@@ -7,7 +9,6 @@ import {BigStatement} from '@/components/editorial/BigStatement';
 import {Chapter} from '@/components/editorial/Chapter';
 import {ChapterHeader} from '@/components/editorial/ChapterHeader';
 import {EditorialHero} from '@/components/editorial/EditorialHero';
-import {FaqList} from '@/components/editorial/FaqList';
 import {StickySplit} from '@/components/editorial/StickySplit';
 import {ProjectForm} from '@/components/forms/ProjectForm';
 import {Conversation} from '@/components/illustrations/scenes';
@@ -24,7 +25,7 @@ export const metadata: Metadata = {
 };
 
 export default function StartAProjectPage() {
-  const {hero, enquiry, faq, closing} = startProjectPage;
+  const {hero, enquiry, closing} = startProjectPage;
 
   return (
     <VStack gap={0}>
@@ -39,14 +40,29 @@ export default function StartAProjectPage() {
         <StickySplit
           aside={
             <>
-              <ChapterHeader index={1} label={enquiry.label} title={enquiry.title} intro={undefined} size="display-l" />
+              <ChapterHeader
+                index={1}
+                label={enquiry.label}
+                title={enquiry.title}
+                intro={undefined}
+                size="display-l"
+              />
               <Reveal delay={0.1}>
-                <Text type="large" color="secondary" textWrap="pretty" style={{maxInlineSize: '36ch'}}>
+                <Text
+                  type="large"
+                  color="secondary"
+                  textWrap="pretty"
+                  style={{maxInlineSize: '36ch'}}>
                   {enquiry.intro}
                 </Text>
               </Reveal>
               <Reveal delay={0.15}>
-                <VStack gap={2} style={{borderBlockStart: '1px solid var(--color-border)', paddingBlockStart: 'var(--spacing-5)'}}>
+                <VStack
+                  gap={2}
+                  style={{
+                    borderBlockStart: '1px solid var(--color-border)',
+                    paddingBlockStart: 'var(--spacing-5)',
+                  }}>
                   <Text type="supporting" color="secondary" style={EYEBROW_STYLE}>
                     {enquiry.contactLabel}
                   </Text>
@@ -69,12 +85,8 @@ export default function StartAProjectPage() {
         </StickySplit>
       </Chapter>
 
-      {/* 02: Questions. */}
-      <Chapter label={faq.label}>
-        <StickySplit aside={<ChapterHeader index={2} label={faq.label} title={faq.title} size="display-l" />}>
-          <FaqList items={faq.items} />
-        </StickySplit>
-      </Chapter>
+      {/* 02: Before you send it. */}
+      <PageFaq group={startProjectFaq} index={2} />
 
       <BigStatement {...closing} hasProjectAction={false} />
     </VStack>

@@ -1,4 +1,6 @@
 import type {Metadata} from 'next';
+import {PageFaq} from '@/components/editorial/PageFaq';
+import {graphyeneFaq} from '@/content/faqs';
 import {VStack, HStack} from '@astryxdesign/core/Layout';
 import {Heading} from '@astryxdesign/core/Heading';
 import {Text} from '@astryxdesign/core/Text';
@@ -50,7 +52,12 @@ export default function GraphyenePage() {
         <StickySplit
           aside={
             <>
-              <ChapterHeader index={1} label={problem.label} title={problem.title} size="display-l" />
+              <ChapterHeader
+                index={1}
+                label={problem.label}
+                title={problem.title}
+                size="display-l"
+              />
               <StackedLayers maxWidth={340} />
             </>
           }>
@@ -75,7 +82,14 @@ export default function GraphyenePage() {
       {/* 04: Principles, on the muted surface. */}
       <Chapter tone="muted" label={principles.label}>
         <StickySplit
-          aside={<ChapterHeader index={4} label={principles.label} title={principles.title} size="display-l" />}>
+          aside={
+            <ChapterHeader
+              index={4}
+              label={principles.label}
+              title={principles.title}
+              size="display-l"
+            />
+          }>
           <StepTimeline steps={principles.steps} />
         </StickySplit>
       </Chapter>
@@ -87,13 +101,20 @@ export default function GraphyenePage() {
             <IndexLabel index={5}>{architecture.label}</IndexLabel>
           </Reveal>
           <Reveal delay={0.05} distance={32}>
-            <Heading level={2} textWrap="balance" style={{...typeRole('display-xl'), letterSpacing: '-0.03em', maxInlineSize: '14ch'}}>
+            <Heading
+              level={2}
+              textWrap="balance"
+              style={{...typeRole('display-xl'), letterSpacing: '-0.03em', maxInlineSize: '14ch'}}>
               <Lines text={architecture.title} />
             </Heading>
           </Reveal>
           <HStack justify="end">
             <Reveal delay={0.1}>
-              <Text type="large" color="secondary" textWrap="pretty" style={{maxInlineSize: '44ch'}}>
+              <Text
+                type="large"
+                color="secondary"
+                textWrap="pretty"
+                style={{maxInlineSize: '44ch'}}>
                 {architecture.description}
               </Text>
             </Reveal>
@@ -113,6 +134,9 @@ export default function GraphyenePage() {
         <ChapterHeader index={7} label={stillBecoming.label} title={stillBecoming.title} />
         <IndexList items={stillBecoming.items} isNumbered={false} />
       </Chapter>
+
+      {/* 08: Questions we're already being asked. */}
+      <PageFaq group={graphyeneFaq} index={8} />
 
       <BigStatement {...closing} />
     </VStack>

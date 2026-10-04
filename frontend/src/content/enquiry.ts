@@ -95,29 +95,6 @@ export const startProjectPage = {
     intro: 'A few details help us understand where you are and what might be useful.',
     contactLabel: 'Prefer email?',
   },
-  faq: {
-    label: 'Before you ask',
-    title: 'A few things worth *knowing.*',
-    items: [
-      {
-        question: 'What happens after I send this?',
-        answer: "We'll take a look at your note and get back to you with the next step.",
-      },
-      {
-        question: 'Do I need to know which service I need?',
-        answer: "No. Tell us what's happening in your own words. You don't need to choose a service first.",
-      },
-      {
-        question: 'Is this a commitment?',
-        answer:
-          "No. By sending this, you're starting a conversation. We'll use it to understand the problem and figure out whether Graphikx is the right fit.",
-      },
-      {
-        question: 'What do you do with my details?',
-        answer: 'They stay with Graphikx and are used only to respond to your enquiry.',
-      },
-    ],
-  },
   closing: {
     label: 'Every project starts somewhere',
     title: 'Sometimes with just “something isn’t *working.*”',

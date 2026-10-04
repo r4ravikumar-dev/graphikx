@@ -1,4 +1,6 @@
 import type {Metadata} from 'next';
+import {PageFaq} from '@/components/editorial/PageFaq';
+import {studioFaq} from '@/content/faqs';
 import {VStack} from '@astryxdesign/core/Layout';
 import {Text} from '@astryxdesign/core/Text';
 import {Reveal} from '@/components/motion/Reveal';
@@ -40,10 +42,10 @@ export default function StudioPage() {
 
       {/* Manifesto: why Graphikx exists. */}
       <Chapter label={manifesto.label}>
-        <Reveal>
+        <Reveal hAlign="center">
           <IndexLabel>{manifesto.label}</IndexLabel>
         </Reveal>
-        <Manifesto text={manifesto.text} />
+        <Manifesto text={manifesto.text} isCentered />
       </Chapter>
 
       {/* 01: Why we started, told as the questions we ask. */}
@@ -51,7 +53,12 @@ export default function StudioPage() {
         <StickySplit
           aside={
             <>
-              <ChapterHeader index={1} label={whyWeStarted.label} title={whyWeStarted.title} size="display-l" />
+              <ChapterHeader
+                index={1}
+                label={whyWeStarted.label}
+                title={whyWeStarted.title}
+                size="display-l"
+              />
               <QuestionPath maxWidth={340} />
             </>
           }>
@@ -60,7 +67,11 @@ export default function StudioPage() {
               {whyWeStarted.intro}
             </Text>
           </Reveal>
-          <BuildUp label="Question" layers={whyWeStarted.questions} resolution={whyWeStarted.resolution} />
+          <BuildUp
+            label="Question"
+            layers={whyWeStarted.questions}
+            resolution={whyWeStarted.resolution}
+          />
         </StickySplit>
       </Chapter>
 
@@ -72,7 +83,11 @@ export default function StudioPage() {
             title: item.title,
             summary: item.summary,
             detail: (
-              <Text type="large" color="secondary" textWrap="pretty" style={{maxInlineSize: '60ch'}}>
+              <Text
+                type="large"
+                color="secondary"
+                textWrap="pretty"
+                style={{maxInlineSize: '60ch'}}>
                 {item.detail}
               </Text>
             ),
@@ -83,7 +98,14 @@ export default function StudioPage() {
       {/* 03: How we work, on the muted surface. */}
       <Chapter tone="muted" label={howWeWork.label}>
         <StickySplit
-          aside={<ChapterHeader index={3} label={howWeWork.label} title={howWeWork.title} size="display-l" />}>
+          aside={
+            <ChapterHeader
+              index={3}
+              label={howWeWork.label}
+              title={howWeWork.title}
+              size="display-l"
+            />
+          }>
           <StepTimeline steps={howWeWork.steps} />
         </StickySplit>
       </Chapter>
@@ -97,10 +119,16 @@ export default function StudioPage() {
 
       {/* 05: Currently exploring. */}
       <Chapter label={currentlyExploring.label}>
-        <ChapterHeader index={5} label={currentlyExploring.label} title={currentlyExploring.title} />
+        <ChapterHeader
+          index={5}
+          label={currentlyExploring.label}
+          title={currentlyExploring.title}
+        />
         <QuestionRail items={currentlyExploring.items} />
       </Chapter>
 
+      {/* 06: Getting to know the studio. */}
+      <PageFaq group={studioFaq} index={6} tone="muted" />
 
       <BigStatement {...closing} />
     </VStack>

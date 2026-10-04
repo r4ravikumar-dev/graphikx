@@ -7,7 +7,7 @@ import {VStack, HStack} from '@astryxdesign/core/Layout';
 import {Heading} from '@astryxdesign/core/Heading';
 import {Text} from '@astryxdesign/core/Text';
 import {Icon} from '@astryxdesign/core/Icon';
-import {ArrowRight, Plus} from 'lucide-react';
+import {ArrowRight, Minus, Plus} from 'lucide-react';
 import {MotionHStack} from '@/components/motion/Motion';
 import {Reveal} from '@/components/motion/Reveal';
 import {springs} from '@/motion/springs';
@@ -100,9 +100,13 @@ function RowContent({
         <motion.span
           aria-hidden
           className="index-row-arrow"
-          animate={{rotate: isOpen ? 45 : 0, x: isHovered && kind === 'link' ? 4 : 0}}
+          animate={{rotate: isOpen ? 180 : 0, x: isHovered && kind === 'link' ? 4 : 0}}
           transition={springs.spatial.fast}>
-          <Icon icon={kind === 'link' ? ArrowRight : Plus} size="md" color="secondary" />
+          <Icon
+            icon={kind === 'link' ? ArrowRight : isOpen ? Minus : Plus}
+            size="md"
+            color="secondary"
+          />
         </motion.span>
       )}
     </HStack>

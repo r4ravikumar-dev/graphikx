@@ -1,12 +1,17 @@
 'use client';
 
+import {VStack} from '@astryxdesign/core/Layout';
 import {Text} from '@astryxdesign/core/Text';
 import {Lines} from '@/components/storytelling/Lines';
 import {IndexList} from './IndexList';
 
-export type Faq = {question: string; answer: string};
+/**
+ * One question and its answer as short paragraphs: the direct answer first
+ * (set in ink), then a useful clarification and, where it helps, a next step.
+ */
+export type Faq = {question: string; answer: readonly string[]};
 
-/** Questions as expandable hairline rows, the way the reference studios close service pages. */
+/** Questions as expandable hairline rows, one open at a time. */
 export function FaqList({items}: {items: readonly Faq[]}) {
   return (
     <IndexList
@@ -15,9 +20,17 @@ export function FaqList({items}: {items: readonly Faq[]}) {
       items={items.map(item => ({
         title: item.question,
         detail: (
-          <Text type="large" color="secondary" textWrap="pretty" style={{maxInlineSize: '60ch'}}>
-            <Lines text={item.answer} />
-          </Text>
+          <VStack gap={3} style={{maxInlineSize: '60ch'}}>
+            {item.answer.map((paragraph, index) => (
+              <Text
+                key={paragraph}
+                type="large"
+                color={index === 0 ? 'primary' : 'secondary'}
+                textWrap="pretty">
+                <Lines text={paragraph} />
+              </Text>
+            ))}
+          </VStack>
         ),
       }))}
     />
