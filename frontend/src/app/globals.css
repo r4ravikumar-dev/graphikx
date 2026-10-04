@@ -434,7 +434,7 @@ html {
   .big-statement-grid {
     grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
     grid-template-areas: 'label label' 'title title' 'text art';
-    align-items: end;
+    align-items: center;
   }
   .big-statement-art {
     align-items: flex-end;
@@ -453,6 +453,15 @@ html {
 @media (min-width: 768px) {
   .familiar-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Page hero with an illustration: text left, illustration right, centred
+   against each other from 1024px; stacked below. */
+@media (min-width: 1024px) {
+  .hero-split {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    align-items: center;
   }
 }
 
@@ -692,6 +701,26 @@ html {
 @keyframes ill-glide {
   0%, 100% { transform: translate(0, 0) rotate(0deg); }
   50% { transform: translate(-10px, -12px) rotate(-3deg); }
+}
+
+/* Hero pieces gliding from scattered to settled and back (12s loop):
+   scattered, glide in, hold the clear card, drift apart. Each piece is drawn
+   settled; --dx/--dy/--rot describe where it floats when scattered. */
+.ill-assemble {
+  animation: ill-assemble 12s infinite;
+}
+@keyframes ill-assemble {
+  0%, 10% {
+    transform: translate(var(--dx), var(--dy)) rotate(var(--rot));
+    animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1);
+  }
+  34%, 76% {
+    transform: none;
+    animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1);
+  }
+  98%, 100% {
+    transform: translate(var(--dx), var(--dy)) rotate(var(--rot));
+  }
 }
 
 /* Ideas orbiting the centre of the Studio scene (viewBox 400 × 300).

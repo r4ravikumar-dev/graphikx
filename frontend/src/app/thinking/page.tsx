@@ -42,7 +42,7 @@ export default function ThinkingPage() {
 
       {/* Manifesto: the details we look at. */}
       <Chapter label={manifesto.label}>
-        <Reveal>
+        <Reveal hAlign="center">
           <IndexLabel>{manifesto.label}</IndexLabel>
         </Reveal>
         <Manifesto text={manifesto.text} />

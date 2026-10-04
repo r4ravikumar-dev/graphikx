@@ -21,10 +21,11 @@ import {Marquee} from '@/components/editorial/Marquee';
 import {StepTimeline} from '@/components/editorial/StepTimeline';
 import {StickySplit} from '@/components/editorial/StickySplit';
 import {
+  DisciplineOrbit,
   QuestionPath,
   StackedLayers,
   SystemBlocks,
-  TangleToLine,
+  SenseMaking,
   ThinkingLens,
 } from '@/components/illustrations/scenes';
 import {Glyph} from '@/components/illustrations/glyphs';
@@ -52,14 +53,21 @@ export default function HomePage() {
   return (
     <VStack gap={0}>
       {/* Hero: one line, one sentence, one action. */}
-      <EditorialHero {...hero} size="display-xxl" isFullHeight illustration={<TangleToLine />} />
+      <EditorialHero
+        {...hero}
+        size="display-xxl"
+        isFullHeight
+        illustration={
+          <SenseMaking label="Scattered interface pieces settling into one clear card" />
+        }
+      />
 
       {/* Manifesto: words light up as you scroll. */}
       <Chapter label={manifesto.label}>
         <Reveal hAlign="center">
           <IndexLabel>{manifesto.label}</IndexLabel>
         </Reveal>
-        <Manifesto text={manifesto.text} isCentered />
+        <Manifesto text={manifesto.text} />
       </Chapter>
 
       {/* 01 The problem: title pinned while the layers stack up. */}
@@ -82,7 +90,17 @@ export default function HomePage() {
 
       {/* 02 Practice: one row per discipline. */}
       <Chapter label={practice.label}>
-        <ChapterHeader index={practice.index} label={practice.label} title={practice.title} />
+        <Grid columns={{minWidth: 320, max: 2}} gap={10} style={{alignItems: 'center'}}>
+          <ChapterHeader
+            index={practice.index}
+            label={practice.label}
+            title={practice.title}
+            size="display-l"
+          />
+          <Reveal hAlign="end">
+            <DisciplineOrbit label="Seven disciplines orbiting one product" maxWidth={340} />
+          </Reveal>
+        </Grid>
         <IndexList
           items={capabilities.map(capability => ({
             title: capability.title,
@@ -152,7 +170,7 @@ export default function HomePage() {
 
       {/* 05 Thinking: articles as editorial rows. */}
       <Chapter label={thinking.label}>
-        <Grid columns={{minWidth: 320, max: 2}} gap={10} style={{alignItems: 'end'}}>
+        <Grid columns={{minWidth: 320, max: 2}} gap={10} style={{alignItems: 'center'}}>
           <ChapterHeader
             index={thinking.index}
             label={thinking.label}

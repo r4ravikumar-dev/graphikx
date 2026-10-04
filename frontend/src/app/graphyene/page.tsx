@@ -67,7 +67,7 @@ export default function GraphyenePage() {
 
       {/* 02: The idea. */}
       <Chapter label={idea.label}>
-        <Reveal>
+        <Reveal hAlign="center">
           <IndexLabel index={2}>{idea.label}</IndexLabel>
         </Reveal>
         <Manifesto text={idea.text} />

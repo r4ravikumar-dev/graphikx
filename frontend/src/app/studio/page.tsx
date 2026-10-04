@@ -45,7 +45,7 @@ export default function StudioPage() {
         <Reveal hAlign="center">
           <IndexLabel>{manifesto.label}</IndexLabel>
         </Reveal>
-        <Manifesto text={manifesto.text} isCentered />
+        <Manifesto text={manifesto.text} />
       </Chapter>
 
       {/* 01: Why we started, told as the questions we ask. */}

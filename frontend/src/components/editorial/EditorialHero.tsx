@@ -33,9 +33,10 @@ type EditorialHeroProps = {
 
 /**
  * Left-aligned editorial hero: one very large title, one sentence, one
- * action, and a quiet meta row along the bottom. Space does the work. The
- * description row is top-aligned, so the description always sits one block
- * below the title however tall the illustration beside it is.
+ * action, and a quiet meta row along the bottom. Space does the work. With
+ * an illustration, the text block (label, title, description, action) sits
+ * on the left and the illustration on the right, vertically centred against
+ * each other from 1024px (.hero-split in globals.css); below that they stack.
  */
 export function EditorialHero({
   label,
@@ -53,31 +54,40 @@ export function EditorialHero({
       gap={0}
       justify="between"
       style={{
-        minHeight: isFullHeight ? 'calc(100svh - var(--nav-padding-block) * 2 - var(--size-element-lg))' : undefined,
+        minHeight: isFullHeight
+          ? 'calc(100svh - var(--nav-padding-block) * 2 - var(--size-element-lg))'
+          : undefined,
         paddingBlockStart: 'var(--space-chapter-gap)',
         paddingBlockEnd: 'var(--space-block)',
       }}>
       <Container gap={0} style={{flex: 1}}>
-        <VStack gap={0} justify="center" style={{flex: 1, gap: 'var(--space-block)'}}>
-          {label && (
-            <Reveal>
-              <IndexLabel>{label}</IndexLabel>
+        <Grid
+          columns={1}
+          className={illustration ? 'hero-split' : undefined}
+          style={{flex: 1, alignContent: 'center', gap: 'var(--space-block)'}}>
+          <VStack gap={0} style={{gap: 'var(--space-block)'}}>
+            {label && (
+              <Reveal>
+                <IndexLabel>{label}</IndexLabel>
+              </Reveal>
+            )}
+            <Reveal delay={0.05} distance={40}>
+              <Heading
+                level={1}
+                textWrap="balance"
+                style={{...typeRole(size), letterSpacing: '-0.04em', maxInlineSize: '14ch'}}>
+                <Lines text={title} />
+              </Heading>
             </Reveal>
-          )}
-          <Reveal delay={0.05} distance={40}>
-            <Heading
-              level={1}
-              textWrap="balance"
-              style={{...typeRole(size), letterSpacing: '-0.04em', maxInlineSize: '14ch'}}>
-              <Lines text={title} />
-            </Heading>
-          </Reveal>
-          {(description || action || illustration) && (
-            <Grid columns={{minWidth: 320, max: 2}} gap={10} style={{alignItems: 'start'}}>
+            {(description || action) && (
               <VStack gap={6}>
                 {description && (
                   <Reveal delay={0.15}>
-                    <Text type="large" color="secondary" textWrap="pretty" style={{maxInlineSize: '36ch'}}>
+                    <Text
+                      type="large"
+                      color="secondary"
+                      textWrap="pretty"
+                      style={{maxInlineSize: '36ch'}}>
                       <Lines text={description} />
                     </Text>
                   </Reveal>
@@ -90,14 +100,14 @@ export function EditorialHero({
                   </Reveal>
                 )}
               </VStack>
-              {illustration && (
-                <Reveal delay={0.1} hAlign="end">
-                  {illustration}
-                </Reveal>
-              )}
-            </Grid>
+            )}
+          </VStack>
+          {illustration && (
+            <Reveal delay={0.1} hAlign="end">
+              {illustration}
+            </Reveal>
           )}
-        </VStack>
+        </Grid>
       </Container>
       {meta && meta.length > 0 && (
         <Container gap={0}>
@@ -107,7 +117,11 @@ export function EditorialHero({
               wrap="wrap"
               justify="between"
               className="hero-meta"
-              style={{borderBlockStart: '1px solid var(--color-border)', paddingBlockStart: 'var(--spacing-4)', marginBlockStart: 'var(--space-block)'}}>
+              style={{
+                borderBlockStart: '1px solid var(--color-border)',
+                paddingBlockStart: 'var(--spacing-4)',
+                marginBlockStart: 'var(--space-block)',
+              }}>
               {meta.map(item => (
                 <Text key={item} type="supporting" color="secondary" style={EYEBROW_STYLE}>
                   {item}
