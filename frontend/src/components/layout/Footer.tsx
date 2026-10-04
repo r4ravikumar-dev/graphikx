@@ -150,13 +150,14 @@ export function Footer() {
         </HStack>
       </Container>
 
-      {/* Giant wordmark, shown in full as the sign-off. */}
+      {/* Giant wordmark, shown in full as the sign-off. Deliberately not a
+          scroll reveal: as the last thing on the page it can't scroll far
+          enough into view to trigger one on short (mobile) viewports. */}
       <Container
         gap={0}
+        aria-hidden
         style={{marginBlockStart: 'var(--space-block)', paddingBlockEnd: 'var(--space-block)'}}>
-        <Reveal distance={48} speed="slow" aria-hidden>
-          <Logo isFluid />
-        </Reveal>
+        <Logo isFluid />
       </Container>
     </VStack>
   );
