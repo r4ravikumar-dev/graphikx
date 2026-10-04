@@ -1,6 +1,6 @@
 'use client';
 
-import {useId} from 'react';
+import {useId, type CSSProperties} from 'react';
 import {motion} from 'framer-motion';
 import {ACCENT, Dot, Illustration, MUTED, Pulse, Stroke, Surface, Travel} from './Illustration';
 
@@ -568,6 +568,109 @@ export function FaqQuestion({label, maxWidth = 340}: SceneProps) {
       <Stroke order={3} stroke={ACCENT} d={answer} />
       <Stroke order={4} d="M254 112 h64" />
       <Stroke order={4} weight="fine" stroke={MUTED} d="M254 128 h44" />
+    </Illustration>
+  );
+}
+
+/**
+ * Hero: making sense of it. Loose interface pieces float scattered and
+ * tilted on the left; an empty card frame waits on the right. In the loop the
+ * pieces glide one by one into place and settle into a clear card (its one
+ * action in brand blue), hold, then drift apart again. Each piece is drawn
+ * at its settled position; .ill-assemble moves it out by --dx/--dy/--rot.
+ * With reduced motion the settled card is all that shows.
+ */
+export function SenseMaking({label, maxWidth = 560}: SceneProps) {
+  const r = (x: number, y: number, w: number, h: number, rad: number) =>
+    `M${x + rad} ${y} h${w - 2 * rad} a${rad} ${rad} 0 0 1 ${rad} ${rad} v${h - 2 * rad} a${rad} ${rad} 0 0 1 -${rad} ${rad} h-${w - 2 * rad} a${rad} ${rad} 0 0 1 -${rad} -${rad} v-${h - 2 * rad} a${rad} ${rad} 0 0 1 ${rad} -${rad} Z`;
+  const frame = r(276, 46, 212, 208, 16);
+  const pieces: {
+    d: string;
+    dx: number;
+    dy: number;
+    rot: number;
+    isAccent?: boolean;
+    isFilled?: boolean;
+  }[] = [
+    {d: 'M288 90 a14 14 0 1 0 28 0 a14 14 0 1 0 -28 0', dx: -236, dy: 52, rot: -18},
+    {d: r(326, 80, 104, 12, 6), dx: -250, dy: -34, rot: 24},
+    {d: r(326, 100, 64, 8, 4), dx: -190, dy: 118, rot: -32},
+    {d: r(292, 124, 180, 54, 10), dx: -232, dy: 22, rot: 10},
+    {d: r(292, 190, 52, 18, 9), dx: -170, dy: -86, rot: 38},
+    {d: r(352, 190, 64, 18, 9), dx: -276, dy: 96, rot: -46},
+    {d: r(400, 220, 72, 22, 11), dx: -210, dy: -150, rot: 16, isAccent: true, isFilled: true},
+  ];
+  return (
+    <Illustration viewBox="0 0 520 300" label={label} maxWidth={maxWidth}>
+      <Stroke order={0} weight="fine" stroke={MUTED} d={frame} />
+      {pieces.map((piece, index) => (
+        <g
+          key={piece.d}
+          className="ill-loop ill-assemble"
+          style={
+            {
+              '--dx': `${piece.dx}px`,
+              '--dy': `${piece.dy}px`,
+              '--rot': `${piece.rot}deg`,
+              animationDelay: `${index * 0.28}s`,
+            } as CSSProperties
+          }>
+          {piece.isFilled ? (
+            <Surface order={1 + index} d={piece.d} fill={ACCENT} fillOpacity={0.9} />
+          ) : (
+            <Surface order={1 + index} d={piece.d} />
+          )}
+          <Stroke order={1 + index} stroke={piece.isAccent ? ACCENT : undefined} d={piece.d} />
+        </g>
+      ))}
+    </Illustration>
+  );
+}
+
+/**
+ * Practice: seven ways in, one product. A product screen at the centre, its
+ * one action in brand blue, ringed by seven small nodes, one per discipline.
+ * In the loop the ring orbits slowly around the product (.ill-orbit pivots
+ * on the 400 x 300 scene centre) and the action pulses.
+ */
+export function DisciplineOrbit({label, maxWidth = 360}: SceneProps) {
+  const ring = 'M90 150 a110 110 0 1 0 220 0 a110 110 0 1 0 -220 0';
+  const screen =
+    'M160 110 h80 a10 10 0 0 1 10 10 v60 a10 10 0 0 1 -10 10 h-80 a10 10 0 0 1 -10 -10 v-60 a10 10 0 0 1 10 -10 Z';
+  const node = (index: number) => {
+    const angle = (index / 7) * Math.PI * 2 - Math.PI / 2;
+    const cx = 200 + 110 * Math.cos(angle);
+    const cy = 150 + 110 * Math.sin(angle);
+    const kind = index % 3;
+    if (kind === 0) return `M${cx - 11} ${cy} a11 11 0 1 0 22 0 a11 11 0 1 0 -22 0`;
+    if (kind === 1) return `M${cx - 10} ${cy - 10} h20 v20 h-20 Z`;
+    return `M${cx} ${cy - 12} L${cx + 12} ${cy + 9} L${cx - 12} ${cy + 9} Z`;
+  };
+  return (
+    <Illustration viewBox="0 0 400 300" label={label} maxWidth={maxWidth}>
+      <g className="ill-loop ill-orbit">
+        <Stroke order={0} weight="fine" stroke={MUTED} strokeDasharray="2 6" d={ring} />
+        {Array.from({length: 7}, (_, index) => (
+          <g key={index}>
+            <Surface order={1 + index * 0.3} d={node(index)} />
+            <Stroke
+              order={1 + index * 0.3}
+              stroke={index === 0 ? ACCENT : undefined}
+              d={node(index)}
+            />
+          </g>
+        ))}
+      </g>
+      <Surface order={2} d={screen} />
+      <Stroke order={2} d={screen} />
+      <Stroke order={3} d="M164 128 h44" />
+      <Stroke order={3} weight="fine" stroke={MUTED} d="M164 144 h72 M164 154 h52" />
+      <Pulse cx={184} cy={171} r={6} delay={0.6} />
+      <Stroke
+        order={4}
+        stroke={ACCENT}
+        d="M169 166 h30 a5 5 0 0 1 5 5 a5 5 0 0 1 -5 5 h-30 a5 5 0 0 1 -5 -5 a5 5 0 0 1 5 -5 Z"
+      />
     </Illustration>
   );
 }
