@@ -59,6 +59,26 @@ function formatReceivedAt(date: Date) {
   }).format(date);
 }
 
+/** The subject of the studio's reply: what they asked about, and for whom. */
+export function replySubject(enquiry: ProjectEnquiry) {
+  const topic = enquiry.projectType ?? 'your project';
+  return `Re: Your Graphikx enquiry about ${topic}${enquiry.company ? ` for ${enquiry.company}` : ''}`;
+}
+
+/**
+ * A mailto link that opens a reply to the visitor: their address as the
+ * recipient (left unencoded, since some mail apps don't decode %40), the
+ * enquiry-specific subject and a greeting to start from.
+ */
+export function replyHref(enquiry: ProjectEnquiry) {
+  const firstName = enquiry.name.split(/\s+/)[0] ?? enquiry.name;
+  const query = [
+    `subject=${encodeURIComponent(replySubject(enquiry))}`,
+    `body=${encodeURIComponent(`Hi ${firstName},\n\nThanks for reaching out to Graphikx.\n\n`)}`,
+  ].join('&');
+  return `mailto:${encodeURI(enquiry.email)}?${query}`;
+}
+
 export function enquirySubject(enquiry: ProjectEnquiry) {
   return `New project enquiry from ${enquiry.name}${enquiry.projectType ? ` (${enquiry.projectType})` : ''}`;
 }
@@ -78,7 +98,6 @@ export function enquiryHtml(enquiry: ProjectEnquiry, receivedAt = new Date()): s
   const name = escapeHtml(enquiry.name);
   const firstName = escapeHtml(enquiry.name.split(/\s+/)[0] ?? enquiry.name);
   const preheader = escapeHtml(enquiry.message.slice(0, 140));
-  const replyHref = `mailto:${encodeURIComponent(enquiry.email)}?subject=${encodeURIComponent('Re: Your project enquiry to Graphikx')}`;
 
   const detailItems = details(enquiry)
     .map(
@@ -131,7 +150,7 @@ export function enquiryHtml(enquiry: ProjectEnquiry, receivedAt = new Date()): s
       <div style="margin-top:28px">${answerBlocks}
       </div>
       <div style="margin:8px 0 28px">
-        <a href="${replyHref}" style="display:inline-block;padding:14px 28px;background:${BRAND};border-radius:999px;font-family:${SANS};font-size:15px;font-weight:600;color:#ffffff;text-decoration:none">Reply to ${firstName} &rarr;</a>
+        <a href="${escapeHtml(replyHref(enquiry))}" style="display:inline-block;padding:14px 28px;background:${BRAND};border-radius:999px;font-family:${SANS};font-size:15px;font-weight:600;color:#ffffff;text-decoration:none">Reply to ${firstName} &rarr;</a>
       </div>
     </div>
     <p style="margin:0;padding:20px 4px 0;font-family:${MONO};font-size:11px;letter-spacing:0.06em;line-height:1.6;color:${SECONDARY}">Sent from the Start a project form on graphikx.in. Replying to this email answers ${name} directly.</p>

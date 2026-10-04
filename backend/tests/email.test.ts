@@ -5,6 +5,7 @@ import {simpleParser, type ParsedMail} from 'mailparser';
 import type {AddressInfo} from 'node:net';
 import {createApp} from '../src/app.js';
 import {DEFAULT_ENQUIRY_INBOX, loadEnv} from '../src/config/env.js';
+import {replyHref} from '../src/emails/enquiryEmail.js';
 
 const enquiry = {
   name: 'Jane <Doe>',
@@ -40,6 +41,23 @@ beforeAll(async () => {
 });
 
 afterAll(() => new Promise<void>(resolve => smtp.close(() => resolve())));
+
+describe('reply button', () => {
+  it('opens a reply to the visitor with an enquiry-specific subject', () => {
+    const url = new URL(replyHref(enquiry));
+    expect(url.protocol).toBe('mailto:');
+    expect(url.pathname).toBe('jane@example.com');
+    expect(url.searchParams.get('subject')).toBe(
+      'Re: Your Graphikx enquiry about Product Design for Example',
+    );
+    expect(url.searchParams.get('body')).toMatch(/^Hi Jane,/);
+  });
+
+  it('falls back to a general subject without a service or company', () => {
+    const url = new URL(replyHref({...enquiry, projectType: undefined, company: undefined}));
+    expect(url.searchParams.get('subject')).toBe('Re: Your Graphikx enquiry about your project');
+  });
+});
 
 describe('enquiry email over SMTP', () => {
   it('delivers the enquiry to design@graphikx.in by default', async () => {
