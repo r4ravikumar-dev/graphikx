@@ -3,6 +3,8 @@
 type LogoProps = {
   /** Rendered height in px; width follows the logo's proportions. */
   height?: number;
+  /** Fill the width of the container instead (for the giant footer wordmark). */
+  isFluid?: boolean;
 };
 
 /**
@@ -13,12 +15,12 @@ type LogoProps = {
  *
  * Decorative: the link around it carries the accessible name.
  */
-export function Logo({height = 26}: LogoProps) {
+export function Logo({height = 26, isFluid = false}: LogoProps) {
   return (
     <svg
       viewBox="0 3 179 42"
-      height={height}
-      width={(height * 179) / 42}
+      height={isFluid ? undefined : height}
+      width={isFluid ? '100%' : (height * 179) / 42}
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden

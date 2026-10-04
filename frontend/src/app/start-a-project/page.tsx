@@ -1,17 +1,20 @@
 import type {Metadata} from 'next';
-import {VStack, HStack} from '@astryxdesign/core/Layout';
-import {Section} from '@astryxdesign/core/Section';
-import {Heading} from '@astryxdesign/core/Heading';
+import {VStack} from '@astryxdesign/core/Layout';
 import {Text} from '@astryxdesign/core/Text';
-import {Container} from '@/components/layout/Container';
+import {Link} from '@astryxdesign/core/Link';
 import {Reveal} from '@/components/motion/Reveal';
-import {CtaButton} from '@/components/navigation/CtaButton';
-import {SectionIntro} from '@/components/storytelling/SectionIntro';
-import {KeyStatement} from '@/components/storytelling/KeyStatement';
-import {Microcopy} from '@/components/storytelling/Microcopy';
+import {BigStatement} from '@/components/editorial/BigStatement';
+import {Chapter} from '@/components/editorial/Chapter';
+import {ChapterHeader} from '@/components/editorial/ChapterHeader';
+import {EditorialHero} from '@/components/editorial/EditorialHero';
+import {FaqList} from '@/components/editorial/FaqList';
+import {StickySplit} from '@/components/editorial/StickySplit';
 import {ProjectForm} from '@/components/forms/ProjectForm';
+import {Conversation} from '@/components/illustrations/scenes';
 import {startProjectPage} from '@/content/enquiry';
+import {site} from '@/content/site';
 import {typeRole} from '@/theme/typeScale';
+import {EYEBROW_STYLE} from '@/theme/eyebrow';
 
 export const metadata: Metadata = {
   title: 'Start a Project',
@@ -20,82 +23,60 @@ export const metadata: Metadata = {
   alternates: {canonical: '/start-a-project'},
 };
 
-/** Frame from the Astryx "contact-form" template: one centred, capped column. */
 export default function StartAProjectPage() {
-  const {opening, enquiry, closing} = startProjectPage;
+  const {hero, enquiry, faq, closing} = startProjectPage;
 
   return (
     <VStack gap={0}>
-      {/* 01: Opening */}
-      <Container size="narrow" paddingBlock={10}>
-        <VStack gap={5} paddingBlockStart={10}>
-          <SectionIntro level={1} eyebrow={opening.eyebrow} title={opening.title} />
-          <VStack gap={1}>
-            {opening.lines.map((line, index) => (
-              <Reveal key={line} delay={0.15 + 0.07 * index} distance={12}>
-                <Text type="large" weight="medium">
-                  {line}
+      <EditorialHero
+        {...hero}
+        action={{label: 'Start with step one', href: `#${enquiry.id}`, direction: 'down'}}
+        illustration={<Conversation />}
+      />
+
+      {/* 01: The form, in a panel, with the email beside it. */}
+      <Chapter id={enquiry.id} label={enquiry.label}>
+        <StickySplit
+          aside={
+            <>
+              <ChapterHeader index={1} label={enquiry.label} title={enquiry.title} intro={undefined} size="display-l" />
+              <Reveal delay={0.1}>
+                <Text type="large" color="secondary" textWrap="pretty" style={{maxInlineSize: '36ch'}}>
+                  {enquiry.intro}
                 </Text>
               </Reveal>
-            ))}
-          </VStack>
-          <Reveal delay={0.5}>
-            <Text type="large" color="secondary">
-              {opening.closing}
-            </Text>
-          </Reveal>
-          <Microcopy delay={0.55}>{opening.microcopy}</Microcopy>
-        </VStack>
-      </Container>
-
-      {/* 02–05: Project enquiry */}
-      <Section variant="muted" padding={0}>
-        <Container
-          size="narrow"
-          paddingBlock={10}
-          gap={6}
-          id={enquiry.id}>
-          <SectionIntro
-            eyebrow={enquiry.eyebrow}
-            title={enquiry.title}
-            description={enquiry.description}
-          />
-          <Reveal delay={0.1}>
-            <Section padding={6}>
-              <ProjectForm variant="full" />
-            </Section>
-          </Reveal>
-        </Container>
-      </Section>
-
-      {/* 08: Closing statement */}
-      <Container size="narrow" paddingBlock={10}>
-        <VStack gap={5}>
-          <Reveal>
-            <Heading level={2} type="display-2" textWrap="balance">
-              {closing.title}
-            </Heading>
-          </Reveal>
-          <VStack gap={1}>
-            {closing.lines.map((line, index) => (
-              <Reveal key={line} delay={0.08 * index} distance={12}>
-                <Text type="large" color="secondary">
-                  {line}
-                </Text>
+              <Reveal delay={0.15}>
+                <VStack gap={2} style={{borderBlockStart: '1px solid var(--color-border)', paddingBlockStart: 'var(--spacing-5)'}}>
+                  <Text type="supporting" color="secondary" style={EYEBROW_STYLE}>
+                    {enquiry.contactLabel}
+                  </Text>
+                  <Link href={`mailto:${site.email}`} isStandalone style={typeRole('headline-s')}>
+                    {site.email}
+                  </Link>
+                </VStack>
               </Reveal>
-            ))}
+            </>
+          }>
+          <VStack
+            gap={0}
+            style={{
+              backgroundColor: 'var(--color-background-muted)',
+              borderRadius: 'var(--radius-container-lg, 16px)',
+              padding: 'var(--space-block)',
+            }}>
+            <ProjectForm />
           </VStack>
-          <KeyStatement>{closing.quote}</KeyStatement>
-          <Reveal>
-            <Heading level={3} style={typeRole('headline-l')}>
-              {closing.enough}
-            </Heading>
-          </Reveal>
-          <HStack>
-            <CtaButton {...closing.action} />
-          </HStack>
-        </VStack>
-      </Container>
+        </StickySplit>
+      </Chapter>
+
+      {/* 02: Questions. */}
+      <Chapter label={faq.label}>
+        <StickySplit aside={<ChapterHeader index={2} label={faq.label} title={faq.title} size="display-l" />}>
+          <FaqList items={faq.items} />
+        </StickySplit>
+      </Chapter>
+
+      <BigStatement {...closing} hasProjectAction={false} />
     </VStack>
   );
 }

@@ -1,225 +1,125 @@
 /**
- * Studio page copy, in page order. Multi-line strings use "\n" for line
- * breaks, and **double asterisks** for emphasis.
+ * Studio page copy, in page order. "*word*" sets the italic serif accent
+ * (in the manifesto, the brand-blue keyword); "\n" breaks a line.
  */
 
-export const opening = {
-  eyebrow: 'The studio',
-  title: "We didn't start Graphikx to make more screens.",
-  paragraphs: [
-    'We started it because we kept noticing the same thing:',
-    'A lot of digital products are built with good intentions, but somewhere along the way, they become harder to understand than they need to be.',
-  ],
-  tooMany: ['Too many steps.', 'Too many decisions.', 'Too many things competing for attention.'],
-  turn: 'We wanted to explore a different way of making.',
-  approach: [
-    'Start with the person.',
-    'Understand the problem.',
-    "Question what isn't working.",
-    'Then design what actually helps.',
-  ],
-  closing: "That's why Graphikx exists.",
-  microcopy: 'Make sense of it.',
+export const hero = {
+  label: 'Studio',
+  title: "We didn't start Graphikx to make more *screens.*",
+  description:
+    'We started it because good ideas kept getting lost in experiences that were harder than they needed to be.',
+  meta: ['Founded by Ravi Kumar', 'Product', 'Experience', 'Interfaces', 'Systems'],
+};
+
+export const manifesto = {
+  label: 'Why Graphikx exists',
+  text: 'Too many steps. Too many decisions. Too many things competing for attention. So we start with the *person,* understand the problem, question what isn’t working, then design what actually *helps.*',
 };
 
 export const whyWeStarted = {
-  eyebrow: 'Why we started',
-  title: 'Good ideas deserve good experiences.',
-  paragraphs: [
-    'A strong idea can lose its meaning when the experience around it becomes difficult.',
-    'A useful product can become frustrating.\nA simple task can become a long journey.\nA thoughtful feature can get buried under everything else.',
-    'We started Graphikx to work on that space between **what a product wants to do and what people actually experience**.',
-    'We like taking something complicated and asking:',
-  ],
+  label: 'Why we started',
+  title: 'Good ideas deserve good *experiences.*',
+  intro:
+    'We work on the space between what a product wants to do and what people actually experience. We take something complicated and ask:',
   questions: [
     'What is really necessary here?',
     'What could be clearer?',
     'What would make this easier?',
     'What could disappear?',
   ],
-  afterQuestions: 'Then we make something better from the answers.',
-  statement: "We're interested in the difference a thoughtful design decision can make.",
+  resolution: 'Then we make something *better* from the answers.',
 };
 
 export const beliefs = {
-  eyebrow: 'What we believe',
-  title: 'A few things we keep coming back to.',
+  label: 'What we believe',
+  title: 'A few things we keep *coming back* to.',
   items: [
     {
-      icon: 'users',
       title: 'People first',
-      description:
-        'Design starts with the person trying to get something done.\nNot the screen.\nNot the feature.\nNot the trend.',
+      summary: 'Design starts with the person, not the screen.',
+      detail: 'Not the screen. Not the feature. Not the trend. Design starts with the person trying to get something done.',
     },
     {
-      icon: 'eye',
       title: 'Clarity matters',
-      description:
-        "People shouldn't have to work hard to understand what a product is asking them to do.",
+      summary: 'Nobody should work hard to understand a product.',
+      detail: "People shouldn't have to work hard to understand what a product is asking them to do.",
     },
     {
-      icon: 'minus',
       title: 'Less can be more',
-      description:
-        "Every extra element creates another thing to notice, understand, or decide.\nWe'd rather keep what helps.",
+      summary: 'Keep what helps.',
+      detail: "Every extra element is another thing to notice, understand or decide. We'd rather keep what helps.",
     },
     {
-      icon: 'question',
       title: 'Good design asks questions',
-      description:
-        "We don't believe the first idea is always the right one.\nCuriosity makes room for better answers.",
+      summary: 'The first idea is rarely the right one.',
+      detail: 'Curiosity makes room for better answers than the first one that comes to mind.',
     },
     {
-      icon: 'details',
       title: 'Details add up',
-      description:
-        'A small label.\nA well-timed message.\nA useful empty state.\nA thoughtful transition.\nThe little things shape the whole experience.',
+      summary: 'Small things shape the whole experience.',
+      detail: 'A small label. A well-timed message. A useful empty state. A thoughtful transition. The little things shape the whole.',
     },
     {
-      icon: 'blocks',
       title: 'Systems should help people create',
-      description:
-        "Structure is useful when it gives people a better place to start.\nIt shouldn't take away their ability to think.",
+      summary: 'Structure gives a better place to start.',
+      detail: "Structure is useful when it gives people a better place to start. It shouldn't take away their ability to think.",
     },
   ],
 };
 
 export const howWeWork = {
-  eyebrow: 'How we work',
-  title: "There isn't one right process.\nThere is a right place to start.",
-  paragraphs: [
-    'Every project begins in a different place.',
-    "Sometimes there's an idea.\nSometimes there's a product that has grown messy.\nSometimes there's a flow that isn't working.\nSometimes nobody is quite sure what the problem is yet.",
-    "So we don't begin by forcing everything into a fixed process.",
-    "We begin by understanding what you're trying to do.",
-  ],
+  label: 'How we work',
+  title: "There's no one right process. There's a right place to *start.*",
   steps: [
-    {
-      title: 'Listen',
-      description:
-        "We learn what you're building, who it's for, what matters, and what's getting in the way.",
-    },
-    {
-      title: 'Look closer',
-      description:
-        'We examine the experience, question assumptions, and find the parts that deserve attention.',
-    },
-    {
-      title: 'Explore',
-      description: 'We consider different directions instead of locking onto the first answer.',
-    },
-    {
-      title: 'Make',
-      description:
-        'We turn the strongest ideas into flows, interfaces, interactions, and experiences people can actually try.',
-    },
-    {
-      title: 'Learn',
-      description: "We look at what works, what doesn't, and what needs another pass.",
-    },
-    {
-      title: 'Refine',
-      description:
-        'We keep the useful parts, remove the unnecessary ones, and make the experience feel whole.',
-    },
+    {title: 'Listen', description: "What you're building, who it's for and what's in the way."},
+    {title: 'Look closer', description: 'Question assumptions; find what deserves attention.'},
+    {title: 'Explore', description: 'Different directions, not just the first answer.'},
+    {title: 'Make', description: 'Flows, interfaces and interactions people can try.'},
+    {title: 'Learn', description: "What works, what doesn't, what needs another pass."},
+    {title: 'Refine', description: 'Keep the useful parts until it feels whole.'},
   ],
-  statement: "The process can change. The attention shouldn't.",
 };
 
-export const people = {
-  eyebrow: 'The people',
-  title: 'Just people who care about making things better.',
-  paragraphs: [
-    'Graphikx is built by designers who enjoy looking closely at how things work, and wondering how they could work better.',
-    "We're designers, thinkers, makers, and lifelong question-askers.",
-    "We don't believe in having all the answers before we begin.",
-    'We believe in being curious enough to find them.',
-  ],
-  founder: {
-    /**
-     * If this is ever emptied, the profile is hidden in production and shown
-     * with a placeholder in development.
-     */
-    name: 'Ravi Kumar',
-    role: 'Founder · Product & Design',
-    /** "{name}" is replaced with the founder's name. */
-    bio: [
-      '{name} is interested in the space where products, people, and ideas meet.',
-      'Their work moves between product design, user experience, interfaces, and design systems, always looking for ways to make complicated things feel simpler.',
-    ],
-    quote: 'I like taking things apart until I understand why they feel the way they do.',
-  },
-  team: {
-    title: 'Different minds. One way of looking.',
-    description:
-      "As Graphikx grows, we're building a team around curiosity, craft, and the willingness to ask one more question before settling on an answer.",
-    microcopy: 'People change.\nThe curiosity stays.',
-  },
+export const founder = {
+  label: 'The people',
+  /** If emptied, the profile is hidden. */
+  name: 'Ravi Kumar',
+  role: 'Founder · Product & Design',
+  quote: 'I like taking things apart until I understand why they *feel* the way they do.',
+  bio: 'Ravi works where products, people and ideas meet: product design, user experience, interfaces and design systems, always looking for ways to make complicated things feel simpler.',
+  team: 'As Graphikx grows, we’re building a team around curiosity, craft and the willingness to ask one more question.',
 };
 
 export const currentlyExploring = {
-  eyebrow: 'Currently exploring',
-  title: "We're building some things for ourselves, too.",
-  paragraphs: [
-    'Not every idea needs to become a client project.',
-    'Some ideas are worth exploring simply because they teach us something.',
-    "Right now, we're spending time thinking about:",
-  ],
-  areas: [
+  label: 'Currently exploring',
+  title: "We're building some things for *ourselves,* too.",
+  items: [
     {
       title: 'Graphyene',
-      description:
-        'Our evolving idea around how design systems can help products grow without losing clarity or character.',
+      description: 'How design systems can help products grow without losing clarity or character.',
       action: {label: 'Explore Graphyene', href: '/graphyene'},
     },
     {
       title: 'Better product experiences',
-      description:
-        'Looking closely at the moments where digital products become unnecessarily difficult.',
+      description: 'The moments where digital products become unnecessarily difficult.',
     },
     {
       title: 'Interfaces that explain themselves',
-      description:
-        'Exploring how hierarchy, language, interaction, and motion can help people understand what to do next.',
+      description: 'How hierarchy, language, interaction and motion show people what to do next.',
     },
     {
       title: 'Simpler ways to build',
-      description:
-        'Experimenting with no-code tools and lightweight ways to turn ideas into experiences quickly.',
+      description: 'No-code tools and lightweight ways to turn ideas into experiences quickly.',
     },
   ],
-  statement: "We're not waiting for the perfect project to learn.",
-};
-
-export const outsideTheWork = {
-  eyebrow: 'Outside the work',
-  title: 'Design is what we do.\nCuriosity is what keeps us going.',
-  paragraphs: ['We notice things.'],
-  noticing: [
-    'Why one app feels easier than another.',
-    'Why a tiny interaction feels satisfying.',
-    'Why some products feel calm and others feel exhausting.',
-    'Why a system that looks organised can still be difficult to use.',
-  ],
-  afterNoticing: 'Those observations find their way into our work.',
-  outcomes: [
-    'Sometimes they become a design decision.',
-    'Sometimes an experiment.',
-    'Sometimes just a conversation.',
-  ],
-  microcopy: "We're okay with not knowing yet.",
 };
 
 export const mascotMoment = {
-  eyebrow: "One of the things we've learned",
+  label: "One thing we've learned",
   frames: ['Do we have the answer?', 'Not yet.', "Good. Let's keep looking."],
-  microcopy: 'Curiosity is part of the craft.',
 };
 
 export const closing = {
-  title: "We're still figuring things out.",
-  description:
-    "And that's exactly how we like it.\nBecause every good product starts with something that isn't clear yet.\n\nA question. A problem. An idea. A possibility.\n\nThat's where we come in.",
-  action: {label: 'Start a project', href: '/start-a-project'},
-  secondaryAction: {label: "See what we're thinking", href: '/thinking'},
+  title: "We're still figuring things *out.*",
+  note: "And that's exactly how we like it.",
 };

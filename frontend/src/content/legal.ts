@@ -18,13 +18,13 @@ export const privacy: LegalPage = {
   title: 'Your details stay with Graphikx.',
   intro:
     'This page explains what information this website collects, why, and what happens to it. We keep it short because we collect very little.',
-  updated: '2026-10-02',
+  updated: '2026-10-04',
   sections: [
     {
       heading: 'What we collect',
       paragraphs: [
         'When you send a project enquiry, we receive what you type into the form: your name, email address, and anything you choose to tell us about your company, product, or project.',
-        'We do not use analytics, advertising, or tracking cookies on this website.',
+        'We count page visits with Vercel Web Analytics, which does not use cookies and does not identify you personally. We do not use advertising or tracking cookies.',
       ],
     },
     {
@@ -38,6 +38,7 @@ export const privacy: LegalPage = {
       paragraphs: [
         'Your enquiry is sent to the Graphikx team by email, so it is stored by our email provider as well as by us.',
         'This website loads its typefaces from Google Fonts, which means your browser requests them from Google’s servers.',
+        'The website is hosted on Vercel, which also processes the anonymous visit counts described above.',
       ],
     },
     {

@@ -57,13 +57,13 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
     // Next.js jump instantly between pages (see ScrollManager).
     <html lang="en" data-astryx-theme="graphikx" data-scroll-behavior="smooth">
       <head>
-        {/* Typefaces used by the Astryx Stone theme. The root layout covers every page. */}
+        {/* Typefaces: IBM Plex Sans headings and body, IBM Plex Mono eyebrows, Instrument Serif accent words. */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         {/* eslint-disable-next-line @next/next/no-page-custom-font */}
         <link
           rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Figtree:wght@400..700&family=JetBrains+Mono:wght@400;500&family=Montserrat:wght@400..700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400..700;1,400&family=Instrument+Serif:ital@0;1&display=swap"
         />
       </head>
       <body>

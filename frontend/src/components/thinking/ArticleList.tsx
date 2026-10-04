@@ -3,29 +3,27 @@
 import {useState} from 'react';
 import {useSearchParams} from 'next/navigation';
 import {AnimatePresence} from 'framer-motion';
-import {VStack} from '@astryxdesign/core/Layout';
-import {Grid} from '@astryxdesign/core/Grid';
+import {VStack, HStack} from '@astryxdesign/core/Layout';
 import {Heading} from '@astryxdesign/core/Heading';
 import {Text} from '@astryxdesign/core/Text';
 import {MotionVStack} from '@/components/motion/Motion';
+import {ArticleRows} from '@/components/editorial/ArticleRows';
 import {expressive, springs} from '@/motion/springs';
-import {ArticleCard} from './ArticleCard';
 import {ALL_CATEGORIES, CategoryFilter} from './CategoryFilter';
 import type {Article} from '@/content/articles';
 import {typeRole} from '@/theme/typeScale';
-
-type EmptyCategoryCopy = {title: string; description: string; microcopy: string};
+import {EYEBROW_STYLE} from '@/theme/eyebrow';
 
 type ArticleListProps = {
   articles: Article[];
   categories: readonly string[];
-  emptyCategory: EmptyCategoryCopy;
+  emptyCategory: {title: string; description: string};
 };
 
 /**
- * Filterable grid of Thinking articles; cards spring into their new positions.
- * The category can be preset with ?category=..., and the URL follows the filter
- * so a filtered view can be shared.
+ * Filterable Thinking articles as large editorial rows. The category can be
+ * preset with ?category=..., and the URL follows the filter so a filtered view
+ * can be shared.
  */
 export function ArticleList({articles, categories, emptyCategory}: ArticleListProps) {
   const searchParams = useSearchParams();
@@ -50,55 +48,31 @@ export function ArticleList({articles, categories, emptyCategory}: ArticleListPr
   return (
     <VStack gap={6}>
       <CategoryFilter categories={categories} value={category} onChange={selectCategory} />
+      <HStack>
+        <Text type="supporting" color="secondary" role="status" style={EYEBROW_STYLE}>
+          {String(visible.length).padStart(2, '0')} {visible.length === 1 ? 'article' : 'articles'}
+        </Text>
+      </HStack>
       <AnimatePresence mode="wait" initial={false}>
-        {visible.length === 0 ? (
-          <MotionVStack
-            key={`empty-${category}`}
-            gap={3}
-            hAlign="center"
-            paddingBlock={10}
-            role="status"
-            initial={{opacity: 0, y: 16}}
-            animate={{opacity: 1, y: 0}}
-            exit={{opacity: 0, transition: springs.effects.fast}}
-            transition={expressive('default')}>
-            <Heading level={3} style={typeRole('headline-l')} justify="center">
-              {emptyCategory.title}
-            </Heading>
-            <Text type="large" color="secondary" justify="center">
-              {emptyCategory.description}
-            </Text>
-            <Text type="supporting" justify="center">
-              {emptyCategory.microcopy}
-            </Text>
-          </MotionVStack>
-        ) : (
-          <MotionVStack
-            key="grid"
-            initial={{opacity: 0}}
-            animate={{opacity: 1}}
-            exit={{opacity: 0, transition: springs.effects.fast}}
-            transition={springs.effects.default}>
-            <Grid columns={{minWidth: 300}} gap={4}>
-              <AnimatePresence mode="popLayout">
-                {visible.map((article, index) => (
-                  <MotionVStack
-                    key={article.slug}
-                    layout
-                    initial={{opacity: 0, scale: 0.94, y: 16}}
-                    animate={{opacity: 1, scale: 1, y: 0}}
-                    exit={{opacity: 0, scale: 0.94, transition: springs.effects.fast}}
-                    transition={{
-                      ...expressive('default', 0.04 * index),
-                      layout: springs.spatial.default,
-                    }}>
-                    <ArticleCard article={article} />
-                  </MotionVStack>
-                ))}
-              </AnimatePresence>
-            </Grid>
-          </MotionVStack>
-        )}
+        <MotionVStack
+          key={category}
+          initial={{opacity: 0, y: 16}}
+          animate={{opacity: 1, y: 0}}
+          exit={{opacity: 0, transition: springs.effects.fast}}
+          transition={expressive('default')}>
+          {visible.length === 0 ? (
+            <VStack gap={3} paddingBlock={10} style={{borderBlock: '1px solid var(--color-border)'}}>
+              <Heading level={3} style={typeRole('headline-l')}>
+                {emptyCategory.title}
+              </Heading>
+              <Text type="large" color="secondary">
+                {emptyCategory.description}
+              </Text>
+            </VStack>
+          ) : (
+            <ArticleRows articles={visible} />
+          )}
+        </MotionVStack>
       </AnimatePresence>
     </VStack>
   );

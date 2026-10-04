@@ -2,44 +2,37 @@ import {capabilities} from './practice';
 
 export type FieldCopy = {label: string; hint: string};
 
-/**
- * Enquiry form copy. "short" is the homepage form; "full" is the Start a
- * Project page, which asks a little more.
- */
+/** Enquiry form copy, for the three-step form on Start a Project. */
 export const formCopy = {
-  short: {
-    name: {label: 'Your name', hint: 'How should we call you?'},
-    email: {label: 'Email', hint: 'Where can we reach you?'},
-    company: {label: 'Company / product', hint: 'What are you working on?'},
-    message: {
-      label: 'Tell us about it',
-      hint: "What's happening, and what would you like to improve?",
-    },
-    timeline: {label: 'Timeline', hint: 'When are you hoping to start?'},
-    microcopy: 'No polished brief needed.',
+  name: {label: 'Your name', hint: 'What should we call you?'},
+  email: {label: 'Email address', hint: 'Where can we reach you?'},
+  company: {label: 'Company / Product', hint: 'What are you building?'},
+  message: {
+    label: 'What are you working on?',
+    hint: 'Tell us a little about the product, idea, or problem.',
   },
-  full: {
-    name: {label: 'Your name', hint: 'What should we call you?'},
-    email: {label: 'Email address', hint: 'Where can we reach you?'},
-    company: {label: 'Company / Product', hint: 'What are you building?'},
-    message: {
-      label: 'What are you working on?',
-      hint: 'Tell us a little about the product, idea, or problem.',
-    },
-    helpWith: {label: 'What would you like help with?', hint: 'Choose what feels closest:'},
-    difficulty: {
-      label: 'What feels difficult right now?',
-      hint: "What isn't working, or what are you trying to improve?",
-    },
-    stage: {label: 'Where are you right now?', hint: ''},
-    timeline: {label: 'When are you looking to start?', hint: ''},
-    notes: {label: 'Anything else you think we should know?', hint: ''},
-    microcopy: "By sending this, you're starting a conversation. Nothing more.",
-    privacy: 'Your details stay with Graphikx and are used only to respond to your enquiry.',
-    privacyLink: {label: 'Privacy', href: '/privacy'},
+  helpWith: {label: 'What would you like help with?', hint: 'Choose what feels closest:'},
+  difficulty: {
+    label: 'What feels difficult right now?',
+    hint: "What isn't working, or what are you trying to improve?",
   },
+  stage: {label: 'Where are you right now?'},
+  timeline: {label: 'When are you looking to start?'},
+  notes: {label: 'Anything else you think we should know?'},
+  next: 'Continue',
+  back: 'Back',
   submit: "Let's make sense of it",
+  microcopy: "By sending this, you're starting a conversation. Nothing more.",
+  privacy: 'Your details stay with Graphikx and are used only to respond to your enquiry.',
+  privacyLink: {label: 'Privacy', href: '/privacy'},
 };
+
+/** The three steps, in order. */
+export const formSteps = [
+  {title: 'About you', description: 'So we know who we’re talking to.'},
+  {title: 'The project', description: 'In your own words. Rough is fine.'},
+  {title: 'Where you are', description: 'A little context helps us prepare.'},
+] as const;
 
 export const NOT_SURE = 'Not sure yet';
 
@@ -70,23 +63,9 @@ export const notSureHelper = {
     "Tell us what's happening in your own words.\nYou don't need to choose a service first.",
 };
 
-/** A visual interruption between fields that lowers the stakes. */
-export const humanNudge = {
-  title: "Don't overthink this.",
-  description:
-    "Write it the way you'd explain it to a person.\nYou can send us a rough thought.\nWe'll ask questions if we need more.",
-  microcopy: 'Honestly is more useful than impressive.',
-};
-
-export const beforeSubmitting = {
-  eyebrow: 'One last thing',
-  title: 'Start where you are.',
-  paragraphs: [
-    "You don't need to know exactly what you need from us.",
-    "We'll use the first conversation to understand the problem, explore what might help, and figure out whether Graphikx is the right fit.",
-  ],
-  microcopy: 'No pressure. No hard sell. Just a conversation.',
-};
+/** Shown at the top of the project step to lower the stakes. "*word*" sets the accent. */
+export const humanNudge =
+  "Don't *overthink* this. Write it the way you'd explain it to a person; we'll ask if we need more.";
 
 export const confirmation = {
   eyebrow: 'We got it',
@@ -101,35 +80,48 @@ export const confirmation = {
   secondaryAction: {label: 'Keep exploring Thinking', href: '/thinking'},
 };
 
+/** Start a Project page copy, in page order. "*word*" sets the italic serif accent. */
 export const startProjectPage = {
-  opening: {
-    eyebrow: 'Start a project',
-    title: "You don't need a perfect brief.",
-    lines: [
-      'Bring us the idea.',
-      'The problem.',
-      'The half-finished thought.',
-      "The flow that isn't working.",
-      "Or simply the thing you're trying to figure out.",
-    ],
-    closing: "We'll start from there.",
-    microcopy: 'No polished presentation. No perfect wording. Just tell us what’s going on.',
+  hero: {
+    label: 'Start a project',
+    title: "You don't need a perfect *brief.*",
+    description:
+      "Bring us the idea, the problem, or the half-finished thought. We'll start from there.",
+    meta: ['3 short steps', 'No polished brief', 'Just a conversation'],
   },
   enquiry: {
     id: 'enquiry',
-    eyebrow: 'Tell us a little',
-    title: 'What are you working on?',
-    description: 'A few details help us understand where you are and what might be useful.',
+    label: 'Tell us a little',
+    title: 'What are you *working on?*',
+    intro: 'A few details help us understand where you are and what might be useful.',
+    contactLabel: 'Prefer email?',
+  },
+  faq: {
+    label: 'Before you ask',
+    title: 'A few things worth *knowing.*',
+    items: [
+      {
+        question: 'What happens after I send this?',
+        answer: "We'll take a look at your note and get back to you with the next step.",
+      },
+      {
+        question: 'Do I need to know which service I need?',
+        answer: "No. Tell us what's happening in your own words. You don't need to choose a service first.",
+      },
+      {
+        question: 'Is this a commitment?',
+        answer:
+          "No. By sending this, you're starting a conversation. We'll use it to understand the problem and figure out whether Graphikx is the right fit.",
+      },
+      {
+        question: 'What do you do with my details?',
+        answer: 'They stay with Graphikx and are used only to respond to your enquiry.',
+      },
+    ],
   },
   closing: {
-    title: 'Every project starts somewhere.',
-    lines: [
-      'Sometimes with a clear direction.',
-      'Sometimes with a messy problem.',
-      'Sometimes with just:',
-    ],
-    quote: '“Something isn’t working.”',
-    enough: "That's enough.",
-    action: {label: 'Start the conversation', href: '#enquiry'},
+    label: 'Every project starts somewhere',
+    title: 'Sometimes with just “something isn’t *working.*”',
+    note: "That's enough.",
   },
 };

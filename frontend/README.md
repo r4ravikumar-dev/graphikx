@@ -1,4 +1,4 @@
-# Graphikx — Frontend
+# Graphikx · Frontend
 
 The Graphikx website, built with Next.js (App Router), the [Astryx](https://astryx.atmeta.com) design system with the Stone theme, and Framer Motion.
 

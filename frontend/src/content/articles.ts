@@ -411,57 +411,43 @@ export function formatArticleMonthLong(iso: string): string {
   return toDate(iso).toLocaleDateString('en-GB', {month: 'long', year: 'numeric', timeZone: 'UTC'});
 }
 
+/** Thinking page and article page copy. "*word*" sets the italic serif accent. */
 export const thinkingPage = {
-  opening: {
-    eyebrow: 'Thinking',
-    title: 'We like to think about the things people usually overlook.',
-    details: [
-      'The pause before a click.',
-      'The screen that asks for one thing too many.',
-      'The pattern that keeps getting redesigned.',
-      'The tiny interaction that changes how a product feels.',
-    ],
-    paragraphs: [
-      'Thinking is where we explore those details.',
-      'Short observations, deeper ideas, experiments, and questions from the world of digital product design.',
-    ],
-    microcopy: 'Not everything needs an answer. Some things need a better question.',
+  hero: {
+    label: 'Thinking',
+    title: 'The things people usually *overlook.*',
+    description:
+      'Short observations, deeper ideas and open questions from the world of digital product design.',
+  },
+  manifesto: {
+    label: 'What we look at',
+    text: 'The pause before a click. The screen that asks for one thing too *many.* The pattern that keeps getting redesigned. The tiny interaction that changes how a product *feels.*',
   },
   featured: {
-    eyebrow: 'Worth a look',
-    title: 'Start with a question.',
-    intro: 'Some of our thoughts begin with something very simple:',
-    questions: [
-      'Why does this feel difficult?',
-      'Why does this pattern keep appearing?',
-      'Could this work another way?',
-    ],
-    closing: 'These are the questions we follow.',
+    label: 'Worth a look',
     slug: 'why-dashboards-feel-harder',
     actionLabel: 'Read the thinking',
   },
   all: {
-    eyebrow: 'All thinking',
-    title: 'Ideas worth spending a few minutes with.',
-    description:
-      'Browse our notes, observations, and explorations across product design, UX, UI, interaction, SaaS, design systems, and no-code.',
+    label: 'All thinking',
+    title: 'Ideas worth a few *minutes.*',
   },
   emptyCategory: {
     title: 'Coming into focus',
-    description: "We're still collecting our thoughts here.",
-    microcopy: 'More ideas are on the way.',
+    description: "We're still collecting our thoughts here. More ideas are on the way.",
   },
-  invitation: {
-    title: "Have a question we've missed?",
-    description:
-      "We're always interested in the parts of a product that make you stop and think.\nSend us yours.",
-    action: {label: 'Start a conversation', href: '/start-a-project'},
-    microcopy: 'A rough question is perfectly fine.',
+  closing: {
+    label: 'Start a conversation',
+    title: "Have a question we've *missed?*",
+    note: 'A rough question is perfectly fine.',
   },
-  articleInvitation: {
-    title: 'Have a product problem on your mind?',
-    description: "You don't need to turn it into a perfect brief.\nTell us what's happening.",
-    action: {label: "Let's make sense of it", href: '/start-a-project'},
+  article: {
+    back: 'All thinking',
+    related: {label: 'Keep thinking', title: 'You might also *like* these.'},
+    closing: {
+      label: 'Start a conversation',
+      title: 'Have a product problem on your *mind?*',
+      note: "You don't need a perfect brief. Tell us what's happening.",
+    },
   },
-  related: {eyebrow: 'Keep thinking', title: 'You might also like these.'},
 };
