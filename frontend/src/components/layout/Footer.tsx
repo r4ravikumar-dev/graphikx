@@ -157,7 +157,9 @@ export function Footer() {
         gap={0}
         aria-hidden
         style={{marginBlockStart: 'var(--space-block)', paddingBlockEnd: 'var(--space-block)'}}>
-        <Logo isFluid />
+        <VStack className="footer-wordmark-fade">
+          <Logo isFluid />
+        </VStack>
       </Container>
     </VStack>
   );

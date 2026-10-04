@@ -565,7 +565,7 @@ html {
   color: var(--color-text-primary);
 }
 .loader-orbits {
-  inline-size: min(56vw, 240px);
+  inline-size: min(28vw, 112px);
   block-size: auto;
   overflow: visible;
   /* A slow, linear settle over the full 1.4s: no snap, no bounce. */
@@ -579,13 +579,14 @@ html {
 .loader-ring {
   fill: none;
   stroke: var(--color-text-secondary);
-  stroke-opacity: 0.7;
+  stroke-opacity: 0.6;
   stroke-width: 1px;
   vector-effect: non-scaling-stroke;
 }
+/* Slow and linear, like the illustration loops. The viewBox is centred on
+   0,0, so that is the point the dot circles. */
 .loader-orbit {
-  animation: loader-orbit linear infinite;
-  /* The viewBox is centred on 0,0, so that is the core every ring turns around. */
+  animation: loader-orbit 3s linear infinite;
   transform-box: view-box;
   transform-origin: 0 0;
 }
@@ -595,34 +596,15 @@ html {
 .loader-planet {
   fill: var(--color-text-primary);
 }
-.loader-planet.is-outline {
-  fill: none;
-  stroke: var(--color-text-primary);
-  stroke-width: 1.2;
-  stroke-linejoin: round;
-}
 .loader-core {
   fill: var(--color-brand-text);
 }
-.loader-core-halo {
-  fill: none;
-  stroke: var(--color-brand-text);
-  stroke-width: 1;
-  transform-box: fill-box;
-  transform-origin: center;
-  animation: loader-halo 3s cubic-bezier(0.2, 0, 0, 1) infinite;
-}
-@keyframes loader-halo {
-  0% { transform: scale(1); opacity: 0.7; }
-  100% { transform: scale(2.8); opacity: 0; }
-}
-.loader-star {
-  fill: var(--color-text-secondary);
-  animation: loader-twinkle 2.4s ease-in-out infinite alternate;
-}
-@keyframes loader-twinkle {
-  from { opacity: 0.15; }
-  to { opacity: 0.8; }
+
+/* Footer wordmark: fades from full strength at the top to 10% at the bottom.
+   A mask keeps the logo's own theme colours in light and dark mode. */
+.footer-wordmark-fade {
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, rgb(0 0 0 / 0.1) 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, rgb(0 0 0 / 0.1) 100%);
 }
 
 /* ---------- Custom cursor (components/navigation/CustomCursor) ---------- */
