@@ -123,10 +123,19 @@ type TravelProps = {
   shape?: 'comet' | 'dot';
   /** Line thickness, for drawing at smaller sizes. Defaults to 3 (comet) or 9 (dot). */
   thickness?: number;
+  /** Constant speed instead of easing in and out, for scenes that sync to it. */
+  isLinear?: boolean;
 };
 
 /** A blue mark that travels along a path, forever (the .ill-travel loop). */
-export function Travel({d, duration = 9, delay = 0, shape = 'comet', thickness}: TravelProps) {
+export function Travel({
+  d,
+  duration = 9,
+  delay = 0,
+  shape = 'comet',
+  thickness,
+  isLinear = false,
+}: TravelProps) {
   return (
     <path
       className="ill-loop ill-travel"
@@ -137,7 +146,11 @@ export function Travel({d, duration = 9, delay = 0, shape = 'comet', thickness}:
       strokeWidth={thickness ?? (shape === 'dot' ? 9 : 3)}
       strokeLinecap="round"
       strokeDasharray={shape === 'dot' ? '0.0001 1.9999' : '0.08 1.92'}
-      style={{animationDuration: `${duration}s`, animationDelay: `${delay}s`}}
+      style={{
+        animationDuration: `${duration}s`,
+        animationDelay: `${delay}s`,
+        animationTimingFunction: isLinear ? 'linear' : undefined,
+      }}
     />
   );
 }

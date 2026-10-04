@@ -236,32 +236,6 @@ export const practicePage = {
       {title: 'Refine', description: "Keep what's useful. Remove what isn't helping."},
     ],
   },
-  faq: {
-    label: 'Questions',
-    title: 'Things people often *ask.*',
-    items: [
-      {
-        question: 'Do I need a detailed brief?',
-        answer:
-          "No. Bring the idea, the problem or the half-finished thought. We'll use the first conversation to understand it.",
-      },
-      {
-        question: "What if I don't know which discipline I need?",
-        answer:
-          "That's fine. Tell us what's happening in your own words. You don't need to choose a service first.",
-      },
-      {
-        question: 'Can you work on a product that already exists?',
-        answer:
-          "Yes. That's what UX Flow Revamp is for: we find where people get stuck and reshape the experience around what matters most.",
-      },
-      {
-        question: 'Do you only design, or build too?',
-        answer:
-          'We design, and we use no-code tools like Framer and Webflow to turn ideas into experiences people can click, explore and test.',
-      },
-    ],
-  },
   closing: {
     title: "Something feels difficult. Let's make *sense* of it.",
     note: 'No perfect brief required.',

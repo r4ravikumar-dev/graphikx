@@ -1,4 +1,6 @@
 import type {Metadata} from 'next';
+import {PageFaq} from '@/components/editorial/PageFaq';
+import {thinkingFaq} from '@/content/faqs';
 import {Suspense} from 'react';
 import {VStack} from '@astryxdesign/core/Layout';
 import {Reveal} from '@/components/motion/Reveal';
@@ -28,7 +30,13 @@ export default function ThinkingPage() {
     <VStack gap={0}>
       <EditorialHero
         {...hero}
-        meta={[`${articles.length} articles`, `${articleCategories.length} topics`, 'Product', 'UX', 'Systems']}
+        meta={[
+          `${articles.length} articles`,
+          `${articleCategories.length} topics`,
+          'Product',
+          'UX',
+          'Systems',
+        ]}
         illustration={<ThinkingLens />}
       />
 
@@ -43,7 +51,12 @@ export default function ThinkingPage() {
       {/* 01: Featured article, on the muted surface. */}
       {featuredArticle && (
         <Chapter tone="muted" label={featured.label}>
-          <FeaturedArticle index={1} label={featured.label} article={featuredArticle} actionLabel={featured.actionLabel} />
+          <FeaturedArticle
+            index={1}
+            label={featured.label}
+            article={featuredArticle}
+            actionLabel={featured.actionLabel}
+          />
         </Chapter>
       )}
 
@@ -51,9 +64,16 @@ export default function ThinkingPage() {
       <Chapter label={all.label}>
         <ChapterHeader index={2} label={all.label} title={all.title} />
         <Suspense>
-          <ArticleList articles={articles} categories={articleCategories} emptyCategory={emptyCategory} />
+          <ArticleList
+            articles={articles}
+            categories={articleCategories}
+            emptyCategory={emptyCategory}
+          />
         </Suspense>
       </Chapter>
+
+      {/* 03: About these ideas. */}
+      <PageFaq group={thinkingFaq} index={3} tone="muted" />
 
       <BigStatement {...closing} />
     </VStack>

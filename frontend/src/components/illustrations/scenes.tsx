@@ -108,8 +108,19 @@ export function SystemBlocks({label, maxWidth = 440}: SceneProps) {
     if (kind === 1) return `M${cx - 16} ${cy - 16} h32 v32 h-32 Z`;
     return `M${cx} ${cy - 18} L${cx + 18} ${cy + 14} L${cx - 18} ${cy + 14} Z`;
   };
-  const steps = order.length;
-  const stepSeconds = 1.2;
+  const duration = 10.8;
+  // Each shape lights up the moment the comet's head reaches it. The comet
+  // moves at a constant speed and its head runs from 0 to 1.08 of the path
+  // (its 0.08 tail has to leave the end too), so a shape's start time is its
+  // distance along the snake, as a share of the whole, over 1.08.
+  const points = order.map(([row, col]) => [x(col), y(row)] as const);
+  const distances = points.map((_, index) =>
+    points
+      .slice(1, index + 1)
+      .reduce((sum, [px, py], k) => sum + Math.hypot(px - points[k]![0], py - points[k]![1]), 0),
+  );
+  const total = distances[distances.length - 1]!;
+  const arrival = (index: number) => ((distances[index]! / total / 1.08) * duration).toFixed(2);
   return (
     <Illustration viewBox="0 0 400 300" label={label} maxWidth={maxWidth}>
       <Stroke
@@ -118,12 +129,12 @@ export function SystemBlocks({label, maxWidth = 440}: SceneProps) {
         stroke={MUTED}
         d="M80 60 H 320 M 80 150 H 320 M 80 240 H 320 M 80 60 V 240 M 200 60 V 240 M 320 60 V 240"
       />
-      <Travel d={snake} duration={steps * stepSeconds} />
+      <Travel d={snake} duration={duration} isLinear />
       {order.map(([row, col], index) => (
         <g key={`${row}-${col}`}>
           <Surface order={2 + index} d={shapePath(row, col)} />
           <Stroke order={2 + index} d={shapePath(row, col)} />
-          {/* The highlight: a blue copy that lights up as the pulse passes. */}
+          {/* The highlight: a blue copy that lights up as the comet arrives. */}
           <path
             className="ill-loop ill-blink"
             d={shapePath(row, col)}
@@ -133,8 +144,8 @@ export function SystemBlocks({label, maxWidth = 440}: SceneProps) {
             strokeWidth={1.75}
             strokeLinejoin="round"
             style={{
-              animationDuration: `${steps * stepSeconds}s`,
-              animationDelay: `${index * stepSeconds - 0.3}s`,
+              animationDuration: `${duration}s`,
+              animationDelay: `${arrival(index)}s`,
             }}
           />
         </g>
@@ -452,6 +463,111 @@ export function FounderPortrait({label, maxWidth = 360}: SceneProps) {
           on: {opacity: 1, transition: {duration: 1.2, delay: 0.2}},
         }}
       />
+    </Illustration>
+  );
+}
+
+/**
+ * Privacy: your details, kept safe. A shield with a blue lock inside a dashed
+ * boundary. In the loop a comet circles the boundary, the lock floats gently
+ * and the keyhole pulses.
+ */
+export function PrivacyShield({label, maxWidth = 380}: SceneProps) {
+  const ring = 'M90 150 a110 110 0 1 0 220 0 a110 110 0 1 0 -220 0';
+  const shield =
+    'M200 62 C 228 78, 256 84, 282 84 V 150 C 282 196, 246 226, 200 242 C 154 226, 118 196, 118 150 V 84 C 144 84, 172 78, 200 62 Z';
+  const lock =
+    'M182 140 h36 a6 6 0 0 1 6 6 v28 a6 6 0 0 1 -6 6 h-36 a6 6 0 0 1 -6 -6 v-28 a6 6 0 0 1 6 -6 Z';
+  return (
+    <Illustration viewBox="0 0 400 300" label={label} maxWidth={maxWidth}>
+      <Stroke order={0} weight="fine" stroke={MUTED} strokeDasharray="2 6" d={ring} />
+      <Travel d={ring} duration={16} thickness={2.5} />
+      <Surface order={1} d={shield} />
+      <Stroke order={1} d={shield} />
+      <Stroke order={2} weight="fine" stroke={MUTED} d="M200 78 C 222 90, 244 96, 266 97" />
+      <g className="ill-loop ill-float" style={{['--float' as string]: '4px'}}>
+        <Surface order={3} d={lock} />
+        <Stroke order={3} stroke={ACCENT} d="M188 140 V 128 a12 12 0 0 1 24 0 V 140" />
+        <Stroke order={3} stroke={ACCENT} d={lock} />
+        <Pulse cx={200} cy={156} r={4} delay={0.6} />
+        <Dot order={4} cx={200} cy={156} r={4} />
+        <Stroke order={4} stroke={ACCENT} d="M200 160 v8" />
+      </g>
+    </Illustration>
+  );
+}
+
+/**
+ * Terms: an agreement, plainly kept. A document with a short checklist, two
+ * items ticked in blue, and a signature being written. In the loop a pulse
+ * runs along the signature and the pen floats.
+ */
+export function TermsDocument({label, maxWidth = 380}: SceneProps) {
+  const back =
+    'M160 52 h150 a10 10 0 0 1 10 10 v190 a10 10 0 0 1 -10 10 h-150 a10 10 0 0 1 -10 -10 v-190 a10 10 0 0 1 10 -10 Z';
+  const front =
+    'M130 40 h150 a10 10 0 0 1 10 10 v200 a10 10 0 0 1 -10 10 h-150 a10 10 0 0 1 -10 -10 v-200 a10 10 0 0 1 10 -10 Z';
+  const box = (y: number) =>
+    `M144 ${y - 8} h12 a2 2 0 0 1 2 2 v12 a2 2 0 0 1 -2 2 h-12 a2 2 0 0 1 -2 -2 v-12 a2 2 0 0 1 2 -2 Z`;
+  const signature = 'M142 222 C 152 204, 162 236, 174 218 S 192 206, 200 222 S 222 226, 238 212';
+  return (
+    <Illustration viewBox="0 0 400 300" label={label} maxWidth={maxWidth}>
+      <Surface order={0} d={back} />
+      <Stroke order={0} weight="fine" stroke={MUTED} d={back} />
+      <Surface order={1} d={front} />
+      <Stroke order={1} d={front} />
+      <Stroke order={2} d="M142 68 h80" />
+      <Stroke order={2} weight="fine" stroke={MUTED} d="M142 84 h126" />
+      {[112, 140, 168].map((y, index) => (
+        <g key={y}>
+          <Stroke order={3} stroke={index < 2 ? ACCENT : undefined} d={box(y)} />
+          {index < 2 && <Stroke order={4} stroke={ACCENT} d={`M146 ${y} l3 3 l6 -7`} />}
+          <Stroke
+            order={3}
+            weight="fine"
+            stroke={MUTED}
+            d={`M168 ${y} h${index === 1 ? 70 : 96}`}
+          />
+        </g>
+      ))}
+      <Stroke order={4} weight="fine" stroke={MUTED} d="M142 238 h126" />
+      <Stroke order={5} stroke={ACCENT} d={signature} />
+      <Travel d={signature} duration={6} thickness={2.5} />
+      <g className="ill-loop ill-float" style={{['--float' as string]: '5px'}}>
+        <Stroke
+          order={6}
+          d="M242 208 L 266 172 L 274 178 L 250 214 Z M242 208 L 238 220 L 250 214"
+        />
+      </g>
+    </Illustration>
+  );
+}
+
+/**
+ * Questions, answered: a question on the left, a short answer on the right
+ * and a dotted line between them. In the loop the question floats and
+ * pulses, and a dot carries it along the line to the answer.
+ */
+export function FaqQuestion({label, maxWidth = 340}: SceneProps) {
+  const question = 'M66 120 a44 44 0 1 0 88 0 a44 44 0 1 0 -88 0';
+  const answer =
+    'M248 88 h76 a12 12 0 0 1 12 12 v40 a12 12 0 0 1 -12 12 h-76 a12 12 0 0 1 -12 -12 v-40 a12 12 0 0 1 12 -12 Z';
+  const line = 'M160 120 H 230';
+  return (
+    <Illustration viewBox="0 0 400 240" label={label} maxWidth={maxWidth}>
+      <g className="ill-loop ill-float" style={{['--float' as string]: '4px'}}>
+        <Pulse cx={110} cy={120} r={44} delay={1} />
+        <Surface order={0} d={question} />
+        <Stroke order={0} d={question} />
+        <Stroke order={1} stroke={ACCENT} strokeWidth={3} d="M98 108 a12 12 0 1 1 15 12 v9" />
+        <Dot order={2} cx={113} cy={142} r={3} />
+      </g>
+      <Stroke order={2} weight="fine" stroke={MUTED} strokeDasharray="2 6" d={line} />
+      <Travel d={line} duration={4} shape="dot" thickness={6} />
+      <Surface order={3} d={answer} />
+      <Stroke order={3} stroke={ACCENT} d={answer} />
+      <Stroke order={4} d="M254 112 h64" />
+      <Stroke order={4} weight="fine" stroke={MUTED} d="M254 128 h44" />
     </Illustration>
   );
 }

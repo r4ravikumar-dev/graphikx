@@ -456,6 +456,51 @@ html {
   }
 }
 
+/* Privacy and Terms header: text left, illustration on the right content
+   edge from 1024px; stacked, illustration below, on smaller screens. */
+.legal-header {
+  align-items: center;
+}
+.legal-header-art {
+  align-items: flex-start;
+}
+@media (min-width: 1024px) {
+  .legal-header {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  }
+  .legal-header-art {
+    align-items: flex-end;
+  }
+}
+
+/* Legal pages read like documents: lists with small brand-blue square
+   markers, and plain-words callouts on a brand-blue hairline. */
+.legal-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.legal-list > li {
+  position: relative;
+  padding-inline-start: var(--spacing-6);
+}
+.legal-list > li::before {
+  content: '';
+  position: absolute;
+  inset-inline-start: var(--spacing-1);
+  inset-block-start: 0.7em;
+  inline-size: 6px;
+  block-size: 6px;
+  border-radius: 1px;
+  background: var(--color-brand-text);
+}
+.legal-note {
+  margin: var(--spacing-2) 0 0;
+  padding-inline-start: var(--spacing-5);
+  border-inline-start: 2px solid var(--color-brand-text);
+  color: var(--color-text-primary);
+}
+
 /* BigStatement email: underline grows on hover. */
 .giant-email {
   color: var(--color-text-primary);

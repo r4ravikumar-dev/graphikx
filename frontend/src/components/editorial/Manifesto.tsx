@@ -10,6 +10,8 @@ type ManifestoProps = {
   /** "*word*" marks a keyword: the italic serif accent, in brand blue once lit. "\n" breaks a line. */
   text: string;
   level?: 2 | 3;
+  /** Centre the paragraph in the column (Home and Studio). */
+  isCentered?: boolean;
 };
 
 type Token = {word: string; isKeyword: boolean; position: number} | {lineBreak: true};
@@ -60,7 +62,7 @@ function Word({
  * viewport, so the reader's pace sets the rhythm. Nothing plays on its own.
  * Screen readers and reduced-motion users get the plain, fully lit text.
  */
-export function Manifesto({text, level = 2}: ManifestoProps) {
+export function Manifesto({text, level = 2, isCentered = false}: ManifestoProps) {
   const ref = useRef<HTMLHeadingElement>(null);
   const reduceMotion = useReducedMotion();
   const {scrollYProgress} = useScroll({target: ref, offset: ['start 85%', 'end 45%']});
@@ -72,15 +74,18 @@ export function Manifesto({text, level = 2}: ManifestoProps) {
       ref={ref}
       level={level}
       textWrap="pretty"
-      style={{...typeRole('display-m'), letterSpacing: '-0.02em', maxInlineSize: '24ch'}}>
+      style={{
+        ...typeRole('display-m'),
+        letterSpacing: '-0.02em',
+        maxInlineSize: '24ch',
+        ...(isCentered && {textAlign: 'center', marginInline: 'auto'}),
+      }}>
       {tokens.map((token, index) => {
         if ('lineBreak' in token) return <br key={`br-${index}`} />;
         const start = token.position / wordCount;
         if (reduceMotion) {
           return (
-            <span
-              key={index}
-              style={token.isKeyword ? keywordStyle : undefined}>
+            <span key={index} style={token.isKeyword ? keywordStyle : undefined}>
               {token.word}{' '}
             </span>
           );

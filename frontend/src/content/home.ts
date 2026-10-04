@@ -84,6 +84,7 @@ export const thinking = {
 export const familiar = {
   index: 6,
   label: 'Maybe this sounds familiar',
+  title: 'Something feels a little *off.*',
   situations: [
     {text: "Maybe the idea is strong, but the experience hasn't caught up.", glyph: 'experiences'},
     {text: 'Maybe simple things take people longer than they should.', glyph: 'ux'},

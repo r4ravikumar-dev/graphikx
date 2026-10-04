@@ -1,4 +1,6 @@
 import type {Metadata} from 'next';
+import {PageFaq} from '@/components/editorial/PageFaq';
+import {practiceFaq} from '@/content/faqs';
 import {VStack, HStack} from '@astryxdesign/core/Layout';
 import {Heading} from '@astryxdesign/core/Heading';
 import {Text} from '@astryxdesign/core/Text';
@@ -8,7 +10,6 @@ import {BigStatement} from '@/components/editorial/BigStatement';
 import {Chapter} from '@/components/editorial/Chapter';
 import {ChapterHeader} from '@/components/editorial/ChapterHeader';
 import {EditorialHero} from '@/components/editorial/EditorialHero';
-import {FaqList} from '@/components/editorial/FaqList';
 import {IndexLabel} from '@/components/editorial/IndexLabel';
 import {IndexList} from '@/components/editorial/IndexList';
 import {SequenceRail} from '@/components/editorial/SequenceRail';
@@ -27,7 +28,7 @@ export const metadata: Metadata = {
 };
 
 export default function PracticePage() {
-  const {hero, connects, approach, faq, closing} = practicePage;
+  const {hero, connects, approach, closing} = practicePage;
   // Chapters 01–03 are the groups; numbering continues after them.
   let chapter = practiceGroups.length;
 
@@ -48,7 +49,11 @@ export default function PracticePage() {
               />
             }>
             <Reveal>
-              <Text type="large" color="secondary" textWrap="pretty" style={{maxInlineSize: '44ch'}}>
+              <Text
+                type="large"
+                color="secondary"
+                textWrap="pretty"
+                style={{maxInlineSize: '44ch'}}>
                 {group.intro}
               </Text>
             </Reveal>
@@ -75,13 +80,20 @@ export default function PracticePage() {
             <IndexLabel index={++chapter}>{connects.label}</IndexLabel>
           </Reveal>
           <Reveal delay={0.05} distance={32}>
-            <Heading level={2} textWrap="balance" style={{...typeRole('display-xl'), letterSpacing: '-0.03em', maxInlineSize: '14ch'}}>
+            <Heading
+              level={2}
+              textWrap="balance"
+              style={{...typeRole('display-xl'), letterSpacing: '-0.03em', maxInlineSize: '14ch'}}>
               <Lines text={connects.title} />
             </Heading>
           </Reveal>
           <HStack justify="end">
             <Reveal delay={0.1}>
-              <Text type="large" color="secondary" textWrap="pretty" style={{maxInlineSize: '44ch'}}>
+              <Text
+                type="large"
+                color="secondary"
+                textWrap="pretty"
+                style={{maxInlineSize: '44ch'}}>
                 {connects.description}
               </Text>
             </Reveal>
@@ -93,17 +105,20 @@ export default function PracticePage() {
       {/* 05: Approach. */}
       <Chapter label={approach.label}>
         <StickySplit
-          aside={<ChapterHeader index={++chapter} label={approach.label} title={approach.title} size="display-l" />}>
+          aside={
+            <ChapterHeader
+              index={++chapter}
+              label={approach.label}
+              title={approach.title}
+              size="display-l"
+            />
+          }>
           <StepTimeline steps={approach.steps} />
         </StickySplit>
       </Chapter>
 
-      {/* 06: Questions. */}
-      <Chapter label={faq.label}>
-        <StickySplit aside={<ChapterHeader index={++chapter} label={faq.label} title={faq.title} size="display-l" />}>
-          <FaqList items={faq.items} />
-        </StickySplit>
-      </Chapter>
+      {/* 06: A few things you might be wondering. */}
+      <PageFaq group={practiceFaq} index={++chapter} />
 
       <BigStatement {...closing} />
     </VStack>

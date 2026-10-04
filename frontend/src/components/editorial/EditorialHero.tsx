@@ -33,7 +33,9 @@ type EditorialHeroProps = {
 
 /**
  * Left-aligned editorial hero: one very large title, one sentence, one
- * action, and a quiet meta row along the bottom. Space does the work.
+ * action, and a quiet meta row along the bottom. Space does the work. The
+ * description row is top-aligned, so the description always sits one block
+ * below the title however tall the illustration beside it is.
  */
 export function EditorialHero({
   label,
@@ -71,7 +73,7 @@ export function EditorialHero({
             </Heading>
           </Reveal>
           {(description || action || illustration) && (
-            <Grid columns={{minWidth: 320, max: 2}} gap={10} style={{alignItems: 'end'}}>
+            <Grid columns={{minWidth: 320, max: 2}} gap={10} style={{alignItems: 'start'}}>
               <VStack gap={6}>
                 {description && (
                   <Reveal delay={0.15}>
