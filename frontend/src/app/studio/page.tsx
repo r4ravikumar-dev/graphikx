@@ -2,7 +2,6 @@ import type {Metadata} from 'next';
 import {VStack} from '@astryxdesign/core/Layout';
 import {Text} from '@astryxdesign/core/Text';
 import {Reveal} from '@/components/motion/Reveal';
-import {MascotDialogue} from '@/components/mascot/MascotDialogue';
 import {BigStatement} from '@/components/editorial/BigStatement';
 import {BuildUp} from '@/components/editorial/BuildUp';
 import {Chapter} from '@/components/editorial/Chapter';
@@ -24,7 +23,6 @@ import {
   hero,
   howWeWork,
   manifesto,
-  mascotMoment,
   whyWeStarted,
 } from '@/content/studio';
 
@@ -103,15 +101,6 @@ export default function StudioPage() {
         <QuestionRail items={currentlyExploring.items} />
       </Chapter>
 
-      {/* Mascot moment: the looping dialogue on its own screen. */}
-      <Chapter label={mascotMoment.label} width="narrow">
-        <VStack gap={8} hAlign="center">
-          <Reveal hAlign="center">
-            <IndexLabel>{mascotMoment.label}</IndexLabel>
-          </Reveal>
-          <MascotDialogue frames={mascotMoment.frames} />
-        </VStack>
-      </Chapter>
 
       <BigStatement {...closing} />
     </VStack>

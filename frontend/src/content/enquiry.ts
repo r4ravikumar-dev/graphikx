@@ -75,7 +75,6 @@ export const confirmation = {
     "We've got your note and will take a look.",
     "We'll get back to you with the next step.",
   ],
-  mascotLine: "Got it. Let's figure this out.",
   action: {label: 'Back to Graphikx', href: '/'},
   secondaryAction: {label: 'Keep exploring Thinking', href: '/thinking'},
 };

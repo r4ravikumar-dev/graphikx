@@ -211,6 +211,18 @@ html {
   }
 }
 
+/* Mobile menu drawer: the header (logo and close) matches the navbar exactly,
+   16px top and bottom on phones and the page gutter at the sides, so the
+   logo stays put when the drawer opens. The body shares the same gutter. */
+.astryx-mobile-nav > div > div:first-child {
+  block-size: auto;
+  min-block-size: 0;
+  padding: var(--nav-padding-block) var(--space-gutter);
+}
+.astryx-mobile-nav > div > div:nth-child(2) {
+  padding: 0 var(--space-gutter);
+}
+
 /* Mobile menu: full-width rows on hairlines, quiet contact links. */
 .menu-row {
   display: flex;
@@ -481,7 +493,7 @@ html {
 }
 
 /* The lens scanning across the lines. */
-.ill-scan {
+.illustration .ill-scan {
   animation: ill-scan 11s ease-in-out infinite;
   transform-box: view-box;
 }
@@ -492,7 +504,7 @@ html {
 }
 
 /* The question mark swaying, as if still thinking. */
-.ill-sway {
+.illustration .ill-sway {
   animation: ill-sway 7s ease-in-out infinite;
   transform-origin: center bottom;
 }
@@ -510,8 +522,10 @@ html {
   50% { transform: translate(-10px, -12px) rotate(-3deg); }
 }
 
-/* Ideas orbiting the centre of the Studio scene (viewBox 400 × 300). */
-.ill-orbit {
+/* Ideas orbiting the centre of the Studio scene (viewBox 400 × 300).
+   Scoped like .illustration .ill-loop so its pivot (the scene centre, not
+   each shape's own centre) wins over the shared fill-box origin. */
+.illustration .ill-orbit {
   animation: ill-orbit 40s linear infinite;
   transform-box: view-box;
   transform-origin: 200px 150px;
@@ -536,4 +550,111 @@ html {
   .illustration .ill-blink {
     opacity: 0;
   }
+}
+
+/* ---------- Page transition loader (components/navigation/PageTransition) ---------- */
+/* Covers the page for 1.4s between pages, on the theme's own surface. */
+
+.page-transition {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  background-color: var(--color-background-surface);
+  color: var(--color-text-primary);
+}
+.loader-orbits {
+  inline-size: min(56vw, 240px);
+  block-size: auto;
+  overflow: visible;
+  /* A slow, linear settle over the full 1.4s: no snap, no bounce. */
+  animation: loader-arrive 1.4s linear both;
+}
+@keyframes loader-arrive {
+  0% { transform: scale(0.94); opacity: 0; }
+  25% { opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+.loader-ring {
+  fill: none;
+  stroke: var(--color-text-secondary);
+  stroke-opacity: 0.7;
+  stroke-width: 1px;
+  vector-effect: non-scaling-stroke;
+}
+.loader-orbit {
+  animation: loader-orbit linear infinite;
+  /* The viewBox is centred on 0,0, so that is the core every ring turns around. */
+  transform-box: view-box;
+  transform-origin: 0 0;
+}
+@keyframes loader-orbit {
+  to { transform: rotate(360deg); }
+}
+.loader-planet {
+  fill: var(--color-text-primary);
+}
+.loader-planet.is-outline {
+  fill: none;
+  stroke: var(--color-text-primary);
+  stroke-width: 1.2;
+  stroke-linejoin: round;
+}
+.loader-core {
+  fill: var(--color-brand-text);
+}
+.loader-core-halo {
+  fill: none;
+  stroke: var(--color-brand-text);
+  stroke-width: 1;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: loader-halo 3s cubic-bezier(0.2, 0, 0, 1) infinite;
+}
+@keyframes loader-halo {
+  0% { transform: scale(1); opacity: 0.7; }
+  100% { transform: scale(2.8); opacity: 0; }
+}
+.loader-star {
+  fill: var(--color-text-secondary);
+  animation: loader-twinkle 2.4s ease-in-out infinite alternate;
+}
+@keyframes loader-twinkle {
+  from { opacity: 0.15; }
+  to { opacity: 0.8; }
+}
+
+/* ---------- Custom cursor (components/navigation/CustomCursor) ---------- */
+/* Only applied with a fine pointer; the class is added by the component. */
+
+html.has-custom-cursor,
+html.has-custom-cursor * {
+  cursor: none !important;
+}
+/* Text fields keep the native text cursor (the custom one hides there). */
+html.has-custom-cursor :is(input:not([type="checkbox"]):not([type="radio"]):not([type="button"]):not([type="submit"]), textarea, [contenteditable="true"]) {
+  cursor: text !important;
+}
+.cursor-squircle {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2147483647;
+  inline-size: 20px;
+  block-size: 20px;
+  margin: -10px 0 0 -10px;
+  pointer-events: none;
+  /* White in "difference" mode inverts whatever is underneath: light on dark,
+     dark on light, and the colours of buttons and images. */
+  mix-blend-mode: difference;
+}
+.cursor-squircle svg {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  overflow: visible;
+}
+.cursor-squircle path {
+  fill: white;
 }

@@ -6,7 +6,7 @@ import {useInView, useReducedMotion} from 'framer-motion';
 type SequenceOptions = {
   /**
    * Repeat the sequence forever (hold, reset, play again). Off by default:
-   * sequences play once and stay put. Only the mascot loops.
+   * sequences play once and stay put.
    */
   loop?: boolean;
   /** Time between one item appearing and the next. */

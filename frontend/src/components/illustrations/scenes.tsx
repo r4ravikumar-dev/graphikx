@@ -260,9 +260,9 @@ export function JourneyScreens({label, maxWidth = 560}: SceneProps) {
  */
 export function OriginRings({label, maxWidth = 420}: SceneProps) {
   const rings = [
-    {r: 44, duration: 30, shape: `M${200 - 6} ${150 - 44 - 6} h12 v12 h-12 Z`},
-    {r: 84, duration: 44, shape: `M200 ${150 - 84 - 8} l8 13 h-16 Z`},
-    {r: 124, duration: 60, shape: `M${200 - 7} ${150 - 124} a7 7 0 1 0 14 0 a7 7 0 1 0 -14 0`},
+    {r: 44, duration: 14, shape: `M${200 - 6} ${150 - 44 - 6} h12 v12 h-12 Z`},
+    {r: 84, duration: 20, shape: `M200 ${150 - 84 - 8} l8 13 h-16 Z`},
+    {r: 124, duration: 28, shape: `M${200 - 7} ${150 - 124} a7 7 0 1 0 14 0 a7 7 0 1 0 -14 0`},
   ];
   return (
     <Illustration viewBox="0 0 400 300" label={label} maxWidth={maxWidth}>
