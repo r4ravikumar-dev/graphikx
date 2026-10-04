@@ -3,56 +3,21 @@
 import {useCallback, useEffect, useRef, useState} from 'react';
 import {usePathname} from 'next/navigation';
 import {AnimatePresence, motion, useReducedMotion} from 'framer-motion';
-import {VStack} from '@astryxdesign/core/Layout';
-import {Text} from '@astryxdesign/core/Text';
 import {VisuallyHidden} from '@astryxdesign/core/VisuallyHidden';
-import {EYEBROW_STYLE} from '@/theme/eyebrow';
 
 /** How long the loader plays on every page change. */
 const DURATION_MS = 1400;
 /** If a page never arrives (failed navigation), give the screen back anyway. */
 const SAFETY_MS = 8000;
 
-/** A few fixed "stars" so the field looks the same on server and client. */
-const STARS = [
-  [-82, -60], [-64, 48], [-40, -86], [-12, 74], [18, -70], [44, 62],
-  [70, -38], [86, 20], [-88, 8], [58, 84], [-58, -20], [30, 30],
-] as const;
-
-/** The universe: rings of the site's shapes revolving around one point. */
-function Orbits() {
+/** The loader, kept minimal: one ring and one dot slowly orbiting a brand-blue core. */
+function Orbit() {
   return (
-    <svg className="loader-orbits" viewBox="-100 -100 200 200" aria-hidden>
-      {STARS.map(([x, y], index) => (
-        <circle
-          key={`${x},${y}`}
-          className="loader-star"
-          cx={x}
-          cy={y}
-          r={0.9}
-          style={{animationDelay: `${-(index % 4) * 0.6}s`}}
-        />
-      ))}
-      {[30, 52, 76].map((r, index) => (
-        <circle
-          key={r}
-          className="loader-ring"
-          r={r}
-          strokeDasharray={index === 1 ? '1.5 5' : undefined}
-        />
-      ))}
-      {/* Slow, linear drift like the illustration loops (14s, 20s, 28s a lap),
-          each planet starting at a different angle so they never line up. */}
-      <g className="loader-orbit" style={{animationDuration: '14s', animationDelay: '-3s'}}>
+    <svg className="loader-orbits" viewBox="-50 -50 100 100" aria-hidden>
+      <circle className="loader-ring" r={30} />
+      <g className="loader-orbit">
         <circle cx={0} cy={-30} r={3.5} className="loader-planet" />
       </g>
-      <g className="loader-orbit" style={{animationDuration: '20s', animationDelay: '-12s', animationDirection: 'reverse'}}>
-        <rect x={-3.5} y={-55.5} width={7} height={7} className="loader-planet is-outline" />
-      </g>
-      <g className="loader-orbit" style={{animationDuration: '28s', animationDelay: '-19s'}}>
-        <path d="M0 -81 l4.5 7.5 h-9 Z" className="loader-planet is-outline" />
-      </g>
-      <circle r={9} className="loader-core-halo" />
       <circle r={6} className="loader-core" />
     </svg>
   );
@@ -148,12 +113,7 @@ export function PageTransition() {
           animate={{opacity: 1, transition: {duration: 0.2, ease: [0.2, 0, 0, 1]}}}
           exit={{opacity: 0, transition: {duration: 0.3, ease: [0.4, 0, 1, 1]}}}>
           <VisuallyHidden>Loading page</VisuallyHidden>
-          <VStack gap={6} hAlign="center">
-            <Orbits />
-            <Text type="supporting" color="secondary" style={EYEBROW_STYLE}>
-              Making sense of it
-            </Text>
-          </VStack>
+          <Orbit />
         </motion.div>
       )}
     </AnimatePresence>
