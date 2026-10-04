@@ -6,6 +6,9 @@ const optional = z
   .transform(value => (value === '' ? undefined : value))
   .optional();
 
+/** Where enquiries go when ENQUIRY_NOTIFY_TO is not set. */
+export const DEFAULT_ENQUIRY_INBOX = 'design@graphikx.in';
+
 const envSchema = z.object({
   NODE_ENV: z.enum(['development', 'test', 'production']).default('development'),
   PORT: z.coerce.number().int().positive().default(4000),
@@ -24,7 +27,7 @@ const envSchema = z.object({
   EMAIL_USER: optional,
   EMAIL_PASSWORD: optional,
   EMAIL_FROM: optional,
-  ENQUIRY_NOTIFY_TO: optional,
+  ENQUIRY_NOTIFY_TO: optional.transform(value => value ?? DEFAULT_ENQUIRY_INBOX),
 });
 
 export type Env = z.infer<typeof envSchema>;

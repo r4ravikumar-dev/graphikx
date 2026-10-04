@@ -11,7 +11,7 @@ import {EditorialHero} from '@/components/editorial/EditorialHero';
 import {FaqList} from '@/components/editorial/FaqList';
 import {IndexLabel} from '@/components/editorial/IndexLabel';
 import {IndexList} from '@/components/editorial/IndexList';
-import {LineDiagram} from '@/components/editorial/LineDiagram';
+import {SequenceRail} from '@/components/editorial/SequenceRail';
 import {StepTimeline} from '@/components/editorial/StepTimeline';
 import {StickySplit} from '@/components/editorial/StickySplit';
 import {JourneyScreens} from '@/components/illustrations/scenes';
@@ -87,10 +87,7 @@ export default function PracticePage() {
             </Reveal>
           </HStack>
         </VStack>
-        <LineDiagram
-          nodes={connects.sequence}
-          label={`How the disciplines connect: ${connects.sequence.join(', then ')}.`}
-        />
+        <SequenceRail steps={connects.sequence} label="How the disciplines connect, in order" />
       </Chapter>
 
       {/* 05: Approach. */}

@@ -1,3 +1,5 @@
+import type {SequenceStep} from '@/components/editorial/SequenceRail';
+
 export type PracticeGroupId = 'product' | 'interface' | 'building';
 
 export type Capability = {
@@ -121,7 +123,8 @@ export const capabilities: Capability[] = [
     slug: 'no-code-design',
     title: 'No-code Design',
     group: 'building',
-    summary: 'Turn ideas into realistic, interactive experiences without starting with a full build.',
+    summary:
+      'Turn ideas into realistic, interactive experiences without starting with a full build.',
     headline: 'Make the idea real enough to test.',
     body: [
       'No-code lets us move quickly from a concept to an experience people can interact with.',
@@ -173,19 +176,22 @@ export const practiceGroups: PracticeGroup[] = [
     id: 'product',
     label: 'Product thinking',
     title: 'Understand the *journey* first.',
-    intro: 'What people are trying to do, and where the experience gets in their way, shapes everything else.',
+    intro:
+      'What people are trying to do, and where the experience gets in their way, shapes everything else.',
   },
   {
     id: 'interface',
     label: 'Interface thinking',
     title: 'Where the thinking becomes *visible.*',
-    intro: 'Visual and interactive details that show people where they are, what they can do and what happens next.',
+    intro:
+      'Visual and interactive details that show people where they are, what they can do and what happens next.',
   },
   {
     id: 'building',
     label: 'Product building',
     title: 'Real enough to *test.*',
-    intro: 'Design people can click, explore and try, without unnecessary distance between an idea and its first version.',
+    intro:
+      'Design people can click, explore and try, without unnecessary distance between an idea and its first version.',
   },
 ];
 
@@ -204,15 +210,28 @@ export const practicePage = {
     title: "These aren't *separate* pieces.",
     description:
       'The flow shapes the interface, the interface shapes the interaction, and the interaction shapes how the product feels. So we design the whole.',
-    sequence: ['Product', 'UX', 'UI', 'Interaction', 'Build', 'Evolve'],
+    sequence: [
+      {title: 'Product', glyph: 'product', description: 'What it should do, and for whom.'},
+      {title: 'UX', glyph: 'ux', description: 'How people move through it.'},
+      {title: 'UI', glyph: 'ui', description: 'How it reads and looks.'},
+      {title: 'Interaction', glyph: 'interaction', description: 'How it responds to every action.'},
+      {title: 'Build', glyph: 'build', description: 'Real enough to click and test.'},
+      {title: 'Evolve', glyph: 'evolve', description: 'Staying connected as it grows.'},
+    ] satisfies SequenceStep[],
   },
   approach: {
     label: 'Our approach',
     title: 'Start with understanding. End with something *useful.*',
     steps: [
-      {title: 'Understand', description: "What you're building, who it's for, and what's in the way."},
+      {
+        title: 'Understand',
+        description: "What you're building, who it's for, and what's in the way.",
+      },
       {title: 'Explore', description: 'Different ways the experience could work.'},
-      {title: 'Shape', description: 'The strongest direction, as flows, interfaces and interactions.'},
+      {
+        title: 'Shape',
+        description: 'The strongest direction, as flows, interfaces and interactions.',
+      },
       {title: 'Test', description: 'Ideas in front of people, to learn what needs to change.'},
       {title: 'Refine', description: "Keep what's useful. Remove what isn't helping."},
     ],

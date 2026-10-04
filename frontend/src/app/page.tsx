@@ -13,7 +13,7 @@ import {ChapterHeader} from '@/components/editorial/ChapterHeader';
 import {EditorialHero} from '@/components/editorial/EditorialHero';
 import {IndexLabel} from '@/components/editorial/IndexLabel';
 import {IndexList} from '@/components/editorial/IndexList';
-import {LineDiagram} from '@/components/editorial/LineDiagram';
+import {SequenceRail} from '@/components/editorial/SequenceRail';
 import {Manifesto} from '@/components/editorial/Manifesto';
 import {Marquee} from '@/components/editorial/Marquee';
 import {StepTimeline} from '@/components/editorial/StepTimeline';
@@ -25,6 +25,7 @@ import {
   TangleToLine,
   ThinkingLens,
 } from '@/components/illustrations/scenes';
+import {Glyph} from '@/components/illustrations/glyphs';
 import {articles} from '@/content/articles';
 import {capabilities} from '@/content/practice';
 import {
@@ -39,6 +40,7 @@ import {
   thinking,
 } from '@/content/home';
 import {typeRole} from '@/theme/typeScale';
+import {EYEBROW_STYLE} from '@/theme/eyebrow';
 
 export default function HomePage() {
   const previewArticles = thinking.articleSlugs
@@ -48,12 +50,7 @@ export default function HomePage() {
   return (
     <VStack gap={0}>
       {/* Hero: one line, one sentence, one action. */}
-      <EditorialHero
-        {...hero}
-        size="display-xxl"
-        isFullHeight
-        illustration={<TangleToLine />}
-      />
+      <EditorialHero {...hero} size="display-xxl" isFullHeight illustration={<TangleToLine />} />
 
       {/* Manifesto: words light up as you scroll. */}
       <Chapter label={manifesto.label}>
@@ -68,7 +65,12 @@ export default function HomePage() {
         <StickySplit
           aside={
             <>
-              <ChapterHeader index={problem.index} label={problem.label} title={problem.title} size="display-l" />
+              <ChapterHeader
+                index={problem.index}
+                label={problem.label}
+                title={problem.title}
+                size="display-l"
+              />
               <StackedLayers maxWidth={360} />
             </>
           }>
@@ -98,7 +100,12 @@ export default function HomePage() {
         <StickySplit
           aside={
             <>
-              <ChapterHeader index={howWeThink.index} label={howWeThink.label} title={howWeThink.title} size="display-l" />
+              <ChapterHeader
+                index={howWeThink.index}
+                label={howWeThink.label}
+                title={howWeThink.title}
+                size="display-l"
+              />
               <QuestionPath maxWidth={360} />
             </>
           }>
@@ -119,7 +126,11 @@ export default function HomePage() {
               </Heading>
             </Reveal>
             <Reveal delay={0.1}>
-              <Text type="large" color="secondary" textWrap="pretty" style={{maxInlineSize: '36ch'}}>
+              <Text
+                type="large"
+                color="secondary"
+                textWrap="pretty"
+                style={{maxInlineSize: '36ch'}}>
                 {graphyene.description}
               </Text>
             </Reveal>
@@ -129,21 +140,23 @@ export default function HomePage() {
               </HStack>
             </Reveal>
           </VStack>
-          <Reveal hAlign="center">
+          <Reveal hAlign="end">
             <SystemBlocks label="Mixed shapes settling into an ordered grid" />
           </Reveal>
         </Grid>
-        <LineDiagram
-          nodes={graphyene.layers}
-          label={`The Graphyene layers: ${graphyene.layers.join(', then ')}.`}
-        />
+        <SequenceRail steps={graphyene.layers} label="The Graphyene layers, in order" />
         <Marquee items={graphyene.principles} />
       </Chapter>
 
       {/* 05 Thinking: articles as editorial rows. */}
       <Chapter label={thinking.label}>
         <Grid columns={{minWidth: 320, max: 2}} gap={10} style={{alignItems: 'end'}}>
-          <ChapterHeader index={thinking.index} label={thinking.label} title={thinking.title} size="display-l" />
+          <ChapterHeader
+            index={thinking.index}
+            label={thinking.label}
+            title={thinking.title}
+            size="display-l"
+          />
           <Reveal hAlign="end">
             <ThinkingLens maxWidth={340} />
           </Reveal>
@@ -156,31 +169,44 @@ export default function HomePage() {
         </Reveal>
       </Chapter>
 
-      {/* 06 Maybe this sounds familiar: one large line at a time. */}
+      {/* 06 Maybe this sounds familiar: four situations, each with its glyph. */}
       <Chapter tone="muted" label={familiar.label}>
         <Reveal>
           <IndexLabel index={familiar.index}>{familiar.label}</IndexLabel>
         </Reveal>
-        <VStack gap={0} role="list">
-          {familiar.situations.map(situation => (
+        <Grid columns={1} gap={0} className="familiar-grid" role="list">
+          {familiar.situations.map((situation, index) => (
             <Reveal
-              key={situation}
+              key={situation.text}
               role="listitem"
+              delay={(index % 2) * 0.1}
               distance={32}
-              style={{borderBlockStart: '1px solid var(--color-border)', paddingBlock: 'var(--spacing-8)'}}>
-              <Text style={{...typeRole('headline-xl'), letterSpacing: '-0.02em'}} textWrap="balance">
-                {situation}
-              </Text>
+              className="familiar-item">
+              <VStack gap={5}>
+                <VStack hAlign="start">
+                  <Glyph name={situation.glyph} />
+                </VStack>
+                <Text
+                  type="supporting"
+                  hasTabularNumbers
+                  style={{...EYEBROW_STYLE, color: 'var(--color-brand-text)'}}>
+                  {String(index + 1).padStart(2, '0')}
+                </Text>
+                <Text
+                  style={{...typeRole('headline-l'), letterSpacing: '-0.02em'}}
+                  textWrap="balance">
+                  {situation.text}
+                </Text>
+              </VStack>
             </Reveal>
           ))}
-        </VStack>
+        </Grid>
         <Reveal distance={32}>
           <Heading level={2} style={{...typeRole('display-l'), letterSpacing: '-0.03em'}}>
             <Lines text={familiar.closing} />
           </Heading>
         </Reveal>
       </Chapter>
-
 
       {/* Closing: statement and email, no form. */}
       <BigStatement {...closing} />

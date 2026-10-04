@@ -9,10 +9,11 @@ import {ANCHORS, fluid, rem} from './breakpoints';
  *
  * How sizes respond across the tiers in breakpoints.ts:
  * - Display and headline roles are fluid: mobile size at 390px growing to the
- *   desktop size at 1440px, then on to the wide size at 2560px. Below 390px
+ *   desktop size at 1440px, then on to the wide size at 1600px, where
+ *   scaling stops. Below 390px
  *   they ease down to 85% so long words still fit a 320px screen.
  * - Labels, body and captions step: mobile below 768px, tablet to 1023px,
- *   desktop from 1024px, growing gently towards the wide size above 1440px.
+ *   desktop from 1024px, growing gently to the wide size at 1600px.
  */
 
 export type TypeRole =
@@ -53,25 +54,25 @@ const text = (wide: number, desktop: number, tablet: number, mobile: number, lin
 
 export const typeScale: Record<TypeRole, RoleSpec> = {
   // v2 expressive tier: used at most once per section.
-  'display-xxl': display(208, 144, 104, 64, LINE_HEIGHT.hero),
-  'display-xl': display(136, 96, 72, 48, LINE_HEIGHT.chapter),
+  'display-xxl': display(153, 144, 104, 64, LINE_HEIGHT.hero),
+  'display-xl': display(102, 96, 72, 48, LINE_HEIGHT.chapter),
   // v1 scale.
-  'display-l': display(76, 56, 50, 44, LINE_HEIGHT.display),
-  'display-m': display(64, 48, 44, 40, LINE_HEIGHT.display),
-  'display-s': display(52, 40, 36, 36, LINE_HEIGHT.display),
-  'headline-xl': display(44, 36, 34, 32, LINE_HEIGHT.headline),
-  'headline-l': display(38, 32, 30, 28, LINE_HEIGHT.headline),
-  'headline-m': display(32, 28, 26, 24, LINE_HEIGHT.headline),
-  'headline-s': display(28, 24, 22, 20, LINE_HEIGHT.headline),
-  'label-l': text(20, 18, 17, 16, LINE_HEIGHT.label),
-  'label-m': text(17, 16, 15, 14, LINE_HEIGHT.label),
-  'label-s': text(15, 14, 14, 14, LINE_HEIGHT.label),
-  'body-l': text(23, 20, 18, 18, LINE_HEIGHT.body),
-  'body-m': text(18, 16, 16, 14, LINE_HEIGHT.body),
-  'body-s': text(15, 14, 14, 14, LINE_HEIGHT.smallBody),
-  'caption-l': text(15, 14, 13, 13, LINE_HEIGHT.caption),
-  'caption-m': text(14, 13, 12, 12, LINE_HEIGHT.caption),
-  'caption-s': text(13, 12, 12, 12, LINE_HEIGHT.caption),
+  'display-l': display(59, 56, 50, 44, LINE_HEIGHT.display),
+  'display-m': display(50, 48, 44, 40, LINE_HEIGHT.display),
+  'display-s': display(42, 40, 36, 36, LINE_HEIGHT.display),
+  'headline-xl': display(37, 36, 34, 32, LINE_HEIGHT.headline),
+  'headline-l': display(33, 32, 30, 28, LINE_HEIGHT.headline),
+  'headline-m': display(29, 28, 26, 24, LINE_HEIGHT.headline),
+  'headline-s': display(25, 24, 22, 20, LINE_HEIGHT.headline),
+  'label-l': text(18, 18, 17, 16, LINE_HEIGHT.label),
+  'label-m': text(16, 16, 15, 14, LINE_HEIGHT.label),
+  'label-s': text(14, 14, 14, 14, LINE_HEIGHT.label),
+  'body-l': text(20, 20, 18, 18, LINE_HEIGHT.body),
+  'body-m': text(16, 16, 16, 14, LINE_HEIGHT.body),
+  'body-s': text(14, 14, 14, 14, LINE_HEIGHT.smallBody),
+  'caption-l': text(14, 14, 13, 13, LINE_HEIGHT.caption),
+  'caption-m': text(13, 13, 12, 12, LINE_HEIGHT.caption),
+  'caption-s': text(12, 12, 12, 12, LINE_HEIGHT.caption),
 };
 
 const sizeVar = (role: TypeRole) => `--type-${role}-size`;

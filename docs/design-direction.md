@@ -84,7 +84,7 @@ The v1 scale stays for everything functional (body, labels, captions, headlines)
 | `Manifesto`: a paragraph whose words light up as you scroll, with accent keywords | Studio RS, Levo | Point-of-view paragraphs |
 | `IndexList`: rows of large type with hairlines, a number, an arrow, and a hover hint or preview | Studio RS services, Havu services | Capability cards, TopicGrid |
 | `StepTimeline`: full-screen sticky steps with a large numeral | Studio RS method, Havu process | ProcessSteps |
-| `LineDiagram`: animated line diagrams that explain an idea | Levo, Havu | Architecture cards, part of FlowComparison |
+| `SequenceRail` (was `LineDiagram`): an ordered sequence in hairline columns with a progress line that draws once | Levo, Havu | Architecture cards, part of FlowComparison |
 | `Marquee`: one slow line of words | Studio RS, Havu | Tag clouds |
 | `BigStatement`: a closing line, the email as a giant link, one button | Studio RS, Visuvate | ProjectInvitation |
 | `GiantWordmark`: an oversized logo across the footer | Studio RS, Visuvate | The current footer heading |
@@ -102,7 +102,7 @@ Each line below is roughly one screen.
 3. **The problem (`StickySplit`).** "Products rarely become complicated all at once." stays on the left while the layered lines build up on the right, ending on "Less confusion. Less friction. More clarity."
 4. **Practice (`IndexList`).** Seven rows: `01  Product Design  Shape a product around what people need  →`. Hovering reveals a one-line hint. Ends with "Explore the practice".
 5. **How we think (`StepTimeline`).** Understand, Question, Simplify, Shape, Refine. One step per scroll, with a large numeral.
-6. **Graphyene (on the muted surface).** A Display XL "Graphyene", one line and an animated `LineDiagram` (Foundation → Tokens → Components → Patterns → Experiences). The principles run in a marquee.
+6. **Graphyene (on the muted surface).** A Display XL "Graphyene", one line and a `SequenceRail` (Foundation → Tokens → Components → Patterns → Experiences). The principles run in a marquee.
 7. **Thinking.** Three articles as editorial rows (category · title · read time), not cards.
 8. **Maybe this sounds familiar.** One large "Maybe…" line at a time, then "You don't need the perfect brief."
 9. ~~Mascot moment~~ (removed: the mascot is no longer part of the site).
@@ -114,7 +114,7 @@ Each line below is roughly one screen.
 
 1. A hero with a Display XL title and one sentence.
 2. Three chapters (Product thinking, Interface thinking, Product building). Each is a `StickySplit` with its practice areas as expanding `IndexList` rows. The detail (what we work on, the nudge line) opens inline instead of always being shown.
-3. "These aren't separate pieces": an animated `LineDiagram` of Product → UX → UI → Interaction → Build → Evolve.
+3. "These aren't separate pieces": a `SequenceRail` of Product → UX → UI → Interaction → Build → Evolve.
 4. The approach as a `StepTimeline`.
 5. "You don't have to know what to ask for": the large "Maybe…" lines.
 6. `BigStatement`.
@@ -134,7 +134,7 @@ Each line below is roughly one screen.
 2. A `Manifesto`: "The challenge isn't making more things…"
 3. "A system should…" as an `IndexList` of six rows.
 4. The principles as a `StepTimeline`, or six large numbered rows.
-5. The architecture as a full-screen animated `LineDiagram`.
+5. The architecture as a `SequenceRail`.
 6. The explorations as a horizontal rail of four large question cards.
 7. "Still becoming": the status badge, with the current focus areas as a list.
 8. `BigStatement`.
@@ -202,10 +202,12 @@ Measured on the references at 375, 768 and 1920px: gutters grow with the screen 
 | mobile-lg | 390–767 | 64–90px | 20–36px | single column; menu toggle; compact index rows |
 | tablet | 768–1023 | 90–112px | 36–47px | two-column grids; split layouts stack; horizontal diagram |
 | desktop-sm | 1024–1439 | 112–144px | 47–64px | sticky 5/7 splits; one-line index rows |
-| desktop-lg | 1440–1919 | 144–171px | 64–85px | the approved desktop design |
-| wide | 1920+ | 171–208px | 85–112px | content up to 2080px; illustrations 1.45× |
+| desktop-lg | 1440–1599 | 144–153px | 64–71px | the approved desktop design |
+| max | 1600+ | 153px (fixed) | 71px (fixed) | nothing scales further; content and header snap to a centred 1600px frame |
 
-Display/headline roles, gutters and section spacing are fluid (`clamp()`) between anchors at 320, 390, 1440 and 2560px; labels, body and captions step at 768 and 1024. Source: `src/theme/breakpoints.ts`, `typeScale.ts`, `spaceScale.ts`, applied through the theme's `adaptations` with custom `widthBreakpoints`.
+Display/headline roles, gutters and section spacing are fluid (`clamp()`) between anchors at 320, 390, 1440 and 1600px, and hold from 1600px; labels, body and captions step at 768 and 1024.
+
+**Controls:** inputs are 36px tall on desktop and 44px on tablets and phones; every button is 36px on desktop and 48px on tablets and phones (theme tokens `--size-element-md` / `--size-element-lg`). Source: `src/theme/breakpoints.ts`, `typeScale.ts`, `spaceScale.ts`, applied through the theme's `adaptations` with custom `widthBreakpoints`.
 
 ---
 
@@ -226,15 +228,15 @@ Display/headline roles, gutters and section spacing are fluid (`clamp()`) betwee
 ### Shared frame (every page)
 
 1. `EditorialHero` with an `IndexLabel`, one *accent* word, one sentence, a mono meta row and a looping illustration.
-2. Numbered chapters (`01 ── LABEL`) built only from the shared components: `ChapterHeader`, `StickySplit`, `Manifesto`, `IndexList`, `BuildUp`, `StepTimeline`, `LineDiagram`, `Marquee`, `QuestionRail`, `FaqList`.
+2. Numbered chapters (`01 ── LABEL`) built only from the shared components: `ChapterHeader`, `StickySplit`, `Manifesto`, `IndexList`, `BuildUp`, `StepTimeline`, `SequenceRail`, `Marquee`, `QuestionRail`, `FaqList`.
 3. Every section follows the device's light or dark mode. Never flip a section to the opposite scheme: it jars people mid-scroll. To set a chapter apart, use the theme's muted surface (`tone="muted"`), never adjacent to another muted chapter. The footer uses the muted surface too.
 4. `BigStatement` to close, then the footer.
 
 ### Page structures
 
-**Practice:** hero → 01–03 the three groups (sticky title, expandable capability rows numbered as on the homepage) → 04 "These aren't *separate* pieces" (muted, line diagram) → 05 approach (step timeline) → 06 FAQ → close.
+**Practice:** hero → 01–03 the three groups (sticky title, expandable capability rows numbered as on the homepage) → 04 "These aren't *separate* pieces" (muted, sequence rail) → 05 approach (step timeline) → 06 FAQ → close.
 
-**Graphyene:** hero (status meta) → 01 the problem (build-up) → 02 the idea (manifesto) → 03 "A system should…" (rows) → 04 principles (muted, step timeline) → 05 architecture (line diagram) → 06 explorations (question rail) → 07 still becoming (rows) → close.
+**Graphyene:** hero (status meta) → 01 the problem (build-up) → 02 the idea (manifesto) → 03 "A system should…" (rows) → 04 principles (muted, step timeline) → 05 architecture (sequence rail) → 06 explorations (question rail) → 07 still becoming (rows) → close.
 
 **Studio:** hero → manifesto → 01 why we started (questions build-up) → 02 beliefs (expandable rows) → 03 how we work (muted, step timeline) → 04 the founder (quote, bio) → 05 currently exploring (question rail) → close.
 

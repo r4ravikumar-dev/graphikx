@@ -97,12 +97,12 @@ function Block({block}: {block: ArticleBlock}) {
             )}
             <VStack gap={3} as="figure" style={{margin: 0}}>
               {visuals[block.visual]()}
-              <Text type="supporting" color="secondary" justify="center" as="div" style={EYEBROW_STYLE}>
+              <Text type="supporting" color="secondary" as="div" style={EYEBROW_STYLE}>
                 <figcaption>{block.caption}</figcaption>
               </Text>
             </VStack>
             {block.microcopy && (
-              <Text color="secondary" justify="center" style={accentStyle}>
+              <Text color="secondary" style={accentStyle}>
                 {block.microcopy}
               </Text>
             )}

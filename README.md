@@ -298,7 +298,17 @@ EMAIL_FROM=
 ENQUIRY_NOTIFY_TO=
 ```
 
-Leave `EMAIL_HOST` empty during development. Enquiries are then printed to the console instead of being emailed.
+Leave `EMAIL_HOST` empty during development. Enquiries are then printed to the console instead of being emailed. In production an empty `EMAIL_HOST` makes the form show an error, so an enquiry is never reported as sent when it wasn't.
+
+Each enquiry is emailed to `ENQUIRY_NOTIFY_TO` (default `design@graphikx.in`) as a branded HTML email with a plain-text version (`backend/src/emails/enquiryEmail.ts`); replying answers the visitor. The graphikx.in mailbox is on Zoho, so production uses:
+
+```
+EMAIL_HOST=smtp.zoho.in
+EMAIL_PORT=465
+EMAIL_USER=design@graphikx.in
+EMAIL_PASSWORD=            # a Zoho app-specific password, not the account password
+EMAIL_FROM="Graphikx Website <design@graphikx.in>"
+```
 
 Start the backend:
 
@@ -533,7 +543,7 @@ components/
 │   ├── FaqList             # Questions as expandable rows
 │   ├── BuildUp             # Lines stacking like layers, then one answer
 │   ├── StepTimeline        # Numbered steps with outlined numerals
-│   ├── LineDiagram         # Nodes joined by hairlines that draw in once
+│   ├── SequenceRail        # An ordered sequence in hairline columns; progress draws once
 │   ├── Marquee             # Phrases that slide with the scroll
 │   ├── QuestionRail        # Open questions side by side
 │   ├── ArticleRows         # Articles as editorial rows

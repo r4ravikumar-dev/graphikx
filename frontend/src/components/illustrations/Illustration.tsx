@@ -53,10 +53,16 @@ export function Stroke({order = 0, stroke = INK, weight = 'regular', ...props}: 
 }
 
 /** A soft tinted surface under line work, for depth. Fades in with the drawing. */
-export function Surface({order = 0, ...props}: Omit<ComponentProps<typeof motion.path>, 'custom' | 'variants'> & {order?: number}) {
+export function Surface({
+  order = 0,
+  ...props
+}: Omit<ComponentProps<typeof motion.path>, 'custom' | 'variants'> & {order?: number}) {
   return (
     <motion.path
-      variants={{off: {opacity: 0}, on: {opacity: 1, transition: {duration: 1.2, delay: 0.12 * order}}}}
+      variants={{
+        off: {opacity: 0},
+        on: {opacity: 1, transition: {duration: 1.2, delay: 0.12 * order}},
+      }}
       fill="currentColor"
       fillOpacity={0.05}
       stroke="none"
@@ -65,7 +71,9 @@ export function Surface({order = 0, ...props}: Omit<ComponentProps<typeof motion
   );
 }
 
-type DotProps = Omit<ComponentProps<typeof motion.circle>, 'custom' | 'variants'> & {order?: number};
+type DotProps = Omit<ComponentProps<typeof motion.circle>, 'custom' | 'variants'> & {
+  order?: number;
+};
 
 /** A dot that pops in with a small spring overshoot. */
 export function Dot({order = 0, fill = ACCENT, ...props}: DotProps) {
@@ -81,7 +89,17 @@ export function Dot({order = 0, fill = ACCENT, ...props}: DotProps) {
 }
 
 /** A ring that ripples outwards from a point, forever (the .ill-pulse loop). */
-export function Pulse({cx, cy, r = 8, delay = 0}: {cx: number; cy: number; r?: number; delay?: number}) {
+export function Pulse({
+  cx,
+  cy,
+  r = 8,
+  delay = 0,
+}: {
+  cx: number;
+  cy: number;
+  r?: number;
+  delay?: number;
+}) {
   return (
     <circle
       className="ill-loop ill-pulse"
@@ -103,10 +121,12 @@ type TravelProps = {
   delay?: number;
   /** "comet" is a short glowing segment; "dot" is a single round point. */
   shape?: 'comet' | 'dot';
+  /** Line thickness, for drawing at smaller sizes. Defaults to 3 (comet) or 9 (dot). */
+  thickness?: number;
 };
 
 /** A blue mark that travels along a path, forever (the .ill-travel loop). */
-export function Travel({d, duration = 9, delay = 0, shape = 'comet'}: TravelProps) {
+export function Travel({d, duration = 9, delay = 0, shape = 'comet', thickness}: TravelProps) {
   return (
     <path
       className="ill-loop ill-travel"
@@ -114,7 +134,7 @@ export function Travel({d, duration = 9, delay = 0, shape = 'comet'}: TravelProp
       pathLength={1}
       fill="none"
       stroke={ACCENT}
-      strokeWidth={shape === 'dot' ? 9 : 3}
+      strokeWidth={thickness ?? (shape === 'dot' ? 9 : 3)}
       strokeLinecap="round"
       strokeDasharray={shape === 'dot' ? '0.0001 1.9999' : '0.08 1.92'}
       style={{animationDuration: `${duration}s`, animationDelay: `${delay}s`}}
@@ -177,7 +197,9 @@ export function Illustration({viewBox, label, maxWidth, children}: IllustrationP
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
       // Grows on large screens with --illustration-scale (spaceScale.ts).
-      style={{maxInlineSize: maxWidth ? `calc(${maxWidth}px * var(--illustration-scale, 1))` : undefined}}>
+      style={{
+        maxInlineSize: maxWidth ? `calc(${maxWidth}px * var(--illustration-scale, 1))` : undefined,
+      }}>
       <DotGrid id={`${baseId}-grid`} viewBox={viewBox} />
       {typeof children === 'function' ? children({clip: `${baseId}-clip`}) : children}
     </motion.svg>

@@ -51,7 +51,7 @@ export function EditorialHero({
       gap={0}
       justify="between"
       style={{
-        minHeight: isFullHeight ? 'calc(100svh - var(--nav-padding-block) * 2 - 32px)' : undefined,
+        minHeight: isFullHeight ? 'calc(100svh - var(--nav-padding-block) * 2 - var(--size-element-lg))' : undefined,
         paddingBlockStart: 'var(--space-chapter-gap)',
         paddingBlockEnd: 'var(--space-block)',
       }}>

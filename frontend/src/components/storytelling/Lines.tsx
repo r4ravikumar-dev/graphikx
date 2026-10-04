@@ -1,8 +1,9 @@
 import {Fragment, type ReactNode} from 'react';
 
-/** The italic serif accent, for one word per headline. */
+/** The italic serif accent, for one word per headline. Always in brand blue. */
 export const accentStyle = {
   fontFamily: 'var(--font-family-accent)',
+  color: 'var(--color-brand-text)',
   fontStyle: 'italic',
   fontWeight: 400,
   letterSpacing: '-0.01em',

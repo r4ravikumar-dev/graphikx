@@ -75,8 +75,8 @@ export const confirmation = {
     "We've got your note and will take a look.",
     "We'll get back to you with the next step.",
   ],
-  action: {label: 'Back to Graphikx', href: '/'},
-  secondaryAction: {label: 'Keep exploring Thinking', href: '/thinking'},
+  /** The one action after sending: start a fresh enquiry. */
+  sendAnother: 'Send another enquiry',
 };
 
 /** Start a Project page copy, in page order. "*word*" sets the italic serif accent. */
