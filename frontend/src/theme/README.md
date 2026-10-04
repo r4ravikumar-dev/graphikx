@@ -1,6 +1,6 @@
 # Graphikx theme
 
-`graphikxTheme.ts` extends the Astryx [Stone](https://astryx.atmeta.com/themes?theme=stone) theme: warm stone and slate, with Montserrat headings and Figtree body text. Put any Graphikx-specific theme changes in this file.
+`graphikxTheme.ts` extends the Astryx [Stone](https://astryx.atmeta.com/themes?theme=stone) theme: warm stone and slate. Graphikx sets headings and body text in IBM Plex Sans, eyebrows and code in IBM Plex Mono, and accent words in Instrument Serif. Put any Graphikx-specific theme changes in this file.
 
 ## Typography
 

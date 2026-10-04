@@ -1,15 +1,23 @@
+import {ANCHORS, fluid, rem} from './breakpoints';
+
 /**
- * Graphikx — Responsive Typography Scale v1.
+ * Graphikx Responsive Typography Scale v1, plus the v2 expressive tier.
  *
- * Desktop base 16px, mobile base 14px. Largest size 56px on desktop, 44px on
- * mobile. Sizes are in px here and emitted as rem so they respect browser
- * font-size settings.
+ * Desktop base 16px, mobile base 14px. v1 tops out at 56px (Display L). The
+ * v2 tier adds Display XL (96px chapter titles) and Display XXL (144px, the
+ * homepage hero only), each used at most once per section.
  *
- * Breakpoints follow the Astryx theme widths: tablet is 768–1023px (md–lg),
- * mobile is below 768px (md).
+ * How sizes respond across the tiers in breakpoints.ts:
+ * - Display and headline roles are fluid: mobile size at 390px growing to the
+ *   desktop size at 1440px, then on to the wide size at 2560px. Below 390px
+ *   they ease down to 85% so long words still fit a 320px screen.
+ * - Labels, body and captions step: mobile below 768px, tablet to 1023px,
+ *   desktop from 1024px, growing gently towards the wide size above 1440px.
  */
 
 export type TypeRole =
+  | 'display-xxl'
+  | 'display-xl'
   | 'display-l'
   | 'display-m'
   | 'display-s'
@@ -27,41 +35,77 @@ export type TypeRole =
   | 'caption-m'
   | 'caption-s';
 
-type RoleSpec = {desktop: number; tablet: number; mobile: number; lineHeight: number};
-
-/** Line heights by family: display 110%, headline/label 125%, body 135%, small body 140%, caption 150%. */
-const LINE_HEIGHT = {display: 1.1, headline: 1.25, label: 1.25, body: 1.35, smallBody: 1.4, caption: 1.5};
-
-export const typeScale: Record<TypeRole, RoleSpec> = {
-  'display-l': {desktop: 56, tablet: 50, mobile: 44, lineHeight: LINE_HEIGHT.display},
-  'display-m': {desktop: 48, tablet: 44, mobile: 40, lineHeight: LINE_HEIGHT.display},
-  'display-s': {desktop: 40, tablet: 36, mobile: 36, lineHeight: LINE_HEIGHT.display},
-  'headline-xl': {desktop: 36, tablet: 34, mobile: 32, lineHeight: LINE_HEIGHT.headline},
-  'headline-l': {desktop: 32, tablet: 30, mobile: 28, lineHeight: LINE_HEIGHT.headline},
-  'headline-m': {desktop: 28, tablet: 26, mobile: 24, lineHeight: LINE_HEIGHT.headline},
-  'headline-s': {desktop: 24, tablet: 22, mobile: 20, lineHeight: LINE_HEIGHT.headline},
-  'label-l': {desktop: 18, tablet: 17, mobile: 16, lineHeight: LINE_HEIGHT.label},
-  'label-m': {desktop: 16, tablet: 15, mobile: 14, lineHeight: LINE_HEIGHT.label},
-  'label-s': {desktop: 14, tablet: 14, mobile: 14, lineHeight: LINE_HEIGHT.label},
-  'body-l': {desktop: 20, tablet: 18, mobile: 18, lineHeight: LINE_HEIGHT.body},
-  'body-m': {desktop: 16, tablet: 16, mobile: 14, lineHeight: LINE_HEIGHT.body},
-  'body-s': {desktop: 14, tablet: 14, mobile: 14, lineHeight: LINE_HEIGHT.smallBody},
-  'caption-l': {desktop: 14, tablet: 13, mobile: 13, lineHeight: LINE_HEIGHT.caption},
-  'caption-m': {desktop: 13, tablet: 12, mobile: 12, lineHeight: LINE_HEIGHT.caption},
-  'caption-s': {desktop: 12, tablet: 12, mobile: 12, lineHeight: LINE_HEIGHT.caption},
+type RoleSpec = {
+  wide: number;
+  desktop: number;
+  tablet: number;
+  mobile: number;
+  lineHeight: number;
+  /** Scales continuously with the viewport (display and headline roles). */
+  isFluid: boolean;
 };
 
-const rem = (px: number) => `${px / 16}rem`;
+/** Line heights by family: display 110%, headline/label 125%, body 135%, small body 140%, caption 150%. */
+const LINE_HEIGHT = {hero: 0.95, chapter: 1, display: 1.1, headline: 1.25, label: 1.25, body: 1.35, smallBody: 1.4, caption: 1.5};
+
+const display = (wide: number, desktop: number, tablet: number, mobile: number, lineHeight: number): RoleSpec => ({wide, desktop, tablet, mobile, lineHeight, isFluid: true});
+const text = (wide: number, desktop: number, tablet: number, mobile: number, lineHeight: number): RoleSpec => ({wide, desktop, tablet, mobile, lineHeight, isFluid: false});
+
+export const typeScale: Record<TypeRole, RoleSpec> = {
+  // v2 expressive tier: used at most once per section.
+  'display-xxl': display(208, 144, 104, 64, LINE_HEIGHT.hero),
+  'display-xl': display(136, 96, 72, 48, LINE_HEIGHT.chapter),
+  // v1 scale.
+  'display-l': display(76, 56, 50, 44, LINE_HEIGHT.display),
+  'display-m': display(64, 48, 44, 40, LINE_HEIGHT.display),
+  'display-s': display(52, 40, 36, 36, LINE_HEIGHT.display),
+  'headline-xl': display(44, 36, 34, 32, LINE_HEIGHT.headline),
+  'headline-l': display(38, 32, 30, 28, LINE_HEIGHT.headline),
+  'headline-m': display(32, 28, 26, 24, LINE_HEIGHT.headline),
+  'headline-s': display(28, 24, 22, 20, LINE_HEIGHT.headline),
+  'label-l': text(20, 18, 17, 16, LINE_HEIGHT.label),
+  'label-m': text(17, 16, 15, 14, LINE_HEIGHT.label),
+  'label-s': text(15, 14, 14, 14, LINE_HEIGHT.label),
+  'body-l': text(23, 20, 18, 18, LINE_HEIGHT.body),
+  'body-m': text(18, 16, 16, 14, LINE_HEIGHT.body),
+  'body-s': text(15, 14, 14, 14, LINE_HEIGHT.smallBody),
+  'caption-l': text(15, 14, 13, 13, LINE_HEIGHT.caption),
+  'caption-m': text(14, 13, 12, 12, LINE_HEIGHT.caption),
+  'caption-s': text(13, 12, 12, 12, LINE_HEIGHT.caption),
+};
 
 const sizeVar = (role: TypeRole) => `--type-${role}-size`;
 const leadingVar = (role: TypeRole) => `--type-${role}-leading`;
 
-/** Theme-local tokens for one breakpoint, e.g. {'--type-display-l-size': '3.5rem', ...}. */
-export function typeTokens(breakpoint: 'desktop' | 'tablet' | 'mobile'): Record<string, string> {
+/** Where in the theme a set of type tokens applies. */
+export type TypeTier = 'base' | 'below-xl' | 'below-lg' | 'below-md' | 'below-sm';
+
+const MOBILE_SM_RATIO = 0.85;
+
+/**
+ * Theme-local type tokens for one tier, e.g. {'--type-display-l-size': 'clamp(...)'}.
+ * "base" is the root theme (1440px and up); the others are adaptations that
+ * apply in order below each breakpoint.
+ */
+export function typeTokens(tier: TypeTier): Record<string, string> {
   const tokens: Record<string, string> = {};
   for (const [role, spec] of Object.entries(typeScale) as [TypeRole, RoleSpec][]) {
-    tokens[sizeVar(role)] = rem(spec[breakpoint]);
-    if (breakpoint === 'desktop') tokens[leadingVar(role)] = String(spec.lineHeight);
+    const size = (() => {
+      switch (tier) {
+        case 'base':
+          return fluid(spec.desktop, spec.wide, ANCHORS.desktop, ANCHORS.wide);
+        case 'below-xl':
+          return spec.isFluid ? fluid(spec.mobile, spec.desktop, ANCHORS.mobile, ANCHORS.desktop) : rem(spec.desktop);
+        case 'below-lg':
+          return spec.isFluid ? undefined : rem(spec.tablet);
+        case 'below-md':
+          return spec.isFluid ? undefined : rem(spec.mobile);
+        case 'below-sm':
+          return spec.isFluid ? fluid(Math.round(spec.mobile * MOBILE_SM_RATIO), spec.mobile, ANCHORS.mobileSm, ANCHORS.mobile) : undefined;
+      }
+    })();
+    if (size) tokens[sizeVar(role)] = size;
+    if (tier === 'base') tokens[leadingVar(role)] = String(spec.lineHeight);
   }
   return tokens;
 }

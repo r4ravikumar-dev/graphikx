@@ -12,11 +12,21 @@ function scrollInstantly(top: number) {
   window.scrollTo({top, left: 0, behavior: 'instant'});
 }
 
+/** Scrolls to the element named by the URL hash. Returns false if there is none. */
+function scrollToHash(): boolean {
+  if (!window.location.hash) return false;
+  const target = document.getElementById(decodeURIComponent(window.location.hash.slice(1)));
+  target?.scrollIntoView({block: 'start', behavior: 'instant'});
+  return target !== null;
+}
+
 /**
  * Page-to-page scroll behaviour:
  *
  * - Following a link opens the new page at the very top (or at its #section,
  *   if the link points to one).
+ * - Loading a page with a #section re-aligns to it after the load event and
+ *   fonts, since the browser's own jump can land before layout settles.
  * - Back and Forward return to exactly where the visitor was on that page,
  *   e.g. the card they clicked.
  *
@@ -35,6 +45,15 @@ export function ScrollManager() {
   useLayoutEffect(() => {
     currentPath.current = pathname;
   }, [pathname]);
+
+  useEffect(() => {
+    if (!window.location.hash) return;
+    // After the load event (when the browser makes its own jump) and fonts.
+    const align = () => document.fonts.ready.then(() => afterNextScroll(scrollToHash));
+    if (document.readyState === 'complete') align();
+    else window.addEventListener('load', align, {once: true});
+    return () => window.removeEventListener('load', align);
+  }, []);
 
   useEffect(() => {
     const previous = window.history.scrollRestoration;
@@ -75,11 +94,7 @@ export function ScrollManager() {
       }
 
       // New page: honour a #section link, otherwise start at the top.
-      const target = window.location.hash
-        ? document.getElementById(decodeURIComponent(window.location.hash.slice(1)))
-        : null;
-      if (target) target.scrollIntoView({block: 'start', behavior: 'instant'});
-      else scrollInstantly(0);
+      if (!scrollToHash()) scrollInstantly(0);
     });
   }, [pathname]);
 

@@ -1,14 +1,11 @@
 import type {Metadata} from 'next';
 import {notFound} from 'next/navigation';
 import {VStack} from '@astryxdesign/core/Layout';
-import {Grid} from '@astryxdesign/core/Grid';
-import {Section} from '@astryxdesign/core/Section';
-import {Container} from '@/components/layout/Container';
-import {Reveal} from '@/components/motion/Reveal';
-import {SectionIntro} from '@/components/storytelling/SectionIntro';
-import {ProjectInvitation} from '@/components/storytelling/ProjectInvitation';
+import {ArticleRows} from '@/components/editorial/ArticleRows';
+import {BigStatement} from '@/components/editorial/BigStatement';
+import {Chapter} from '@/components/editorial/Chapter';
+import {ChapterHeader} from '@/components/editorial/ChapterHeader';
 import {ArticleContent} from '@/components/thinking/ArticleContent';
-import {ArticleCard} from '@/components/thinking/ArticleCard';
 import {articles, getArticle, getRelatedArticles, thinkingPage} from '@/content/articles';
 import {site} from '@/content/site';
 
@@ -54,32 +51,23 @@ export default async function ArticlePage({params}: ArticlePageProps) {
     publisher: {'@type': 'Organization', name: site.name},
   };
 
+  const {back, related: relatedCopy, closing} = thinkingPage.article;
+
   return (
     <VStack gap={0}>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{__html: JSON.stringify(structuredData).replace(/</g, '\\u003c')}}
       />
-      <ArticleContent article={article} />
+      <ArticleContent article={article} backLabel={back} />
 
-      {/* Related thinking */}
-      <Container paddingBlock={10}>
-        <VStack gap={6}>
-          <SectionIntro eyebrow={thinkingPage.related.eyebrow} title={thinkingPage.related.title} />
-          <Grid columns={{minWidth: 260}} gap={4}>
-            {related.map((relatedArticle, index) => (
-              <Reveal key={relatedArticle.slug} delay={0.06 * index} height="100%">
-                <ArticleCard article={relatedArticle} variant="compact" />
-              </Reveal>
-            ))}
-          </Grid>
-        </VStack>
-      </Container>
+      {/* Keep thinking: related articles as rows. */}
+      <Chapter label={relatedCopy.label}>
+        <ChapterHeader label={relatedCopy.label} title={relatedCopy.title} size="display-l" />
+        <ArticleRows articles={related} />
+      </Chapter>
 
-      {/* Article CTA */}
-      <Section variant="muted" padding={0}>
-        <ProjectInvitation {...thinkingPage.articleInvitation} />
-      </Section>
+      <BigStatement {...closing} />
     </VStack>
   );
 }

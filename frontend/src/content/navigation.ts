@@ -68,7 +68,7 @@ export const mobileMenu = {
 export const statusCopy = {
   loading: 'One moment…',
   notFound: {
-    title: 'Looks like we lost the flow.',
+    title: 'Looks like we lost the *flow.*',
     description: "The page you're looking for isn't here.",
     action: {label: 'Back to Graphikx', href: '/'},
   },

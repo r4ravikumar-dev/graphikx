@@ -1,58 +1,55 @@
 'use client';
 
+import NextLink from 'next/link';
 import {VStack, HStack} from '@astryxdesign/core/Layout';
 import {Heading} from '@astryxdesign/core/Heading';
 import {Text} from '@astryxdesign/core/Text';
-import {Icon} from '@astryxdesign/core/Icon';
-import {ArrowRight} from 'lucide-react';
-import {MotionClickableCard, MotionHStack} from '@/components/motion/Motion';
-import {Eyebrow} from '@/components/storytelling/Eyebrow';
-import {springs} from '@/motion/springs';
+import {Reveal} from '@/components/motion/Reveal';
+import {CtaButton} from '@/components/navigation/CtaButton';
+import {IndexLabel} from '@/components/editorial/IndexLabel';
 import type {Article} from '@/content/articles';
-import {EMPHASIS} from '@/theme/emphasis';
 import {typeRole} from '@/theme/typeScale';
+import {EYEBROW_STYLE} from '@/theme/eyebrow';
 
 type FeaturedArticleProps = {
+  index: number;
+  label: string;
   article: Article;
   actionLabel: string;
 };
 
-/** One article given the spotlight: a large card with its category, title, and excerpt. */
-export function FeaturedArticle({article, actionLabel}: FeaturedArticleProps) {
+/** One article given a whole chapter: label, meta, a very large title and the excerpt. */
+export function FeaturedArticle({index, label, article, actionLabel}: FeaturedArticleProps) {
+  const href = `/thinking/${article.slug}`;
   return (
-    <MotionClickableCard
-      label={article.title}
-      href={`/thinking/${article.slug}`}
-      padding={8}
-      variant={EMPHASIS}
-      elevation="low"
-      initial="rest"
-      whileHover="hover"
-      whileTap={{scale: 0.99}}
-      variants={{rest: {y: 0}, hover: {y: -6}}}
-      transition={springs.spatial.fast}>
-      <VStack gap={5}>
-        <Eyebrow>{`Featured · ${article.category}`}</Eyebrow>
-        <Heading level={3} style={typeRole('headline-m')} textWrap="balance">
-          {article.title}
-        </Heading>
-        <Text type="large" textWrap="pretty">
-          {article.excerpt}
-        </Text>
-        <MotionHStack
-          gap={2}
-          vAlign="center"
-          variants={{rest: {x: 0}, hover: {x: 8}}}
-          transition={springs.spatial.fast}>
-          <Text type="large" weight="medium" color="accent">
-            {actionLabel}
+    <VStack gap={8}>
+      <Reveal>
+        <IndexLabel index={index}>{label}</IndexLabel>
+      </Reveal>
+      <Reveal delay={0.05} distance={32}>
+        <VStack gap={5}>
+          <Text type="supporting" color="secondary" style={EYEBROW_STYLE}>
+            {article.category} · {article.readingMinutes} min read
           </Text>
-          <Icon icon={ArrowRight} size="md" color="accent" />
-        </MotionHStack>
-        <HStack>
-          <Text type="supporting">{article.readingMinutes} min read</Text>
-        </HStack>
-      </VStack>
-    </MotionClickableCard>
+          <NextLink href={href} className="featured-article-link">
+            <Heading level={2} textWrap="balance" style={{...typeRole('display-l'), letterSpacing: '-0.03em', maxInlineSize: '20ch'}}>
+              {article.title}
+            </Heading>
+          </NextLink>
+        </VStack>
+      </Reveal>
+      <HStack justify="end">
+        <Reveal delay={0.12}>
+          <VStack gap={6} style={{maxInlineSize: '44ch'}}>
+            <Text type="large" color="secondary" textWrap="pretty">
+              {article.excerpt}
+            </Text>
+            <HStack>
+              <CtaButton label={actionLabel} href={href} variant="secondary" />
+            </HStack>
+          </VStack>
+        </Reveal>
+      </HStack>
+    </VStack>
   );
 }

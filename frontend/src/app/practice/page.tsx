@@ -1,111 +1,114 @@
 import type {Metadata} from 'next';
 import {VStack, HStack} from '@astryxdesign/core/Layout';
-import {Grid} from '@astryxdesign/core/Grid';
-import {Section} from '@astryxdesign/core/Section';
 import {Heading} from '@astryxdesign/core/Heading';
 import {Text} from '@astryxdesign/core/Text';
-import {Container} from '@/components/layout/Container';
 import {Reveal} from '@/components/motion/Reveal';
-import {CtaButton} from '@/components/navigation/CtaButton';
-import {NarrativeBlock} from '@/components/storytelling/NarrativeBlock';
-import {SectionIntro} from '@/components/storytelling/SectionIntro';
-import {Statement} from '@/components/storytelling/Statement';
-import {Microcopy} from '@/components/storytelling/Microcopy';
-import {ProcessSteps} from '@/components/storytelling/ProcessSteps';
-import {SituationList} from '@/components/storytelling/SituationList';
-import {ProjectInvitation} from '@/components/storytelling/ProjectInvitation';
-import {PracticeGroup} from '@/components/practice/PracticeGroup';
-import {DisciplineFlow} from '@/components/practice/DisciplineFlow';
+import {Lines} from '@/components/storytelling/Lines';
+import {BigStatement} from '@/components/editorial/BigStatement';
+import {Chapter} from '@/components/editorial/Chapter';
+import {ChapterHeader} from '@/components/editorial/ChapterHeader';
+import {EditorialHero} from '@/components/editorial/EditorialHero';
+import {FaqList} from '@/components/editorial/FaqList';
+import {IndexLabel} from '@/components/editorial/IndexLabel';
+import {IndexList} from '@/components/editorial/IndexList';
+import {LineDiagram} from '@/components/editorial/LineDiagram';
+import {StepTimeline} from '@/components/editorial/StepTimeline';
+import {StickySplit} from '@/components/editorial/StickySplit';
+import {JourneyScreens} from '@/components/illustrations/scenes';
+import {CapabilityDetail} from '@/components/practice/CapabilityDetail';
 import {capabilities, practiceGroups, practicePage} from '@/content/practice';
 import {typeRole} from '@/theme/typeScale';
 
 export const metadata: Metadata = {
   title: 'Practice',
   description:
-    'Product design, UX design, UX flow revamps, UI design, interaction design, no-code design, and SaaS product design at Graphikx.',
+    'Product design, UX, UI, interaction design, UX flow revamps, no-code design and SaaS product design.',
   alternates: {canonical: '/practice'},
 };
 
 export default function PracticePage() {
-  const {opening, connects, approach, whereToStart, closing} = practicePage;
+  const {hero, connects, approach, faq, closing} = practicePage;
+  // Chapters 01–03 are the groups; numbering continues after them.
+  let chapter = practiceGroups.length;
 
   return (
     <VStack gap={0}>
-      {/* Opening */}
-      <Container paddingBlock={10}>
-        <VStack gap={6} paddingBlockStart={10}>
-          <SectionIntro level={1} eyebrow={opening.eyebrow} title={opening.title} />
-          <VStack gap={3} maxWidth={760}>
-            {opening.paragraphs.map((paragraph, index) => (
-              <Reveal key={paragraph} delay={0.1 + 0.06 * index}>
-                <Text type="large" color="secondary" as="p" textWrap="pretty">
-                  {paragraph}
-                </Text>
-              </Reveal>
-            ))}
-          </VStack>
-          <Microcopy delay={0.25}>{opening.microcopy}</Microcopy>
-        </VStack>
-      </Container>
+      <EditorialHero {...hero} illustration={<JourneyScreens />} />
 
-      {/* 01–03: Practice groups */}
-      {practiceGroups.map((group, index) => (
-        <Section
-          key={group.id}
-          variant={index % 2 === 1 ? 'muted' : 'transparent'}
-          padding={0}>
-          <PracticeGroup
-            group={group}
-            number={index + 1}
-            capabilities={capabilities.filter(capability => capability.group === group.id)}
-          />
-        </Section>
+      {/* 01–03: the three groups. Rows keep their homepage numbers and open from /practice#slug. */}
+      {practiceGroups.map((group, groupIndex) => (
+        <Chapter key={group.id} label={group.label}>
+          <StickySplit
+            aside={
+              <ChapterHeader
+                index={groupIndex + 1}
+                label={group.label}
+                title={group.title}
+                size="display-l"
+              />
+            }>
+            <Reveal>
+              <Text type="large" color="secondary" textWrap="pretty" style={{maxInlineSize: '44ch'}}>
+                {group.intro}
+              </Text>
+            </Reveal>
+            <IndexList
+              items={capabilities
+                .map((capability, index) => ({capability, number: index + 1}))
+                .filter(({capability}) => capability.group === group.id)
+                .map(({capability, number}) => ({
+                  id: capability.slug,
+                  number,
+                  title: capability.title,
+                  summary: capability.summary,
+                  detail: <CapabilityDetail capability={capability} />,
+                }))}
+            />
+          </StickySplit>
+        </Chapter>
       ))}
 
-      {/* 04: How the practice connects */}
-      <NarrativeBlock
-        eyebrow={connects.eyebrow}
-        title={connects.title}
-        paragraphs={connects.paragraphs}
-      />
-      <Container paddingBlockEnd={10}>
-        <VStack gap={4}>
-          <DisciplineFlow steps={connects.sequence} />
-          <Microcopy>{connects.microcopy}</Microcopy>
-        </VStack>
-      </Container>
-
-      {/* 05: How we work */}
-      <Container paddingBlock={10}>
-        <VStack gap={8}>
-          <SectionIntro eyebrow={approach.eyebrow} title={approach.title} />
-          <ProcessSteps steps={approach.steps} />
-        </VStack>
-      </Container>
-      <Statement statement={approach.closing} />
-
-      {/* 06: Where to start */}
-      <Container paddingBlock={10}>
-        <Grid columns={{minWidth: 320, max: 2}} gap={10}>
-          <SectionIntro eyebrow={whereToStart.eyebrow} title={whereToStart.title} />
-          <VStack gap={6}>
-            <SituationList situations={whereToStart.situations} />
-            <Reveal>
-              <Heading level={3} style={typeRole('headline-l')}>
-                {whereToStart.closing}
-              </Heading>
+      {/* 04: How it connects, on the muted surface. */}
+      <Chapter tone="muted" label={connects.label}>
+        <VStack gap={6}>
+          <Reveal>
+            <IndexLabel index={++chapter}>{connects.label}</IndexLabel>
+          </Reveal>
+          <Reveal delay={0.05} distance={32}>
+            <Heading level={2} textWrap="balance" style={{...typeRole('display-xl'), letterSpacing: '-0.03em', maxInlineSize: '14ch'}}>
+              <Lines text={connects.title} />
+            </Heading>
+          </Reveal>
+          <HStack justify="end">
+            <Reveal delay={0.1}>
+              <Text type="large" color="secondary" textWrap="pretty" style={{maxInlineSize: '44ch'}}>
+                {connects.description}
+              </Text>
             </Reveal>
-            <HStack>
-              <CtaButton {...whereToStart.action} />
-            </HStack>
-          </VStack>
-        </Grid>
-      </Container>
+          </HStack>
+        </VStack>
+        <LineDiagram
+          nodes={connects.sequence}
+          label={`How the disciplines connect: ${connects.sequence.join(', then ')}.`}
+        />
+      </Chapter>
 
-      {/* 07: Closing */}
-      <Section variant="muted" padding={0}>
-        <ProjectInvitation {...closing} />
-      </Section>
+      {/* 05: Approach. */}
+      <Chapter label={approach.label}>
+        <StickySplit
+          aside={<ChapterHeader index={++chapter} label={approach.label} title={approach.title} size="display-l" />}>
+          <StepTimeline steps={approach.steps} />
+        </StickySplit>
+      </Chapter>
+
+      {/* 06: Questions. */}
+      <Chapter label={faq.label}>
+        <StickySplit aside={<ChapterHeader index={++chapter} label={faq.label} title={faq.title} size="display-l" />}>
+          <FaqList items={faq.items} />
+        </StickySplit>
+      </Chapter>
+
+      <BigStatement {...closing} />
     </VStack>
   );
 }

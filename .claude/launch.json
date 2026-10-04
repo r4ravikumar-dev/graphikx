@@ -3,15 +3,17 @@
   "configurations": [
     {
       "name": "frontend",
-      "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev", "--prefix", "frontend"],
-      "port": 3000
+      "runtimeExecutable": "env",
+      "runtimeArgs": ["BACKEND_URL=http://localhost:4100", "npm", "run", "dev", "--prefix", "frontend"],
+      "port": 3000,
+      "autoPort": true
     },
     {
       "name": "backend",
-      "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev", "--prefix", "backend"],
-      "port": 4000
+      "runtimeExecutable": "env",
+      "runtimeArgs": ["PORT=4100", "npm", "run", "dev", "--prefix", "backend"],
+      "port": 4100,
+      "autoPort": false
     }
   ]
 }

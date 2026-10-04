@@ -36,6 +36,7 @@ export function MainNav() {
         maxInlineSize: CONTENT_MAX_WIDTH,
         marginInline: 'auto',
         paddingInline: CONTENT_GUTTER,
+        boxSizing: 'border-box',
         paddingBlock: 'var(--nav-padding-block)',
       }}
       heading={<Wordmark />}

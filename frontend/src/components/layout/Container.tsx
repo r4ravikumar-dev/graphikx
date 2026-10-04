@@ -3,14 +3,16 @@
 import type {ComponentProps} from 'react';
 import {VStack} from '@astryxdesign/core/Layout';
 
-/** The site's content column. The header uses it too, so everything lines up on wide screens. */
-export const CONTENT_MAX_WIDTH = 1120;
+/** Side gutter between the content column and the edge of the screen (fluid, spaceScale.ts). */
+export const CONTENT_GUTTER = 'var(--space-gutter)';
 
-/** Side gutter between the content column and the edge of the screen. */
-export const CONTENT_GUTTER = 'var(--spacing-6)';
+/** Widest the site's content gets, gutters included. The header uses it too, so everything lines up. */
+export const CONTENT_MAX_WIDTH = `calc(var(--content-max) + 2 * ${CONTENT_GUTTER})`;
 
 const widths = {
-  narrow: 760,
+  narrow: `calc(760px + 2 * ${CONTENT_GUTTER})`,
+  /** Comfortable reading measure for long-form text. */
+  reading: `calc(680px + 2 * ${CONTENT_GUTTER})`,
   default: CONTENT_MAX_WIDTH,
 } as const;
 
@@ -18,13 +20,21 @@ type ContainerProps = ComponentProps<typeof VStack> & {
   size?: keyof typeof widths;
 };
 
-/** Caps and centres page content so wide screens keep comfortable gutters. */
+/**
+ * Caps and centres page content. Below the cap, content fills the screen
+ * minus the fluid gutters, so it grows with the screen from mobile to wide.
+ */
 export function Container({size = 'default', style, ...props}: ContainerProps) {
   return (
     <VStack
       width="100%"
-      maxWidth={widths[size]}
-      style={{marginInline: 'auto', paddingInline: CONTENT_GUTTER, ...style}}
+      style={{
+        maxInlineSize: widths[size],
+        marginInline: 'auto',
+        paddingInline: CONTENT_GUTTER,
+        boxSizing: 'border-box',
+        ...style,
+      }}
       {...props}
     />
   );

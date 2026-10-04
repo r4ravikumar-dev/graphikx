@@ -16,6 +16,7 @@ The project is designed to support the Graphikx brand, content, project enquirie
 - [Backend](#backend)
 - [Getting Started](#getting-started)
 - [Environment Variables](#environment-variables)
+- [Deployment](#deployment)
 - [API](#api)
 - [Content Structure](#content-structure)
 - [Design Principles](#design-principles)
@@ -149,7 +150,7 @@ The frontend is responsible for the Graphikx website experience, responsive layo
 ```
 Framework:   Next.js 16 (App Router) + React 19
 Language:    TypeScript
-Components:  Astryx (@astryxdesign/core) — https://astryx.atmeta.com/components
+Components:  Astryx (@astryxdesign/core): https://astryx.atmeta.com/components
 Theme:       Astryx Stone (@astryxdesign/theme-stone), extended in src/theme
 Typography:  Graphikx Responsive Typography Scale v1 (src/theme/typeScale.ts)
 Templates:   Astryx templates (shell-top-nav, centered-hero, contact-form)
@@ -157,7 +158,7 @@ Styling:     Astryx components + design tokens (no Tailwind)
 Animation:   Framer Motion with Material Design 3 Expressive springs
 Icons:       Lucide
 Forms:       Astryx form components with custom validation
-CMS:         None yet — content lives in src/content
+CMS:         None yet; content lives in src/content
 ```
 
 Pages are built from Astryx templates. Run `npx astryx build "<page idea>"` in `frontend/` to find the closest template, and `npx astryx component <Name>` for component props.
@@ -249,10 +250,11 @@ cp .env.example .env.local
 Add the required values to `.env.local`. Example:
 
 ```env
-NEXT_PUBLIC_API_URL=http://localhost:4000
+BACKEND_URL=http://localhost:4000
 NEXT_PUBLIC_SITE_URL=http://localhost:3000
-NEXT_PUBLIC_ANALYTICS_ID=
 ```
+
+The browser always calls the API on the same origin (`/api/...`). In local development, `next.config.ts` proxies `/api/*` to `BACKEND_URL`.
 
 Start the development server:
 
@@ -319,7 +321,7 @@ Keep sensitive values inside local `.env` files or your deployment provider's en
 ### Frontend
 
 ```env
-NEXT_PUBLIC_API_URL=
+BACKEND_URL=              # local development only; leave unset on Vercel
 NEXT_PUBLIC_SITE_URL=
 NEXT_PUBLIC_CONTACT_EMAIL=
 NEXT_PUBLIC_LINKEDIN_URL=
@@ -336,6 +338,39 @@ ENQUIRY_NOTIFY_TO=
 ```
 
 Add service-specific variables as required.
+
+---
+
+## Deployment
+
+The site deploys to Vercel as **one project with two [services](https://vercel.com/docs/services)**, configured in `vercel.json` at the repository root:
+
+| Service    | Root        | Framework | Public path                    |
+| ---------- | ----------- | --------- | ------------------------------ |
+| `backend`  | `backend/`  | Express   | `/api/*`                       |
+| `frontend` | `frontend/` | Next.js   | everything else (`/*`)         |
+
+- Both services share one domain, so the browser calls the API at `/api/...` on the same origin, with no CORS and no API URL to configure.
+- Vercel passes the original path to each service, so `/api/health` reaches Express as `/api/health`, matching its routes.
+- The backend's entrypoint is set to `src/server.ts`. Without it, Vercel would pick up `src/app.ts`, which only exports a factory.
+- The frontend server never calls the backend, so there are no service bindings. If server-side code ever needs the API, add a binding on the `frontend` service rather than hard-coding a URL.
+
+Set these environment variables in the Vercel project, not in `vercel.json`:
+
+| Variable                                         | Used by  | Notes                                            |
+| ------------------------------------------------ | -------- | ------------------------------------------------ |
+| `NEXT_PUBLIC_SITE_URL`                           | frontend | The production URL, for canonical links and the sitemap |
+| `NEXT_PUBLIC_CONTACT_EMAIL`, `NEXT_PUBLIC_LINKEDIN_URL` | frontend | Optional. Default to the Graphikx contacts     |
+| `EMAIL_HOST`, `EMAIL_PORT`, `EMAIL_USER`, `EMAIL_PASSWORD`, `EMAIL_FROM` | backend | SMTP for enquiry emails. Without them, enquiries are only logged |
+| `ENQUIRY_NOTIFY_TO`                              | backend  | Where enquiries are sent                         |
+
+Do not set `BACKEND_URL` on Vercel.
+
+To run both services together locally, the way they run on Vercel:
+
+```bash
+vercel dev
+```
 
 ---
 

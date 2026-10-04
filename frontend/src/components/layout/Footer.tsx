@@ -1,131 +1,163 @@
 'use client';
 
+import type {ReactNode} from 'react';
+import NextLink from 'next/link';
+import {useReducedMotion} from 'framer-motion';
 import {VStack, HStack} from '@astryxdesign/core/Layout';
 import {Grid} from '@astryxdesign/core/Grid';
-import {Section} from '@astryxdesign/core/Section';
 import {Heading} from '@astryxdesign/core/Heading';
 import {Text} from '@astryxdesign/core/Text';
 import {Link} from '@astryxdesign/core/Link';
 import {Icon} from '@astryxdesign/core/Icon';
-import {Divider} from '@astryxdesign/core/Divider';
 import {VisuallyHidden} from '@astryxdesign/core/VisuallyHidden';
-import {ArrowUpRight} from 'lucide-react';
+import {ArrowUp, ArrowUpRight} from 'lucide-react';
 import {Container} from './Container';
-import {CtaButton} from '@/components/navigation/CtaButton';
-import {Wordmark} from '@/components/navigation/Wordmark';
+import {Logo} from '@/components/navigation/Logo';
 import {Lines} from '@/components/storytelling/Lines';
 import {Reveal} from '@/components/motion/Reveal';
 import {footer} from '@/content/footer';
 import {site} from '@/content/site';
+import {typeRole} from '@/theme/typeScale';
+import {EYEBROW_STYLE} from '@/theme/eyebrow';
+
+const labelStyle = EYEBROW_STYLE;
 
 function ColumnTitle({children}: {children: string}) {
   return (
-    <Text
-      type="label"
-      color="secondary"
-      style={{textTransform: 'uppercase', letterSpacing: '0.08em'}}>
+    <Text type="supporting" color="secondary" style={labelStyle}>
       {children}
     </Text>
   );
 }
 
-/** A footer link marked with ↗, e.g. LinkedIn or Email. */
-function OutboundLink({
-  href,
-  label,
-  opensNewTab,
-}: {
-  href: string;
-  label: string;
-  opensNewTab?: boolean;
-}) {
+/** One cell of the contact bar: a small label over a larger value, with an arrow. */
+function BarCell({label, value, icon}: {label: string; value: string; icon: ReactNode}) {
   return (
-    <Link href={href} isStandalone target={opensNewTab ? '_blank' : undefined}>
-      <HStack gap={1} vAlign="center" as="span">
-        {label}
-        <Icon icon={ArrowUpRight} size="sm" color="inherit" />
-        {opensNewTab && <VisuallyHidden>(opens in new tab)</VisuallyHidden>}
-      </HStack>
-    </Link>
+    <HStack gap={4} justify="between" vAlign="end" width="100%">
+      <VStack gap={1} style={{minInlineSize: 0}}>
+        <Text type="supporting" color="secondary" style={labelStyle}>
+          {label}
+        </Text>
+        <Text style={{...typeRole('headline-s'), overflowWrap: 'anywhere'}}>{value}</Text>
+      </VStack>
+      <span className="footer-bar-arrow" aria-hidden>
+        {icon}
+      </span>
+    </HStack>
   );
 }
 
-/** The site-wide footer (copy in content/footer.ts). */
+/**
+ * The site-wide footer (copy in content/footer.ts), on the theme's muted
+ * surface so it follows light and dark mode: a statement, a contact bar divided by
+ * hairlines, quiet columns, a tiny meta row, and the wordmark set huge
+ * across the full width as a sign-off.
+ */
 export function Footer() {
   const year = new Date().getFullYear();
+  const reduceMotion = useReducedMotion();
+  const {email, linkedin, project, top} = footer.contact;
+  const arrowOut = <Icon icon={ArrowUpRight} size="md" color="inherit" />;
 
   return (
-    <Section variant="muted" padding={0} paddingBlock={10} dividers={['top']}>
-      <Container gap={10} paddingBlock={4}>
-        {/* 4 columns on desktop, 2 on tablet, 1 on mobile (see .footer-columns in globals.css). */}
-        <Grid columns={4} gap={8} className="footer-columns">
-          {/* Brand: logo and statement */}
-          <Reveal gap={3} hAlign="start">
-            <Wordmark height={32} />
-            <Heading level={2} type="display-3">
-              {footer.statement}
+    <VStack
+      as="footer"
+      gap={0}
+      className="site-footer">
+      <Container gap={0} style={{gap: 'var(--space-chapter-gap)', paddingBlockStart: 'var(--space-section)'}}>
+        {/* Statement */}
+        <Grid columns={{minWidth: 320, max: 2}} gap={8} style={{alignItems: 'end'}}>
+          <Reveal distance={32}>
+            <Heading level={2} style={{...typeRole('display-l'), letterSpacing: '-0.03em'}}>
+              <Lines text={footer.statement} />
             </Heading>
-            <Text color="secondary" textWrap="pretty">
+          </Reveal>
+          <Reveal delay={0.08}>
+            <Text type="large" color="secondary" textWrap="pretty" style={{maxInlineSize: '36ch'}}>
               {footer.description}
             </Text>
           </Reveal>
+        </Grid>
 
-          {/* Explore */}
+        {/* Contact bar: 4 cells on desktop, 2 on tablet, 1 on mobile. */}
+        <Grid columns={4} gap={0} className="footer-bar">
+          <a className="footer-bar-cell" href={email.href}>
+            <BarCell label={email.label} value={email.value} icon={arrowOut} />
+          </a>
+          {linkedin.href && (
+            <a className="footer-bar-cell" href={linkedin.href} target="_blank" rel="noreferrer">
+              <BarCell label={linkedin.label} value={linkedin.value} icon={arrowOut} />
+              <VisuallyHidden>(opens in new tab)</VisuallyHidden>
+            </a>
+          )}
+          <NextLink className="footer-bar-cell" href={project.href}>
+            <BarCell label={project.label} value={project.value} icon={arrowOut} />
+          </NextLink>
+          <button
+            type="button"
+            className="footer-bar-cell"
+            onClick={() => window.scrollTo({top: 0, behavior: reduceMotion ? 'auto' : 'smooth'})}>
+            <BarCell
+              label={top.label}
+              value={top.value}
+              icon={<Icon icon={ArrowUp} size="md" color="inherit" />}
+            />
+          </button>
+        </Grid>
+
+        {/* Columns */}
+        <Grid columns={{minWidth: 240, max: 3}} gap={8}>
           <VStack gap={4} as="nav" aria-label={footer.explore.title}>
             <ColumnTitle>{footer.explore.title}</ColumnTitle>
             {footer.explore.links.map(item => (
-              <VStack key={item.href} gap={0.5}>
+              <HStack key={item.href} gap={3} vAlign="center" wrap="wrap">
                 <Link href={item.href} isStandalone>
                   {item.label}
                 </Link>
                 <Text type="supporting">{item.hint}</Text>
-              </VStack>
+              </HStack>
             ))}
           </VStack>
-
-          {/* Work with us */}
-          <VStack gap={4} hAlign="start">
-            <ColumnTitle>{footer.workWithUs.title}</ColumnTitle>
-            <CtaButton {...footer.workWithUs.action} size="md" direction="out" />
-            <Text type="supporting" textWrap="balance">
-              {footer.workWithUs.microcopy}
+          <VStack gap={4}>
+            <ColumnTitle>{footer.studio.title}</ColumnTitle>
+            <Text type="large" textWrap="balance">
+              <Lines text={footer.closing} />
             </Text>
           </VStack>
-
-          {/* Find us */}
-          <VStack gap={4}>
-            <ColumnTitle>{footer.connect.title}</ColumnTitle>
-            {site.linkedinUrl && (
-              <OutboundLink href={site.linkedinUrl} label="LinkedIn" opensNewTab />
-            )}
-            <OutboundLink href={`mailto:${site.email}`} label="Email" />
+          <VStack gap={4} as="nav" aria-label="Legal">
+            <ColumnTitle>Legal</ColumnTitle>
+            {footer.legal.map(item => (
+              <Link key={item.href} href={item.href} isStandalone>
+                {item.label}
+              </Link>
+            ))}
           </VStack>
         </Grid>
 
-        <VStack gap={6}>
-          <Divider />
-          {/* Footer meta */}
-          <HStack gap={6} justify="between" vAlign="center" wrap="wrap">
-            <Text type="supporting">
-              {site.name} © {year}
-            </Text>
-            <HStack gap={5} as="nav" aria-label="Legal">
-              {footer.legal.map(item => (
-                <Link key={item.href} href={item.href} isStandalone>
-                  <Text type="supporting" color="inherit">
-                    {item.label}
-                  </Text>
-                </Link>
-              ))}
-            </HStack>
-          </HStack>
-
-          {/* Final brand line */}
-          <Text type="large" weight="semibold">
-            <Lines text={footer.closing} />
+        {/* Meta */}
+        <HStack
+          gap={6}
+          justify="between"
+          vAlign="center"
+          wrap="wrap"
+          style={{borderBlockStart: '1px solid var(--color-border)', paddingBlockStart: 'var(--spacing-5)'}}>
+          <Text type="supporting" style={labelStyle}>
+            {site.name} © {year}
           </Text>
-        </VStack>
+          <Text type="supporting" style={labelStyle}>
+            {site.tagline}
+          </Text>
+        </HStack>
       </Container>
-    </Section>
+
+      {/* Giant wordmark, shown in full as the sign-off. */}
+      <Container
+        gap={0}
+        style={{marginBlockStart: 'var(--space-block)', paddingBlockEnd: 'var(--space-block)'}}>
+        <Reveal distance={48} speed="slow" aria-hidden>
+          <Logo isFluid />
+        </Reveal>
+      </Container>
+    </VStack>
   );
 }

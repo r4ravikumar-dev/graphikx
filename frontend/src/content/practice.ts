@@ -162,103 +162,89 @@ export const capabilities: Capability[] = [
 
 export type PracticeGroup = {
   id: PracticeGroupId;
-  eyebrow: string;
+  label: string;
+  /** "*word*" sets the italic serif accent. */
   title: string;
-  paragraphs: string[];
+  intro: string;
 };
 
 export const practiceGroups: PracticeGroup[] = [
   {
     id: 'product',
-    eyebrow: 'Product thinking',
-    title: 'Before we design the screen,\nwe understand the journey.',
-    paragraphs: [
-      "Good product experiences don't happen one screen at a time.",
-      'We look at what people are trying to do, what they need along the way, and where the experience starts getting in their way.',
-      'That thinking shapes what the product should do, and how it should feel.',
-    ],
+    label: 'Product thinking',
+    title: 'Understand the *journey* first.',
+    intro: 'What people are trying to do, and where the experience gets in their way, shapes everything else.',
   },
   {
     id: 'interface',
-    eyebrow: 'Interface thinking',
-    title: 'The interface is where the thinking becomes visible.',
-    paragraphs: [
-      'Once the journey is clear, the interface gives it form.',
-      'We design visual and interactive details that help people understand where they are, what they can do, and what happens next.',
-    ],
+    label: 'Interface thinking',
+    title: 'Where the thinking becomes *visible.*',
+    intro: 'Visual and interactive details that show people where they are, what they can do and what happens next.',
   },
   {
     id: 'building',
-    eyebrow: 'Product building',
-    title: 'From something you can imagine\nto something you can experience.',
-    paragraphs: [
-      'Sometimes ideas need more than screens.',
-      'We help turn design into something people can actually click, explore, test, and experience, without adding unnecessary distance between an idea and its first real version.',
-    ],
+    label: 'Product building',
+    title: 'Real enough to *test.*',
+    intro: 'Design people can click, explore and try, without unnecessary distance between an idea and its first version.',
   },
 ];
 
+/** Practice page copy, in page order. "*word*" sets the italic serif accent. */
 export const practicePage = {
-  opening: {
-    eyebrow: 'The Graphikx practice',
-    title: 'Design for what people need.\nNot just what they see.',
-    paragraphs: [
-      'We work across products, experiences, interfaces, and the systems behind them.',
-      'From shaping a new idea to reworking an existing experience, we help make digital products clearer, more useful, and easier to use.',
-    ],
-    microcopy: 'Start with the problem. The design follows.',
+  hero: {
+    label: 'Practice',
+    title: 'Design for what people *need.*',
+    description:
+      'Products, experiences, interfaces and the systems behind them: from a new idea to a product that needs a rethink.',
+    action: {label: 'Start a project', href: '/start-a-project', direction: 'out' as const},
+    meta: ['Product thinking', 'Interface thinking', 'Product building', '7 disciplines'],
   },
   connects: {
-    eyebrow: 'One product. Many decisions.',
-    title: "These aren't separate pieces.",
-    paragraphs: [
-      "A product's experience doesn't stop at UX.",
-      'The flow affects the interface.\nThe interface affects the interaction.\nThe interaction affects how the product feels.',
-      'And as the product grows, all of it needs to stay connected.',
-      "That's why we look at the experience as a whole.",
-    ],
+    label: 'One product. Many decisions.',
+    title: "These aren't *separate* pieces.",
+    description:
+      'The flow shapes the interface, the interface shapes the interaction, and the interaction shapes how the product feels. So we design the whole.',
     sequence: ['Product', 'UX', 'UI', 'Interaction', 'Build', 'Evolve'],
-    microcopy: 'Different disciplines. One experience.',
   },
   approach: {
-    eyebrow: 'Our approach',
-    title: 'Start with understanding.\nEnd with something useful.',
+    label: 'Our approach',
+    title: 'Start with understanding. End with something *useful.*',
     steps: [
-      {
-        title: 'Understand',
-        description: "We learn what you're building, who it's for, and what's getting in the way.",
-      },
-      {title: 'Explore', description: 'We look at different ways the experience could work.'},
-      {
-        title: 'Shape',
-        description: 'We turn the strongest direction into clear flows, interfaces, and interactions.',
-      },
-      {
-        title: 'Test',
-        description: 'We put ideas in front of people and learn what needs to change.',
-      },
-      {title: 'Refine', description: "We keep the useful parts and remove what isn't helping."},
+      {title: 'Understand', description: "What you're building, who it's for, and what's in the way."},
+      {title: 'Explore', description: 'Different ways the experience could work.'},
+      {title: 'Shape', description: 'The strongest direction, as flows, interfaces and interactions.'},
+      {title: 'Test', description: 'Ideas in front of people, to learn what needs to change.'},
+      {title: 'Refine', description: "Keep what's useful. Remove what isn't helping."},
     ],
-    closing: "We don't design more than the problem needs.",
   },
-  whereToStart: {
-    eyebrow: 'Where to start',
-    title: "You don't have to know what to ask for.",
-    situations: [
-      'Maybe you need a new product.',
-      'Maybe the product already exists but the experience feels messy.',
-      "Maybe one important flow isn't working.",
-      'Maybe the interface needs a rethink.',
-      'Or maybe you have an idea and need help figuring out where to begin.',
+  faq: {
+    label: 'Questions',
+    title: 'Things people often *ask.*',
+    items: [
+      {
+        question: 'Do I need a detailed brief?',
+        answer:
+          "No. Bring the idea, the problem or the half-finished thought. We'll use the first conversation to understand it.",
+      },
+      {
+        question: "What if I don't know which discipline I need?",
+        answer:
+          "That's fine. Tell us what's happening in your own words. You don't need to choose a service first.",
+      },
+      {
+        question: 'Can you work on a product that already exists?',
+        answer:
+          "Yes. That's what UX Flow Revamp is for: we find where people get stuck and reshape the experience around what matters most.",
+      },
+      {
+        question: 'Do you only design, or build too?',
+        answer:
+          'We design, and we use no-code tools like Framer and Webflow to turn ideas into experiences people can click, explore and test.',
+      },
     ],
-    closing: "That's enough.",
-    action: {label: "Tell us what you're trying to solve", href: '/start-a-project'},
   },
   closing: {
-    title: "Something feels difficult.\nLet's make sense of it.",
-    description:
-      "Tell us what you're working on, where you're stuck, or what you're trying to improve.\nWe'll start from there.",
-    action: {label: 'Start a project', href: '/start-a-project'},
-    microcopy: 'No perfect brief required.',
+    title: "Something feels difficult. Let's make *sense* of it.",
+    note: 'No perfect brief required.',
   },
 };

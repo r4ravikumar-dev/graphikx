@@ -43,18 +43,465 @@ html {
  * 1 column below 768px, 2 from 768px, 4 above 1024px (the brand column is a little wider).
  * Overrides the Grid's own column template, which lives in a lower-priority CSS layer.
  */
-.footer-columns {
-  grid-template-columns: minmax(0, 1fr);
-}
 
-@media (min-width: 768px) {
-  .footer-columns {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+/* ---------- Editorial components (components/editorial) ---------- */
+
+/* StickySplit: 5/7 columns with a pinned aside on desktop. */
+@media (min-width: 1024px) {
+  .sticky-split {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    align-items: start;
+  }
+  .sticky-split-aside {
+    position: sticky;
+    top: calc(var(--nav-padding-block) * 2 + 32px + var(--spacing-8));
   }
 }
 
-@media (min-width: 1025px) {
-  .footer-columns {
-    grid-template-columns: minmax(0, 1.4fr) repeat(3, minmax(0, 1fr));
+/* IndexList rows: full-width, unstyled interactive rows. */
+.index-row {
+  display: flex;
+  width: 100%;
+  text-align: start;
+  color: inherit;
+  font: inherit;
+  text-decoration: none;
+  background: none;
+  border-inline: 0;
+  border-block-end: 0;
+  cursor: pointer;
+  transition: background-color 200ms ease;
+}
+.index-row:focus-visible {
+  outline: 2px solid var(--color-focus-ring, var(--color-brand));
+  outline-offset: 4px;
+  border-radius: var(--radius-container-sm, 4px);
+}
+
+/* IndexList row layout. */
+.index-row-content.index-row-content {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-areas:
+    'number title arrow'
+    '. summary .';
+  column-gap: var(--spacing-4);
+  row-gap: var(--spacing-2);
+  align-items: baseline;
+}
+.index-row-content.is-unnumbered {
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    'title arrow'
+    'summary .';
+}
+.index-row-number { grid-area: number; }
+.index-row-title { grid-area: title; }
+.index-row-summary { grid-area: summary; max-inline-size: 40ch; }
+.index-row-arrow { grid-area: arrow; display: inline-flex; align-self: center; }
+@media (min-width: 1024px) {
+  .index-row-content.index-row-content {
+    grid-template-columns: 3ch minmax(0, 1.3fr) minmax(0, 1fr) auto;
+    grid-template-areas: 'number title summary arrow';
+    column-gap: var(--spacing-8);
+    align-items: center;
+  }
+  .index-row-content.is-unnumbered {
+    grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr) auto;
+    grid-template-areas: 'title summary arrow';
+  }
+}
+
+/* BuildUp: each layer steps further in, so the lines stack like layers. */
+.build-up {
+  --layer-indent: var(--spacing-3);
+  border-block-end: 1px solid var(--color-border);
+}
+/* Label above the line on phones, beside it from tablet up. */
+.build-up-row.build-up-row {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-2);
+}
+@media (min-width: 768px) {
+  .build-up {
+    --layer-indent: var(--spacing-8);
+  }
+  .build-up-row.build-up-row {
+    flex-direction: row;
+    align-items: baseline;
+    gap: var(--spacing-5);
+  }
+}
+
+/* Expanded IndexList detail lines up with the title, past the number column. */
+.index-row-detail {
+  padding-inline-start: calc(3ch + var(--spacing-4));
+}
+@media (min-width: 1024px) {
+  .index-row-detail {
+    padding-inline-start: calc(3ch + var(--spacing-8));
+  }
+}
+
+/* QuestionRail: 1, 2, then 4 columns, divided by hairlines. */
+.question-rail {
+  border-block: 1px solid var(--color-border);
+}
+.question-rail-item {
+  padding-block: var(--spacing-8);
+}
+.question-rail-item + .question-rail-item {
+  border-block-start: 1px solid var(--color-border);
+}
+@media (min-width: 768px) {
+  .question-rail {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .question-rail-item {
+    padding: var(--spacing-8) var(--spacing-6);
+  }
+  .question-rail-item + .question-rail-item {
+    border-block-start: 0;
+  }
+  .question-rail-item:nth-child(even) {
+    border-inline-start: 1px solid var(--color-border);
+  }
+  .question-rail-item:nth-child(n + 3) {
+    border-block-start: 1px solid var(--color-border);
+  }
+}
+@media (min-width: 1024px) {
+  .question-rail {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .question-rail-item:nth-child(n + 3) {
+    border-block-start: 0;
+  }
+  .question-rail-item + .question-rail-item {
+    border-inline-start: 1px solid var(--color-border);
+  }
+}
+
+/* Thinking: the featured title and the article back link. */
+.featured-article-link,
+.back-link {
+  color: inherit;
+  text-decoration: none;
+}
+.featured-article-link:hover h2 {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.12em;
+  text-decoration-color: var(--color-brand-text);
+}
+.back-link {
+  display: inline-flex;
+  color: var(--color-text-secondary);
+  transition: color 200ms ease;
+}
+.back-link:hover {
+  color: var(--color-text-primary);
+}
+
+/* Legal pages: paragraphs line up under the heading from tablet up; full width on phones. */
+@media (min-width: 768px) {
+  .legal-body {
+    padding-inline-start: calc(3ch + var(--spacing-4));
+  }
+}
+
+/* StepTimeline numeral: outlined, so it reads as structure, not content. */
+.step-row {
+  column-gap: var(--spacing-8);
+}
+.step-numeral {
+  /* Beside the step at every width: Display XL from tablet, Display M on phones. */
+  font-size: var(--type-display-xl-size);
+  line-height: var(--type-display-xl-leading);
+  min-inline-size: 2.2ch;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--color-text-secondary);
+  font-weight: 600;
+}
+
+@media (max-width: 767px) {
+  .step-row {
+    column-gap: var(--spacing-5);
+  }
+  .step-numeral {
+    font-size: var(--type-display-m-size);
+    line-height: 1;
+  }
+}
+
+/* LineDiagram: horizontal chain from tablet up, vertical on phones. */
+.line-diagram {
+  flex-wrap: nowrap;
+}
+.line-diagram-link {
+  display: block;
+  flex: 1 1 var(--spacing-8);
+  min-inline-size: var(--spacing-4);
+  block-size: 1px;
+  background-color: var(--color-text-primary);
+  transform-origin: left center;
+}
+.line-diagram-node {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+  padding: var(--spacing-4) var(--spacing-5);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-container-md, 12px);
+  white-space: nowrap;
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+  .line-diagram-node {
+    padding: var(--spacing-3) var(--spacing-3);
+  }
+}
+@media (max-width: 767px) {
+  .line-diagram {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .line-diagram-link {
+    flex: 0 0 auto;
+    inline-size: 1px;
+    min-inline-size: 0;
+    block-size: var(--spacing-8);
+    margin-inline-start: var(--spacing-6);
+    transform-origin: center top;
+  }
+}
+
+/* EditorialHero meta row: spread on wide screens, left-aligned when it wraps. */
+@media (max-width: 767px) {
+  .hero-meta.hero-meta {
+    justify-content: flex-start;
+    column-gap: var(--spacing-5);
+    row-gap: var(--spacing-2);
+  }
+}
+
+/* BigStatement email: underline grows on hover. */
+.giant-email {
+  color: var(--color-text-primary);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.15em;
+  text-decoration-color: var(--color-border-emphasized);
+  transition: text-decoration-color 200ms ease;
+}
+.giant-email > span {
+  font-size: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+}
+.giant-email:hover {
+  text-decoration-color: var(--color-brand-text);
+}
+
+/* Illustrations: line art that inherits the text colour. */
+.illustration {
+  display: block;
+  inline-size: 100%;
+  block-size: auto;
+  color: var(--color-text-primary);
+  overflow: visible;
+}
+
+/* ---------- Footer ---------- */
+
+/* The muted surface of the current theme: set apart, never flipped. */
+.site-footer {
+  background-color: var(--color-background-muted);
+  color: var(--color-text-primary);
+  border-block-start: 1px solid var(--color-border);
+  overflow: hidden;
+}
+
+/* Contact bar: cells divided by hairlines. 1, 2, then 4 columns. */
+.footer-bar {
+  grid-template-columns: minmax(0, 1fr);
+  border-block: 1px solid var(--color-border);
+}
+.footer-bar-cell {
+  display: flex;
+  padding: var(--spacing-6) var(--spacing-5);
+  color: inherit;
+  font: inherit;
+  text-align: start;
+  text-decoration: none;
+  background: none;
+  border: 0;
+  border-block-start: 1px solid var(--color-border);
+  cursor: pointer;
+  transition: background-color 200ms ease;
+}
+.footer-bar-cell:first-child {
+  border-block-start: 0;
+}
+.footer-bar-cell:hover {
+  background-color: var(--color-background-surface);
+}
+.footer-bar-cell:focus-visible {
+  outline: 2px solid var(--color-brand-text);
+  outline-offset: -2px;
+}
+.footer-bar-arrow {
+  display: inline-flex;
+  color: var(--color-text-secondary);
+  transition: transform 250ms cubic-bezier(0.2, 0, 0, 1.4), color 200ms ease;
+}
+.footer-bar-cell:hover .footer-bar-arrow,
+.footer-bar-cell:focus-visible .footer-bar-arrow {
+  color: var(--color-brand-text);
+  transform: translate(3px, -3px);
+}
+.footer-bar-cell:last-child:hover .footer-bar-arrow {
+  transform: translateY(-4px);
+}
+@media (min-width: 768px) {
+  .footer-bar {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .footer-bar-cell {
+    border-block-start: 0;
+  }
+  .footer-bar-cell:nth-child(n + 3) {
+    border-block-start: 1px solid var(--color-border);
+  }
+  .footer-bar-cell:nth-child(even) {
+    border-inline-start: 1px solid var(--color-border);
+  }
+}
+@media (min-width: 1024px) {
+  .footer-bar {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .footer-bar-cell:nth-child(n + 3) {
+    border-block-start: 0;
+  }
+  .footer-bar-cell + .footer-bar-cell {
+    border-inline-start: 1px solid var(--color-border);
+  }
+}
+
+/* ---------- Illustration loops (components/illustrations) ---------- */
+/* Slow and continuous. Paused off screen and on hover via [data-playing];
+   off entirely with reduced motion, leaving the finished still. */
+
+.illustration .ill-loop {
+  animation-play-state: paused;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.illustration[data-playing='true'] .ill-loop {
+  animation-play-state: running;
+}
+
+/* A blue segment or dot travelling the length of a path (pathLength = 1). */
+.ill-travel {
+  animation: ill-travel 9s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+@keyframes ill-travel {
+  from { stroke-dashoffset: 0.08; }
+  to { stroke-dashoffset: -1; }
+}
+
+/* A ring rippling outwards from a node. */
+.ill-pulse {
+  animation: ill-pulse 3s cubic-bezier(0.2, 0, 0, 1) infinite;
+}
+@keyframes ill-pulse {
+  0% { transform: scale(1); opacity: 0.7; }
+  100% { transform: scale(2.8); opacity: 0; }
+}
+
+/* Layers drifting apart and settling. --float sets the distance. */
+.ill-float {
+  animation: ill-float 8s ease-in-out infinite;
+}
+@keyframes ill-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(calc(var(--float, 6px) * -1)); }
+}
+
+/* The top layer tilting out of line and back. */
+.ill-tilt {
+  animation: ill-tilt 8s ease-in-out infinite;
+}
+@keyframes ill-tilt {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-14px) rotate(-4deg); }
+}
+
+/* A cell lighting up as the pulse passes, then fading. */
+.ill-blink {
+  opacity: 0;
+  animation: ill-blink 10.8s ease-in-out infinite;
+}
+@keyframes ill-blink {
+  0%, 16%, 100% { opacity: 0; }
+  4%, 9% { opacity: 1; }
+}
+
+/* The lens scanning across the lines. */
+.ill-scan {
+  animation: ill-scan 11s ease-in-out infinite;
+  transform-box: view-box;
+}
+@keyframes ill-scan {
+  0%, 100% { transform: translate(-56px, -36px); }
+  33% { transform: translate(64px, -8px); }
+  66% { transform: translate(-24px, 44px); }
+}
+
+/* The question mark swaying, as if still thinking. */
+.ill-sway {
+  animation: ill-sway 7s ease-in-out infinite;
+  transform-origin: center bottom;
+}
+@keyframes ill-sway {
+  0%, 100% { transform: rotate(-5deg); }
+  50% { transform: rotate(5deg); }
+}
+
+/* The paper plane gliding. */
+.ill-glide {
+  animation: ill-glide 9s ease-in-out infinite;
+}
+@keyframes ill-glide {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  50% { transform: translate(-10px, -12px) rotate(-3deg); }
+}
+
+/* Ideas orbiting the centre of the Studio scene (viewBox 400 × 300). */
+.ill-orbit {
+  animation: ill-orbit 40s linear infinite;
+  transform-box: view-box;
+  transform-origin: 200px 150px;
+}
+@keyframes ill-orbit {
+  to { transform: rotate(360deg); }
+}
+
+/* Typing dots: slow, so it reads as thinking rather than urgency. */
+.ill-typing {
+  animation: ill-typing 2.4s ease-in-out infinite;
+}
+@keyframes ill-typing {
+  0%, 60%, 100% { opacity: 0.25; transform: translateY(0); }
+  30% { opacity: 1; transform: translateY(-4px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .illustration .ill-loop {
+    animation: none;
+  }
+  .illustration .ill-blink {
+    opacity: 0;
   }
 }
