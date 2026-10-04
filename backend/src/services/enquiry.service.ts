@@ -1,39 +1,28 @@
 import type {ProjectEnquiry} from '../models/enquiry.js';
 import type {EmailService} from './email.service.js';
+import {
+  enquiryAttachments,
+  enquiryHtml,
+  enquirySubject,
+  enquiryText,
+} from '../emails/enquiryEmail.js';
 
 export type EnquiryService = {
   submit(enquiry: ProjectEnquiry): Promise<void>;
 };
 
-function formatEnquiry(enquiry: ProjectEnquiry): string {
-  const sections = [
-    ['What they are working on', enquiry.message],
-    ['What feels difficult', enquiry.difficulty],
-    ['Anything else', enquiry.notes],
-  ].filter((section): section is [string, string] => Boolean(section[1]));
-
-  return [
-    `Name: ${enquiry.name}`,
-    `Email: ${enquiry.email}`,
-    `Company / product: ${enquiry.company ?? 'Not provided'}`,
-    `Help with: ${enquiry.projectType ?? 'Not provided'}`,
-    `Where they are: ${enquiry.stage ?? 'Not provided'}`,
-    `Timeline: ${enquiry.timeline ?? 'Not provided'}`,
-    ...sections.flatMap(([heading, text]) => ['', `${heading}:`, text]),
-  ].join('\n');
-}
-
-export function createEnquiryService(
-  email: EmailService,
-  notifyTo: string | undefined,
-): EnquiryService {
+/** Sends each enquiry to the studio inbox; replying answers the visitor. */
+export function createEnquiryService(email: EmailService, notifyTo: string): EnquiryService {
   return {
     async submit(enquiry) {
+      const receivedAt = new Date();
       await email.send({
-        to: notifyTo ?? 'studio@localhost',
+        to: notifyTo,
         replyTo: enquiry.email,
-        subject: `New project enquiry from ${enquiry.name}${enquiry.projectType ? ` (${enquiry.projectType})` : ''}`,
-        text: formatEnquiry(enquiry),
+        subject: enquirySubject(enquiry),
+        text: enquiryText(enquiry, receivedAt),
+        html: enquiryHtml(enquiry, receivedAt),
+        attachments: enquiryAttachments,
       });
     },
   };
