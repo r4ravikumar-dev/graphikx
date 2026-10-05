@@ -19,15 +19,25 @@ html {
  * Liquid glass header. The bar stays 80% opaque in the theme's surface
  * colour; what scrolls beneath shows through blurred and colour-boosted,
  * with a bright specular top edge, a soft lower glint and a faint sheen so
- * it reads as a glass slab. Falls back to solid where blur is unsupported or
- * the visitor prefers reduced transparency.
+ * it reads as a glass slab. It shares the liquid glass material's physics
+ * (light, refraction, dispersion, depth; see below), with no grain. Falls back
+ * to solid where blur is unsupported or the visitor prefers reduced
+ * transparency.
  */
 .astryx-app-shell-header.astryx-app-shell-header {
   z-index: 50;
   background-color: var(--color-background-surface);
   box-shadow:
+    /* light: specular rim along the top */
     inset 0 1px 0 0 var(--glass-highlight),
+    /* refraction: the lower edge catching light, and the band inside it */
     inset 0 -1px 0 0 var(--glass-edge),
+    inset 0 -2px 0 -1px var(--glass-highlight),
+    inset 0 -10px 14px -12px var(--glass-highlight),
+    /* dispersion: a warm and cool fringe along the bottom edge */
+    inset 0 -1px 0 0 color-mix(in srgb, var(--lg-fringe-cool) 60%, transparent),
+    /* depth: soft shadow beneath the bar */
+    0 1px 0 0 color-mix(in srgb, var(--lg-fringe-warm) 25%, transparent),
     0 12px 32px -24px var(--glass-shadow);
 }
 @supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
@@ -54,6 +64,155 @@ html {
   .astryx-app-shell-header.astryx-app-shell-header::before {
     display: none;
   }
+}
+
+/*
+ * Liquid glass material: the CTAs (primary and secondary buttons) and the
+ * navbar's current or keyboard-focused item. Built from the properties of a
+ * real glass surface rather than blur alone:
+ *  - Light: light from the top left, as a bright specular rim on the top
+ *    left edge and a soft glow from that corner (no streak).
+ *  - Refraction: a caustic band gathered inside the lower edge, as light
+ *    bends through the curved rim.
+ *  - Depth: shading under the top rim for thickness, plus a contact shadow
+ *    and a wide ambient shadow so the pill floats.
+ *  - Dispersion: a faint warm fringe on one edge and a cool one on the other.
+ *  - Frost: a light blur with a colour and brightness boost; no grain, so
+ *    the glass stays crystal clear.
+ *  - Splay: a soft glow spreading up from the bottom.
+ * Each element sets the --lg-* tokens; the material is shared. The :not(#\#)
+ * chain outranks the design system's atomic classes (which use three).
+ * Solid and unblurred with reduced transparency.
+ */
+:root {
+  /* Dispersion: the warm and cool fringes where glass splits light. */
+  --lg-fringe-warm: rgb(255 70 130 / 0.28);
+  --lg-fringe-cool: rgb(40 160 255 / 0.32);
+}
+
+/* Tokens. Secondary: frosted clear glass with a faint brand edge. */
+.astryx-button[data-variant='secondary'] {
+  --lg-fill: color-mix(in srgb, var(--color-background-surface) 40%, transparent);
+  --lg-fill-hover: color-mix(in srgb, var(--color-background-surface) 60%, transparent);
+  --lg-fill-solid: var(--color-background-surface);
+  --lg-text: var(--color-text-primary);
+  --lg-light: var(--glass-highlight);
+  --lg-sheen: var(--glass-sheen);
+  --lg-ring: color-mix(in srgb, var(--color-brand-text) 16%, transparent);
+  --lg-ring-hover: color-mix(in srgb, var(--color-brand-text) 30%, transparent);
+  --lg-glow: color-mix(in srgb, var(--color-brand-text) 22%, transparent);
+  --lg-drop: 0 10px 26px -14px var(--glass-shadow);
+}
+/* Primary: tinted brand-blue glass. */
+.astryx-button[data-variant='primary'] {
+  --lg-fill: color-mix(in srgb, var(--color-brand) 80%, transparent);
+  --lg-fill-hover: color-mix(in srgb, var(--color-brand) 90%, transparent);
+  --lg-fill-solid: var(--color-brand);
+  --lg-text: rgb(255 255 255);
+  --lg-light: rgb(255 255 255 / 0.7);
+  --lg-sheen: rgb(255 255 255 / 0.38);
+  --lg-ring: rgb(255 255 255 / 0.16);
+  --lg-ring-hover: rgb(255 255 255 / 0.28);
+  --lg-glow: rgb(255 255 255 / 0.34);
+  --lg-drop: 0 10px 26px -12px color-mix(in srgb, var(--color-brand) 70%, transparent);
+}
+/* Navbar item: a small brand-tinted pill with brand-blue text. */
+.astryx-top-nav-item {
+  --lg-fill: color-mix(in srgb, var(--color-brand-text) 12%, transparent);
+  --lg-fill-hover: color-mix(in srgb, var(--color-brand-text) 16%, transparent);
+  --lg-fill-solid: color-mix(in srgb, var(--color-brand-text) 10%, var(--color-background-surface));
+  --lg-text: var(--color-brand-text);
+  --lg-light: var(--glass-highlight);
+  --lg-sheen: var(--glass-sheen);
+  --lg-ring: color-mix(in srgb, var(--color-brand-text) 18%, transparent);
+  --lg-ring-hover: color-mix(in srgb, var(--color-brand-text) 28%, transparent);
+  --lg-glow: color-mix(in srgb, var(--color-brand-text) 20%, transparent);
+  --lg-drop: 0 6px 16px -10px var(--glass-shadow);
+}
+
+/* The material. */
+:is(.astryx-button:is([data-variant='primary'], [data-variant='secondary']), .astryx-top-nav-item:is([aria-current='page'], :focus-visible)):not(#\#):not(#\#):not(#\#):not(#\#) {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  color: var(--lg-text);
+  border-color: var(--glass-edge);
+  background-color: var(--lg-fill-solid);
+  box-shadow:
+    /* light: specular rim, brightest on the top left */
+    inset 1.5px 1.5px 0 -0.5px var(--lg-light),
+    inset 0 1px 0 0 var(--lg-light),
+    /* refraction: the lower rim catching light, and the caustic band inside it */
+    inset 0 -1.5px 0 -0.5px var(--lg-light),
+    inset 0 -9px 12px -8px var(--lg-light),
+    /* dispersion: warm and cool fringes */
+    inset 2px 0 0 -0.5px var(--lg-fringe-warm),
+    inset -2px 0 0 -0.5px var(--lg-fringe-cool),
+    /* depth: thickness under the top rim */
+    inset 0 10px 14px -11px rgb(0 0 0 / 0.2),
+    /* edge */
+    inset 0 0 0 1px var(--lg-ring),
+    /* depth: contact and ambient shadows */
+    0 1px 2px rgb(0 0 0 / 0.1),
+    var(--lg-drop);
+}
+:is(.astryx-button:is([data-variant='primary'], [data-variant='secondary']), .astryx-top-nav-item:is([aria-current='page'], :focus-visible)):not(#\#):not(#\#):not(#\#):not(#\#)::before,
+:is(.astryx-button:is([data-variant='primary'], [data-variant='secondary']), .astryx-top-nav-item:is([aria-current='page'], :focus-visible)):not(#\#):not(#\#):not(#\#):not(#\#)::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  pointer-events: none;
+  transition: opacity 280ms ease;
+}
+/* Light: a soft glow from the top-left corner over a top sheen; no streak,
+   so the glass stays clear. */
+:is(.astryx-button:is([data-variant='primary'], [data-variant='secondary']), .astryx-top-nav-item:is([aria-current='page'], :focus-visible)):not(#\#):not(#\#):not(#\#):not(#\#)::before {
+  background:
+    radial-gradient(90% 140% at 0% 0%, var(--lg-sheen) 0%, transparent 60%),
+    linear-gradient(to bottom, var(--lg-sheen) 0%, transparent 55%);
+  opacity: 0.95;
+}
+/* Splay: light spreading up from the bottom. */
+:is(.astryx-button:is([data-variant='primary'], [data-variant='secondary']), .astryx-top-nav-item:is([aria-current='page'], :focus-visible)):not(#\#):not(#\#):not(#\#):not(#\#)::after {
+  background: radial-gradient(140% 110% at 50% 140%, var(--lg-glow) 0%, transparent 72%);
+  opacity: 0.9;
+}
+:is(.astryx-button:is([data-variant='primary'], [data-variant='secondary']), .astryx-top-nav-item:is([aria-current='page'], :focus-visible)):not(#\#):not(#\#):not(#\#):not(#\#):hover {
+  --lg-ring: var(--lg-ring-hover);
+}
+:is(.astryx-button:is([data-variant='primary'], [data-variant='secondary']), .astryx-top-nav-item:is([aria-current='page'], :focus-visible)):not(#\#):not(#\#):not(#\#):not(#\#):hover::before,
+:is(.astryx-button:is([data-variant='primary'], [data-variant='secondary']), .astryx-top-nav-item:is([aria-current='page'], :focus-visible)):not(#\#):not(#\#):not(#\#):not(#\#):hover::after {
+  opacity: 1;
+}
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  :is(.astryx-button:is([data-variant='primary'], [data-variant='secondary']), .astryx-top-nav-item:is([aria-current='page'], :focus-visible)):not(#\#):not(#\#):not(#\#):not(#\#) {
+    background-color: var(--lg-fill);
+    -webkit-backdrop-filter: blur(10px) saturate(180%) brightness(1.05);
+    backdrop-filter: blur(10px) saturate(180%) brightness(1.05);
+  }
+  :is(.astryx-button:is([data-variant='primary'], [data-variant='secondary']), .astryx-top-nav-item:is([aria-current='page'], :focus-visible)):not(#\#):not(#\#):not(#\#):not(#\#):hover {
+    background-color: var(--lg-fill-hover);
+  }
+}
+@media (prefers-reduced-transparency: reduce) {
+  :is(.astryx-button:is([data-variant='primary'], [data-variant='secondary']), .astryx-top-nav-item:is([aria-current='page'], :focus-visible)):not(#\#):not(#\#):not(#\#):not(#\#),
+  :is(.astryx-button:is([data-variant='primary'], [data-variant='secondary']), .astryx-top-nav-item:is([aria-current='page'], :focus-visible)):not(#\#):not(#\#):not(#\#):not(#\#):hover {
+    background-color: var(--lg-fill-solid);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}
+:is(.astryx-button:is([data-variant='primary'], [data-variant='secondary']), .astryx-top-nav-item:is([aria-current='page'], :focus-visible)):not(#\#):not(#\#):not(#\#):not(#\#) * {
+  color: inherit;
+}
+
+/* Navbar page links: 20px between them. */
+/* Each link sits in its own wrapper (for the hover hint); the row holding
+   the wrappers sets the spacing. */
+:has(> * > .astryx-top-nav-item):not(#\#):not(#\#):not(#\#):not(#\#) {
+  gap: var(--spacing-5);
 }
 
 /* Header vertical padding: 16px on mobile, 20px on tablet, 24px on desktop. */
@@ -876,8 +1035,9 @@ html.has-custom-cursor :is(input:not([type="checkbox"]):not([type="radio"]):not(
 }
 
 /* Liquid glass lens: the backdrop filter inverts what is beneath (as the
-   blend did) and adds the header's glass: a touch of blur, a colour boost,
-   a bright specular rim, a darker lower edge and a sheen. */
+   blend did) and adds the glass material's physics: a touch of blur and a
+   colour boost (frost), a specular rim (light), a caustic band
+   (refraction), warm and cool fringes (dispersion) and depth. */
 @supports ((backdrop-filter: invert(1)) or (-webkit-backdrop-filter: invert(1))) {
   .cursor-lens {
     border-radius: 38%;
@@ -885,7 +1045,14 @@ html.has-custom-cursor :is(input:not([type="checkbox"]):not([type="radio"]):not(
     backdrop-filter: invert(1) saturate(1.6) blur(0.6px);
     background: linear-gradient(160deg, var(--glass-sheen) 0%, transparent 60%);
     box-shadow:
-      inset 0 1px 0.5px var(--glass-highlight),
+      /* light: specular rim, brightest on the top left */
+      inset 1px 1px 0.5px var(--glass-highlight),
+      /* refraction: caustic band inside the lower edge */
+      inset 0 -3px 4px -2px var(--glass-highlight),
+      /* dispersion: warm and cool fringes */
+      inset 1.5px 0 0 -0.5px var(--lg-fringe-warm),
+      inset -1.5px 0 0 -0.5px var(--lg-fringe-cool),
+      /* depth */
       inset 0 -1px 1px rgb(0 0 0 / 0.25),
       0 2px 8px -3px var(--glass-shadow);
   }
