@@ -4,6 +4,7 @@ import {useState, type ReactNode} from 'react';
 import {AnimatePresence, motion} from 'framer-motion';
 import {Text} from '@astryxdesign/core/Text';
 import {MotionHStack} from '@/components/motion/Motion';
+import {accentStyle} from '@/components/storytelling/Lines';
 import {expressive, springs} from '@/motion/springs';
 
 type HoverHintProps = {
@@ -14,7 +15,7 @@ type HoverHintProps = {
 
 /**
  * Shows a small supporting line under a navigation item while it is hovered or
- * focused. The label never changes; only this hint springs in beneath it.
+ * focused, in the brand's italic serif accent and brand blue. The label never changes; only this hint springs in beneath it.
  * The hint is decorative (aria-hidden); items carry their own description.
  */
 export function HoverHint({hint, children}: HoverHintProps) {
@@ -45,7 +46,13 @@ export function HoverHint({hint, children}: HoverHintProps) {
               whiteSpace: 'nowrap',
               pointerEvents: 'none',
             }}>
-            <Text type="supporting" color="secondary">
+            <Text
+              type="supporting"
+              style={{
+                ...accentStyle,
+                // The serif's smaller x-height reads a size down; nudge it up.
+                fontSize: 'calc(var(--text-supporting-size) * 1.15)',
+              }}>
               {hint}
             </Text>
           </motion.span>
