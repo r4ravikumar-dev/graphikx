@@ -59,7 +59,9 @@ export default function StudioPage() {
                 title={whyWeStarted.title}
                 size="display-l"
               />
-              <QuestionPath maxWidth={340} />
+              <VStack className="section-art">
+                <QuestionPath maxWidth={340} />
+              </VStack>
             </>
           }>
           <Reveal>

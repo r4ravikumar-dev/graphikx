@@ -456,6 +456,37 @@ html {
   }
 }
 
+/* Sections stack below 1024px; their illustration then leads, above the
+   headline. Page heroes keep their text first. .section-split is a two-column
+   section grid from 1024px. */
+@media (max-width: 1023px) {
+  .section-art {
+    order: -1;
+  }
+}
+@media (min-width: 1024px) {
+  .section-split {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: center;
+  }
+}
+
+/* Founder note: photo, quote, bio when stacked; quote left with the photo
+   above the bio on the right from 1024px. */
+.founder-grid {
+  grid-template-areas: 'art' 'quote' 'bio';
+}
+.founder-quote { grid-area: quote; }
+.founder-art { grid-area: art; }
+.founder-bio { grid-area: bio; }
+@media (min-width: 1024px) {
+  .founder-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-areas: 'quote art' 'quote bio';
+    align-items: start;
+  }
+}
+
 /* Page hero with an illustration: text left, illustration right, centred
    against each other from 1024px; stacked below. */
 @media (min-width: 1024px) {

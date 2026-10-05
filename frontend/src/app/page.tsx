@@ -21,7 +21,6 @@ import {Marquee} from '@/components/editorial/Marquee';
 import {StepTimeline} from '@/components/editorial/StepTimeline';
 import {StickySplit} from '@/components/editorial/StickySplit';
 import {
-  DisciplineOrbit,
   QuestionPath,
   StackedLayers,
   SystemBlocks,
@@ -81,7 +80,9 @@ export default function HomePage() {
                 title={problem.title}
                 size="display-l"
               />
-              <StackedLayers maxWidth={360} />
+              <VStack className="section-art">
+                <StackedLayers maxWidth={360} />
+              </VStack>
             </>
           }>
           <BuildUp layers={problem.layers} resolution={problem.resolution} />
@@ -90,17 +91,7 @@ export default function HomePage() {
 
       {/* 02 Practice: one row per discipline. */}
       <Chapter label={practice.label}>
-        <Grid columns={{minWidth: 320, max: 2}} gap={10} style={{alignItems: 'center'}}>
-          <ChapterHeader
-            index={practice.index}
-            label={practice.label}
-            title={practice.title}
-            size="display-l"
-          />
-          <Reveal hAlign="end">
-            <DisciplineOrbit label="Seven disciplines orbiting one product" maxWidth={340} />
-          </Reveal>
-        </Grid>
+        <ChapterHeader index={practice.index} label={practice.label} title={practice.title} />
         <IndexList
           items={capabilities.map(capability => ({
             title: capability.title,
@@ -126,7 +117,9 @@ export default function HomePage() {
                 title={howWeThink.title}
                 size="display-l"
               />
-              <QuestionPath maxWidth={360} />
+              <VStack className="section-art">
+                <QuestionPath maxWidth={360} />
+              </VStack>
             </>
           }>
           <StepTimeline steps={howWeThink.steps} />
@@ -135,7 +128,7 @@ export default function HomePage() {
 
       {/* 04 Graphyene: on the muted surface. */}
       <Chapter tone="muted" label={graphyene.label}>
-        <Grid columns={{minWidth: 320, max: 2}} gap={10} style={{alignItems: 'center'}}>
+        <Grid columns={1} gap={10} className="section-split">
           <VStack gap={6}>
             <Reveal>
               <IndexLabel index={graphyene.index}>{graphyene.label}</IndexLabel>
@@ -160,7 +153,7 @@ export default function HomePage() {
               </HStack>
             </Reveal>
           </VStack>
-          <Reveal hAlign="end">
+          <Reveal hAlign="end" className="section-art">
             <SystemBlocks label="Mixed shapes settling into an ordered grid" />
           </Reveal>
         </Grid>
@@ -170,14 +163,14 @@ export default function HomePage() {
 
       {/* 05 Thinking: articles as editorial rows. */}
       <Chapter label={thinking.label}>
-        <Grid columns={{minWidth: 320, max: 2}} gap={10} style={{alignItems: 'center'}}>
+        <Grid columns={1} gap={10} className="section-split">
           <ChapterHeader
             index={thinking.index}
             label={thinking.label}
             title={thinking.title}
             size="display-l"
           />
-          <Reveal hAlign="end">
+          <Reveal hAlign="end" className="section-art">
             <ThinkingLens maxWidth={340} />
           </Reveal>
         </Grid>
