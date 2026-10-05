@@ -687,8 +687,8 @@ SEO copy should remain natural and useful rather than repeating keywords unneces
 | Command         | Description                   |
 | --------------- | ----------------------------- |
 | `npm run dev`   | Start the development server  |
-| `npm run build` | Create a production build     |
-| `npm run start` | Run the production build      |
+| `npm run compile` | Compile to `dist/` for `npm run start` (not named `build`, so Vercel compiles `src/server.ts` itself and bundles its dependencies) |
+| `npm run start` | Run the compiled server       |
 | `npm run test`  | Run the test suite            |
 | `npm run lint`  | Lint the codebase             |
 | `npm run typecheck` | Type-check without building |
