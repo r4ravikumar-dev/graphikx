@@ -34,6 +34,8 @@ html {
     inset 0 -1px 0 0 var(--glass-edge),
     inset 0 -2px 0 -1px var(--glass-highlight),
     inset 0 -10px 14px -12px var(--glass-highlight),
+    /* dark mode: shade pooling along the lower edge */
+    inset 0 -14px 20px -16px var(--lg-shade),
     /* dispersion: a warm and cool fringe along the bottom edge */
     inset 0 -1px 0 0 color-mix(in srgb, var(--lg-fringe-cool) 60%, transparent),
     /* depth: soft shadow beneath the bar */
@@ -80,20 +82,33 @@ html {
  *  - Frost: a light blur with a colour and brightness boost; no grain, so
  *    the glass stays crystal clear.
  *  - Splay: a soft glow spreading up from the bottom.
- * Each element sets the --lg-* tokens; the material is shared. The :not(#\#)
+ * Each element sets the --lg-* tokens; the material is shared. In dark mode
+ * the glass turns smoky and shadowed, as Apple's does: darker fills, a shade
+ * pooling in the body and along the edges, a dark outer edge, and dimmer
+ * light, sheen, glow and fringes (light-dark() tokens). The :not(#\#)
  * chain outranks the design system's atomic classes (which use three).
  * Solid and unblurred with reduced transparency.
  */
 :root {
   /* Dispersion: the warm and cool fringes where glass splits light. */
-  --lg-fringe-warm: rgb(255 70 130 / 0.28);
-  --lg-fringe-cool: rgb(40 160 255 / 0.32);
+  --lg-fringe-warm: light-dark(rgb(255 70 130 / 0.28), rgb(255 70 130 / 0.18));
+  --lg-fringe-cool: light-dark(rgb(40 160 255 / 0.32), rgb(40 160 255 / 0.22));
+  /* Dark mode glass is smoky and shadowed (as Apple's is): a shade pools in
+     the body and along the edges. Transparent in light mode. */
+  --lg-shade: light-dark(rgb(0 0 0 / 0), rgb(0 0 0 / 0.5));
+  --lg-rim-dark: light-dark(rgb(0 0 0 / 0), rgb(0 0 0 / 0.55));
 }
 
 /* Tokens. Secondary: frosted clear glass with a faint brand edge. */
 .astryx-button[data-variant='secondary'] {
-  --lg-fill: color-mix(in srgb, var(--color-background-surface) 40%, transparent);
-  --lg-fill-hover: color-mix(in srgb, var(--color-background-surface) 60%, transparent);
+  --lg-fill: light-dark(
+    color-mix(in srgb, var(--color-background-surface) 40%, transparent),
+    rgb(14 14 18 / 0.5)
+  );
+  --lg-fill-hover: light-dark(
+    color-mix(in srgb, var(--color-background-surface) 60%, transparent),
+    rgb(14 14 18 / 0.66)
+  );
   --lg-fill-solid: var(--color-background-surface);
   --lg-text: var(--color-text-primary);
   --lg-light: var(--glass-highlight);
@@ -103,17 +118,22 @@ html {
   --lg-glow: color-mix(in srgb, var(--color-brand-text) 22%, transparent);
   --lg-drop: 0 10px 26px -14px var(--glass-shadow);
 }
-/* Primary: tinted brand-blue glass. */
+/* Primary: tinted brand-blue glass, kept vivid: a near-solid fill and a
+   light sheen and glow so the colour isn't washed out. */
 .astryx-button[data-variant='primary'] {
-  --lg-fill: color-mix(in srgb, var(--color-brand) 80%, transparent);
-  --lg-fill-hover: color-mix(in srgb, var(--color-brand) 90%, transparent);
+  /* Vivid, near-solid brand blue (tinted glass stays saturated). */
+  --lg-fill: light-dark(
+    color-mix(in srgb, var(--color-brand) 94%, transparent),
+    color-mix(in srgb, var(--color-brand) 92%, transparent)
+  );
+  --lg-fill-hover: var(--color-brand);
   --lg-fill-solid: var(--color-brand);
   --lg-text: rgb(255 255 255);
-  --lg-light: rgb(255 255 255 / 0.7);
-  --lg-sheen: rgb(255 255 255 / 0.38);
+  --lg-light: light-dark(rgb(255 255 255 / 0.7), rgb(255 255 255 / 0.34));
+  --lg-sheen: light-dark(rgb(255 255 255 / 0.2), rgb(255 255 255 / 0.12));
   --lg-ring: rgb(255 255 255 / 0.16);
   --lg-ring-hover: rgb(255 255 255 / 0.28);
-  --lg-glow: rgb(255 255 255 / 0.34);
+  --lg-glow: light-dark(rgb(255 255 255 / 0.16), rgb(255 255 255 / 0.1));
   --lg-drop: 0 10px 26px -12px color-mix(in srgb, var(--color-brand) 70%, transparent);
 }
 /* Navbar item: a small brand-tinted pill with brand-blue text. */
@@ -150,9 +170,13 @@ html {
     inset -2px 0 0 -0.5px var(--lg-fringe-cool),
     /* depth: thickness under the top rim */
     inset 0 10px 14px -11px rgb(0 0 0 / 0.2),
+    /* dark mode: shade pooling in the lower body and along the edges */
+    inset 0 -10px 16px -8px var(--lg-shade),
+    inset 0 0 10px 0 color-mix(in srgb, var(--lg-shade) 50%, transparent),
     /* edge */
     inset 0 0 0 1px var(--lg-ring),
-    /* depth: contact and ambient shadows */
+    /* depth: a dark outer edge (dark mode), contact and ambient shadows */
+    0 0 0 0.5px var(--lg-rim-dark),
     0 1px 2px rgb(0 0 0 / 0.1),
     var(--lg-drop);
 }
