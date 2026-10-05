@@ -239,21 +239,11 @@ html {
   gap: var(--spacing-5);
 }
 
-/* Header vertical padding: 16px on mobile, 20px on tablet, 24px on desktop. */
+/* Header vertical padding: 16px top and bottom at every viewport. The hero
+   height, sticky offsets, anchor scroll offset and mobile menu header all
+   follow this variable. */
 :root {
-  --nav-padding-block: 16px;
-}
-
-@media (min-width: 768px) {
-  :root {
-    --nav-padding-block: 20px;
-  }
-}
-
-@media (min-width: 1024px) {
-  :root {
-    --nav-padding-block: 24px;
-  }
+  --nav-padding-block: var(--spacing-4);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -452,7 +442,7 @@ html {
 }
 
 /* Mobile menu drawer: the header (logo and close) matches the navbar exactly,
-   16px top and bottom on phones and the page gutter at the sides, so the
+   16px top and bottom (--nav-padding-block) and the page gutter at the sides, so the
    logo stays put when the drawer opens. The body shares the same gutter. */
 .astryx-mobile-nav > div > div:first-child {
   block-size: auto;
