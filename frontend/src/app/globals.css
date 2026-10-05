@@ -228,7 +228,10 @@ html {
     backdrop-filter: none;
   }
 }
-:is(.astryx-button:is([data-variant='primary'], [data-variant='secondary']), .astryx-top-nav-item:is([aria-current='page'], :focus-visible)):not(#\#):not(#\#):not(#\#):not(#\#) * {
+/* The nav pill's inner label takes the pill's brand-blue text. Scoped to nav
+   items only: on buttons it would override the design system hiding the
+   label (color: transparent) while a button shows its loading spinner. */
+.astryx-top-nav-item:is([aria-current='page'], :focus-visible):not(#\#):not(#\#):not(#\#):not(#\#) * {
   color: inherit;
 }
 
