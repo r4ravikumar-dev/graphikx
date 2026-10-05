@@ -957,6 +957,25 @@ html {
   }
 }
 
+/* ---------- 404 (app/not-found) ---------- */
+/* A giant 404 whose 0 is the brand's italic serif in blue. The serif sits
+   a little small beside the sans, so it is set slightly larger. */
+.not-found-numerals {
+  display: block;
+  font-weight: 700;
+  line-height: 0.9;
+  color: var(--color-text-primary);
+}
+.not-found-zero {
+  font-family: var(--font-family-accent);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.14em;
+  color: var(--color-brand-text);
+  letter-spacing: -0.02em;
+  padding-inline: 0.04em;
+}
+
 /* ---------- First-visit splash (components/navigation/Splash) ---------- */
 /* Covers the page on the first load of a session: the outlined logo fills
    from the bottom up, then the tagline rises in. Hidden before the first
