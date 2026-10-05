@@ -4,6 +4,7 @@ import {Providers} from './providers';
 import {SiteShell} from '@/components/layout/SiteShell';
 import {site} from '@/content/site';
 import {Analytics} from '@vercel/analytics/next';
+import {SpeedInsights} from '@vercel/speed-insights/next';
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -71,6 +72,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
           <SiteShell>{children}</SiteShell>
         </Providers>
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
