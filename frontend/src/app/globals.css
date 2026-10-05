@@ -957,6 +957,43 @@ html {
   }
 }
 
+/* ---------- First-visit splash (components/navigation/Splash) ---------- */
+/* Covers the page on the first load of a session: the outlined logo fills
+   from the bottom up, then the tagline rises in. Hidden before the first
+   paint once the session has seen it (html.splash-seen) and without JS. */
+.splash {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  display: grid;
+  place-items: center;
+  background-color: var(--color-background-surface);
+}
+html.splash-seen .splash {
+  display: none;
+}
+html:not(.splash-seen):has(.splash) {
+  overflow: hidden;
+}
+.splash-mark {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-5);
+}
+.splash-logo {
+  inline-size: min(60vw, 260px);
+  block-size: auto;
+  overflow: visible;
+}
+.splash-outline path {
+  stroke-width: 0.6;
+  stroke-linejoin: round;
+}
+.splash-tagline {
+  text-align: center;
+}
+
 /* ---------- Page transition loader (components/navigation/PageTransition) ---------- */
 /* Covers the page for 1.4s between pages, on the theme's own surface. */
 
