@@ -626,3 +626,46 @@ export function SenseMaking({label, maxWidth = 560}: SceneProps) {
     </Illustration>
   );
 }
+
+/**
+ * 404: the missing page, in as few lines as possible. A page, a line running
+ * from it that breaks off, and a dashed empty page with a question mark. In
+ * the loop a comet runs the line and stops at the break, and the empty page
+ * floats.
+ */
+export function MissingPage({label, maxWidth = 420}: SceneProps) {
+  const page =
+    'M40 40 h70 a10 10 0 0 1 10 10 v80 a10 10 0 0 1 -10 10 h-70 a10 10 0 0 1 -10 -10 v-80 a10 10 0 0 1 10 -10 Z';
+  const missing =
+    'M260 40 h70 a10 10 0 0 1 10 10 v80 a10 10 0 0 1 -10 10 h-70 a10 10 0 0 1 -10 -10 v-80 a10 10 0 0 1 10 -10 Z';
+  const line = 'M120 90 H 196';
+  return (
+    <Illustration viewBox="0 0 380 180" label={label} maxWidth={maxWidth}>
+      <Surface order={0} d={page} />
+      <Stroke order={0} d={page} />
+      <Stroke order={1} weight="fine" stroke={MUTED} d={line} />
+      <Travel d={line} duration={3.5} thickness={2.5} />
+      {/* Plain paths: the draw-in would override the dash pattern. */}
+      <path
+        d="M206 90 H 244"
+        fill="none"
+        stroke={MUTED}
+        strokeWidth={1}
+        strokeLinecap="round"
+        strokeDasharray="2 6"
+      />
+      <g className="ill-loop ill-float" style={{['--float' as string]: '5px'}}>
+        <path
+          d={missing}
+          fill="none"
+          stroke={ACCENT}
+          strokeWidth={1.5}
+          strokeLinecap="round"
+          strokeDasharray="5 6"
+        />
+        <Stroke order={4} stroke={ACCENT} strokeWidth={3} d="M288 78 a12 12 0 1 1 15 12 v8" />
+        <Dot order={5} cx={303} cy={114} r={3} />
+      </g>
+    </Illustration>
+  );
+}
