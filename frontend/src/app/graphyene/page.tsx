@@ -58,7 +58,9 @@ export default function GraphyenePage() {
                 title={problem.title}
                 size="display-l"
               />
-              <StackedLayers maxWidth={340} />
+              <VStack className="section-art">
+                <StackedLayers maxWidth={340} />
+              </VStack>
             </>
           }>
           <BuildUp layers={problem.layers} resolution={problem.resolution} />

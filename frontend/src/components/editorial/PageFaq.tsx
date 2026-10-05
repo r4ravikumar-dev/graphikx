@@ -1,5 +1,6 @@
 'use client';
 
+import {VStack} from '@astryxdesign/core/Layout';
 import {Chapter} from './Chapter';
 import {ChapterHeader} from './ChapterHeader';
 import {FaqList} from './FaqList';
@@ -27,7 +28,9 @@ export function PageFaq({
         aside={
           <>
             <ChapterHeader index={index} label={group.label} title={group.title} size="display-l" />
-            <FaqQuestion maxWidth={320} />
+            <VStack className="section-art">
+              <FaqQuestion maxWidth={320} />
+            </VStack>
           </>
         }>
         <FaqList items={group.items} />

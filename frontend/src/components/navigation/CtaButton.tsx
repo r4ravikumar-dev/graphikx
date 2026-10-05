@@ -20,6 +20,8 @@ type CtaButtonProps = {
    * down the page, and "out" (↗) matches the header's Start a project button.
    */
   direction?: keyof typeof arrows;
+  /** Opens another website in a new tab. */
+  isExternal?: boolean;
 };
 
 /** A call to action with a trailing arrow (→, ↓ or ↗). */
@@ -29,6 +31,7 @@ export function CtaButton({
   variant = 'primary',
   size = 'lg',
   direction = 'forward',
+  isExternal = false,
 }: CtaButtonProps) {
   return (
     <Button
@@ -36,6 +39,8 @@ export function CtaButton({
       href={href}
       variant={variant}
       size={size}
+      target={isExternal ? '_blank' : undefined}
+      rel={isExternal ? 'noopener noreferrer' : undefined}
       endContent={<Icon icon={arrows[direction]} size="sm" color="inherit" />}
     />
   );

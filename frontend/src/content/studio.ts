@@ -37,17 +37,20 @@ export const beliefs = {
     {
       title: 'People first',
       summary: 'Design starts with the person, not the screen.',
-      detail: 'Not the screen. Not the feature. Not the trend. Design starts with the person trying to get something done.',
+      detail:
+        'Not the screen. Not the feature. Not the trend. Design starts with the person trying to get something done.',
     },
     {
       title: 'Clarity matters',
       summary: 'Nobody should work hard to understand a product.',
-      detail: "People shouldn't have to work hard to understand what a product is asking them to do.",
+      detail:
+        "People shouldn't have to work hard to understand what a product is asking them to do.",
     },
     {
       title: 'Less can be more',
       summary: 'Keep what helps.',
-      detail: "Every extra element is another thing to notice, understand or decide. We'd rather keep what helps.",
+      detail:
+        "Every extra element is another thing to notice, understand or decide. We'd rather keep what helps.",
     },
     {
       title: 'Good design asks questions',
@@ -57,12 +60,14 @@ export const beliefs = {
     {
       title: 'Details add up',
       summary: 'Small things shape the whole experience.',
-      detail: 'A small label. A well-timed message. A useful empty state. A thoughtful transition. The little things shape the whole.',
+      detail:
+        'A small label. A well-timed message. A useful empty state. A thoughtful transition. The little things shape the whole.',
     },
     {
       title: 'Systems should help people create',
       summary: 'Structure gives a better place to start.',
-      detail: "Structure is useful when it gives people a better place to start. It shouldn't take away their ability to think.",
+      detail:
+        "Structure is useful when it gives people a better place to start. It shouldn't take away their ability to think.",
     },
   ],
 };
@@ -88,6 +93,8 @@ export const founder = {
   quote: 'I like taking things apart until I understand why they *feel* the way they do.',
   bio: 'Ravi works where products, people and ideas meet: product design, user experience, interfaces and design systems, always looking for ways to make complicated things feel simpler.',
   team: 'As Graphikx grows, we’re building a team around curiosity, craft and the willingness to ask one more question.',
+  /** Ravi's portfolio, opened in a new tab. The button is hidden while href is empty. */
+  profile: {label: 'Get to know Ravi', href: 'https://www.ravi.graphikx.in'},
 };
 
 export const currentlyExploring = {

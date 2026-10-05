@@ -1,12 +1,13 @@
 'use client';
 
-import {VStack} from '@astryxdesign/core/Layout';
+import {HStack, VStack} from '@astryxdesign/core/Layout';
 import {Grid} from '@astryxdesign/core/Grid';
 import {Heading} from '@astryxdesign/core/Heading';
 import {Text} from '@astryxdesign/core/Text';
 import {VisuallyHidden} from '@astryxdesign/core/VisuallyHidden';
 import {Reveal} from '@/components/motion/Reveal';
 import {FounderPortrait} from '@/components/illustrations/scenes';
+import {CtaButton} from '@/components/navigation/CtaButton';
 import {IndexLabel} from '@/components/editorial/IndexLabel';
 import {Lines, accentStyle} from '@/components/storytelling/Lines';
 import {typeRole} from '@/theme/typeScale';
@@ -21,16 +22,29 @@ type FounderNoteProps = {
   quote: string;
   bio: string;
   team: string;
+  /** A link to know more about the founder; hidden while href is empty. */
+  profile?: {label: string; href: string};
 };
 
 /**
  * The founder, editorial style: a large pull quote on the left; on the right
- * Ravi's photo in the brand duotone, then name, role and a short bio.
+ * Ravi's photo in the brand duotone, then name, role and a short bio. When
+ * stacked below 1024px the photo leads, then the quote, then the bio
+ * (.founder-grid in globals.css).
  */
-export function FounderNote({index, label, name, role, quote, bio, team}: FounderNoteProps) {
+export function FounderNote({
+  index,
+  label,
+  name,
+  role,
+  quote,
+  bio,
+  team,
+  profile,
+}: FounderNoteProps) {
   return (
-    <Grid columns={{minWidth: 320, max: 2}} gap={10} style={{alignItems: 'start'}}>
-      <VStack gap={6}>
+    <Grid columns={1} gap={10} className="founder-grid">
+      <VStack gap={6} className="founder-quote">
         <Reveal>
           <IndexLabel index={index}>{label}</IndexLabel>
         </Reveal>
@@ -58,36 +72,45 @@ export function FounderNote({index, label, name, role, quote, bio, team}: Founde
           </figure>
         </Reveal>
       </VStack>
-      <VStack gap={8}>
-        <Reveal delay={0.08}>
-          <VStack hAlign="start">
-            <FounderPortrait label={`Portrait of ${name}`} maxWidth={360} />
-          </VStack>
-        </Reveal>
-        <Reveal delay={0.12}>
-          <VStack
-            gap={5}
-            style={{
-              borderBlockStart: '1px solid var(--color-border)',
-              paddingBlockStart: 'var(--spacing-6)',
-            }}>
-            <VStack gap={1}>
-              <Heading level={3} style={typeRole('headline-m')}>
-                {name}
-              </Heading>
-              <Text type="supporting" color="secondary" style={EYEBROW_STYLE}>
-                {role}
-              </Text>
-            </VStack>
-            <Text type="large" color="secondary" textWrap="pretty">
-              {bio}
-            </Text>
-            <Text color="secondary" textWrap="pretty">
-              {team}
+      <Reveal delay={0.08} className="founder-art">
+        <VStack hAlign="start">
+          <FounderPortrait label={`Portrait of ${name}`} maxWidth={360} />
+        </VStack>
+      </Reveal>
+      <Reveal delay={0.12} className="founder-bio">
+        <VStack
+          gap={5}
+          style={{
+            borderBlockStart: '1px solid var(--color-border)',
+            paddingBlockStart: 'var(--spacing-6)',
+          }}>
+          <VStack gap={1}>
+            <Heading level={3} style={typeRole('headline-m')}>
+              {name}
+            </Heading>
+            <Text type="supporting" color="secondary" style={EYEBROW_STYLE}>
+              {role}
             </Text>
           </VStack>
-        </Reveal>
-      </VStack>
+          <Text type="large" color="secondary" textWrap="pretty">
+            {bio}
+          </Text>
+          <Text color="secondary" textWrap="pretty">
+            {team}
+          </Text>
+          {profile?.href && (
+            <HStack>
+              <CtaButton
+                label={profile.label}
+                href={profile.href}
+                variant="secondary"
+                direction="out"
+                isExternal
+              />
+            </HStack>
+          )}
+        </VStack>
+      </Reveal>
     </Grid>
   );
 }
