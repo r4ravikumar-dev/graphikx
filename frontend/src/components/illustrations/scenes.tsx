@@ -643,6 +643,14 @@ export function MissingPage({label, maxWidth = 420}: SceneProps) {
     <Illustration viewBox="0 0 380 180" label={label} maxWidth={maxWidth}>
       <Surface order={0} d={page} />
       <Stroke order={0} d={page} />
+      {/* The page's structure: a title, two lines of text and its action */}
+      <Stroke order={1} d="M46 60 h40" />
+      <Stroke order={1} weight="fine" stroke={MUTED} d="M46 76 h58 M46 88 h46" />
+      <Stroke
+        order={2}
+        stroke={ACCENT}
+        d="M51 110 h22 a5 5 0 0 1 5 5 a5 5 0 0 1 -5 5 h-22 a5 5 0 0 1 -5 -5 a5 5 0 0 1 5 -5 Z"
+      />
       <Stroke order={1} weight="fine" stroke={MUTED} d={line} />
       <Travel d={line} duration={3.5} thickness={2.5} />
       {/* Plain paths: the draw-in would override the dash pattern. */}
