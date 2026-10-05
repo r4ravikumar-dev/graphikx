@@ -4,6 +4,7 @@ import {Providers} from './providers';
 import {SiteShell} from '@/components/layout/SiteShell';
 import {site} from '@/content/site';
 import {Analytics} from '@vercel/analytics/next';
+import {Splash, splashSeenScript} from '@/components/navigation/Splash';
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -55,8 +56,19 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
     // the first paint, before JavaScript runs (no flash of the wrong scheme).
     // data-scroll-behavior: keep smooth scrolling for in-page links, but let
     // Next.js jump instantly between pages (see ScrollManager).
-    <html lang="en" data-astryx-theme="graphikx" data-scroll-behavior="smooth">
+    // suppressHydrationWarning: the inline splash script may add the
+    // splash-seen class to <html> before React hydrates (this element only).
+    <html
+      lang="en"
+      data-astryx-theme="graphikx"
+      data-scroll-behavior="smooth"
+      suppressHydrationWarning>
       <head>
+        {/* Hide the first-visit splash before the first paint if this session has already seen it. */}
+        <script dangerouslySetInnerHTML={{__html: splashSeenScript}} />
+        <noscript>
+          <style>{'.splash{display:none}'}</style>
+        </noscript>
         {/* Typefaces: IBM Plex Sans headings and body, IBM Plex Mono eyebrows, Instrument Serif accent words. */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -68,6 +80,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
       </head>
       <body>
         <Providers>
+          <Splash />
           <SiteShell>{children}</SiteShell>
         </Providers>
         <Analytics />

@@ -174,7 +174,7 @@ export const privacy: LegalPage = {
         ),
         p('Our Vercel Web Analytics setup is designed not to rely on cookies.'),
         p(
-          'Some technical services may still use necessary browser storage or similar technologies to provide or secure their service. The website itself does not store anything in your browser.',
+          'Some technical services may still use necessary browser storage or similar technologies to provide or secure their service. The website itself stores just one thing in your browser: a note, kept for the current tab only, that you have seen the opening animation, so it doesn’t replay on every page.',
         ),
         p(
           'If we ever introduce optional cookies or other tracking technologies, we will update this notice first and give you a choice where the law requires it.',
